@@ -1,0 +1,114 @@
+.active {
+  color: red;
+}
+.custom-table {
+  table-layout: fixed;
+}
+
+.span-error {
+  font-size: 10px;
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+.table-condensed {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.my-small-button {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  background-color: blue;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+
+  font-family: Arial, sans-serif; /* Change the font family here */
+}
+.my-small-button:hover {
+  background-color: blue;
+  color: #fff;
+}
+.fa,
+.fas {
+  font-size: 10px;
+}
+.card-body {
+  word-break: break-all;
+}
+
+/* style for search input on add-subjects */
+#search-results,
+#search-results1,
+#search-results2,
+#search-results3,
+#search-results4 {
+  display: none;
+}
+#search-results ul,
+#search-results1 ul,
+#search-results2 ul,
+#search-results3 ul,
+#search-results4 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#search-results li,
+#search-results li,
+#search-results2 li,
+#search-results3 li,
+#search-results4 li {
+  cursor: pointer;
+  padding: 0px;
+}
+
+#search-results li:hover,
+#search-results1 li:hover,
+#search-results2 li:hover,
+#search-results3 li:hover,
+#search-results4 li:hover {
+  background-color: #f2f2f2;
+}
+
+/* Additional styles for positioning */
+.search-container {
+  position: relative;
+}
+
+#search-results,
+#search-results1,
+#search-results2,
+#search-results3,
+#search-results4 {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  top: 100%; /* Position the container right below the input */
+  left: 0;
+  z-index: 999;
+  border-radius: 5px;
+  position: absolute;
+  cursor: pointer;
+}
+
+
+/* CSS for fade-out animation */
+.flash-message {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.flash-message.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}

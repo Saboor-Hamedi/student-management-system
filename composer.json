@@ -1,0 +1,10 @@
+{
+	"name": "omer/sultani",
+	"description": "this project has created by omer",
+	"autoload": {
+		"psr-4": {
+			"Thesis\\": "App/"
+		}
+	},
+	"require": {}
+}
