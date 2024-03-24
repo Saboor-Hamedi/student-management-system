@@ -19,7 +19,6 @@ $search_student_profile_name = '';
 $search_student_profile_name_error = '';
 $student_lastname = '';
 $student_lastname_error = '';
-
 $student_sex = '';
 $student_sex_error = '';
 if (isset ($_POST['student_profile_btn'])) {
@@ -75,7 +74,7 @@ if (isset ($_POST['student_profile_btn'])) {
                     <!-- <div class="form-group"> -->
                       <input type="hidden" class="form-control" id="student_profile_id" name="student_profile_id" placeholder="This will be set automatically"
                         value="<?php echo getInputValue('student_profile_id') ?>" readonly>
-                      <span class="span-error">
+                      <span class="error">
                         <?php
                         if (!empty ($student_profile_id_error)) {
                           echo $student_profile_id_error;
@@ -92,7 +91,7 @@ if (isset ($_POST['student_profile_btn'])) {
                         <input type="text" class="form-control" id="search_student_profile_name"
                           name="search_student_profile_name" placeholder="Search for student"
                           value="<?php echo getInputValue('search_student_profile_name') ?>">
-                        <span class="span-error">
+                        <span class="error">
                           <?php
                           if (!empty ($search_student_profile_name_error)) {
                             echo $search_student_profile_name_error;
@@ -107,7 +106,7 @@ if (isset ($_POST['student_profile_btn'])) {
                     <div class="form-group">
                       <input type="text" class="form-control" id="student_lastname" name="student_lastname"
                         placeholder="Students lastname" value="<?php echo getInputValue('student_lastname') ?>">
-                      <span class="span-error">
+                      <span class="error">
                         <?php
                         if (!empty ($student_lastname_error)) {
                           echo $student_lastname_error;
@@ -122,7 +121,7 @@ if (isset ($_POST['student_profile_btn'])) {
                         <option value="">Select sex</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
-                        </select> <span class="span-error">
+                        </select> <span class="error">
                             <?php
                             if (!empty ($student_sex_error)) {
                               echo $student_sex_error;

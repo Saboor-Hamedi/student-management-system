@@ -3,7 +3,7 @@ $(document).ready(function () {
     var div = document.getElementById('search-results3');
     var selectedTeacherIdField = $('#student_grade_id');
     // Event listener for input changes
-    $('#search_for_student_id').on('input', function () {
+    $('#student_subject_name').on('input', function () {
         var query = $(this).val().trim();
 
         if (query !== '') {
@@ -49,9 +49,9 @@ $(document).ready(function () {
     $('#search-results3').on('click', 'li', function () {
         var teacherId = $(this).data('student_grade_id');
         var teacherName = $(this).text().split(' (ID:')[0]; // Extract the teacher name from the list item text
-        $('#search_for_student_id').val(teacherName);
+        $('#student_subject_name').val(teacherName);
         selectedTeacherIdField.val(teacherId);
-        $('#search_for_student_id').focus();
+        $('#student_subject_name').focus();
         if (div !== null) {
             div.style.display = "none";
         }

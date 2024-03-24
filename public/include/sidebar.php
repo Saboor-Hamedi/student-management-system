@@ -122,7 +122,7 @@
         <li class="nav-item">
           <a href="<?php echo BASE_URL ?>/scores/score.php" class="nav-link">
             <i class="fa fa-calculator mr-2"></i>
-            <p>Grade</p>
+            <p>Score</p>
           </a>
         </li>
         <?php endif ?>

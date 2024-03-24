@@ -118,7 +118,7 @@ if (isset($_POST['insert_grades_btn'])) {
                         <div class="form-group">
                           <div class="search-container">
                             <input type="text" id="search_teacher_live" name="search_teacher_live" class="form-control" value="<?php echo getInputValue('search_teacher_live') ?>" placeholder="Search for Teachers here">
-                            <span class="span-error">
+                            <span class="error">
                               <?php
                               if (!empty($search_teacher_live_error)) {
                                 echo $search_teacher_live_error;
@@ -134,7 +134,7 @@ if (isset($_POST['insert_grades_btn'])) {
                       <div class="col-md-6">
                         <div class="search-container">
                           <input type="text" class="form-control" id="subject_names" name="subject_names" placeholder="Subject Names" value="<?php echo getInputValue('subject_names'); ?>">
-                          <span class=" span-error">
+                          <span class=" error">
                             <?php
                             if (!empty($subject_names_error)) {
                               echo $subject_names_error;
@@ -155,7 +155,7 @@ if (isset($_POST['insert_grades_btn'])) {
                         <div class="form-group">
                           <div class="search-container">
                             <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo getInputValue('search_student_names'); ?>">
-                            <span class=" span-error">
+                            <span class=" error">
                               <?php
                               if (!empty($search_student_names_error)) {
                                 echo $search_student_names_error;
@@ -174,7 +174,7 @@ if (isset($_POST['insert_grades_btn'])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <input type="text" class="form-control" id="start_subject_time" name="start_subject_time" placeholder="Subject Start Time" value="<?php echo getInputValue('start_subject_time') ?>">
-                          <span class=" span-error">
+                          <span class=" error">
                             <?php
                             if (!empty($start_subject_time_error)) {
                               echo $start_subject_time_error;
@@ -187,7 +187,7 @@ if (isset($_POST['insert_grades_btn'])) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <input type="text" class="form-control" id="end_subject_time" name="end_subject_time" placeholder="Suject End Time" value="<?php echo getInputValue('end_subject_time') ?>">
-                          <span class=" span-error">
+                          <span class=" error">
                             <?php
                             if (!empty($end_subject_time_error)) {
                               echo $end_subject_time_error;
@@ -207,7 +207,7 @@ if (isset($_POST['insert_grades_btn'])) {
                               </option>
                             <?php endforeach; ?>
                           </select>
-                          <span class=" span-error">
+                          <span class=" error">
                             <?php
                             if (!empty($select_grades_error)) {
                               echo $select_grades_error;

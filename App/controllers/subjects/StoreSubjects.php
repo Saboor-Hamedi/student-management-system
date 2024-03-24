@@ -51,7 +51,7 @@ class StoreSubjects
     {
         if (isset ($_POST['name']) && $_POST['name'] !== '') {
             $name = $_POST['name'];
-            $subjectsData = $this->callbyid->get_subjects_by_name('school.subjects_repositories', $name);
+            $subjectsData = $this->callbyid->get_subjects_by_name('school.grades', $name);
             echo json_encode($subjectsData, JSON_PRETTY_PRINT);
         } else {
             http_response_code(400); // Bad Request
@@ -79,25 +79,25 @@ class StoreSubjects
         $select_grades
     ) {
         $validation = new Validation();
-        $selected_teacher_id_error = $validation->validate_id($selected_teacher_id, [
+        $selected_teacher_id_error = $validation->number($selected_teacher_id, [
             ['required', 'Required teacher ID'],
             ['integer', 'Teacher ID must be integer'],
             ['min_value', 'Teacher must be not less not 1', 1]
         ]);
 
-        $search_teacher_live_error = $validation->validate_names($search_teacher_live, [
+        $search_teacher_live_error = $validation->string($search_teacher_live, [
             ['required', 'Required name']
         ]);
-        $subject_name_error = $validation->validate_names($subject_names, [
+        $subject_name_error = $validation->string($subject_names, [
             ['required', 'Required subjects'],
             ['min_length', 'Required at least 5 characters', 2]
         ]);
-        $student_id_error = $validation->validate_id($student_id, [
+        $student_id_error = $validation->number($student_id, [
             ['required', 'Required student ID'],
             ['integer', 'Student ID must be integer'],
             ['min_value', 'Student must be not less not 1', 1]
         ]);
-        $search_student_names_error = $validation->validate_names($search_student_names, [
+        $search_student_names_error = $validation->string($search_student_names, [
             ['required', 'Required name']
         ]);
         $start_subject_time_error = $validation->validate_datetime($start_subject_time, [

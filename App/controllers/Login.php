@@ -70,6 +70,7 @@ class Login
     {
         return $_SESSION['user_id'];
     }
+  
 
 
     private function revemoPassword(&$user)

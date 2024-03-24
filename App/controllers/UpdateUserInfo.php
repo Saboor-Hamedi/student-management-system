@@ -25,7 +25,7 @@ class UpdateUserInfo
 
         // Validate input
         $validation = new Validation();
-        $errors = $validation->validate_names($username, [
+        $errors = $validation->string($username, [
             ['required', 'Full Name is required'],
             ['min_length', 'Full Name should be at least 2 characters', 2]
         ]);

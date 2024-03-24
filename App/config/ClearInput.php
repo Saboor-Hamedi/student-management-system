@@ -10,4 +10,8 @@ class ClearInput {
           }
       }
   }
+  public static function getSelfULR(){
+   echo htmlspecialchars($_SERVER['PHP_SELF']);
+    
+  }
 }

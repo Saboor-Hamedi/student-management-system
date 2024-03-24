@@ -32,7 +32,7 @@ if (isset ($_POST['make_new_user'])) {
   $password = $_POST['password'];
   $hashed_password = hash_password($password);
   $select_roles = $_POST['select_roles'];
-  $fullname_errors = $validation->validate_names($fullname, $fullname_rules);
+  $fullname_errors = $validation->string($fullname, $fullname_rules);
   $email_errors = $validation->validate_email($email);
   $password_errors = $validation->validate_password($password);
   $select_errors = $validation->validated_select_option($select_roles);
@@ -108,7 +108,7 @@ if (isset ($_POST['make_new_user'])) {
                     <div class="form-group">
                       <input type="text" class="form-control" name="fullname" placeholder="Full Name"
                         value="<?php echo getInputValue('fullname') ?>" aria-label="Full Name">
-                      <span class="span-error">
+                      <span class="error">
                         <?php
                         if (isset ($errors['fullname'])) {
                           echo $errors['fullname'];
@@ -122,7 +122,7 @@ if (isset ($_POST['make_new_user'])) {
                     <div class="form-group">
                       <input type="text" class="form-control" name="email" placeholder="Example@gmail.com"
                         value="<?php echo getInputValue('email') ?>" aria-label="email">
-                      <span class="span-error">
+                      <span class="error">
                         <?php
                         if (isset ($errors['email'])) {
                           echo $errors['email'];
@@ -135,7 +135,7 @@ if (isset ($_POST['make_new_user'])) {
                     <div class="form-group">
                       <input type="password" class="form-control" name="password"
                         value="<?php echo getInputValue('password') ?>" placeholder="Password" aria-label="password">
-                      <span class="span-error">
+                      <span class="error">
                         <?php
                         if (isset ($errors['password'])) {
                           echo $errors['password'];
@@ -151,7 +151,7 @@ if (isset ($_POST['make_new_user'])) {
                       <option value="1">Student</option>
                       <option value="2">Teacher</option>
                     </select>
-                    <span class="span-error">
+                    <span class="error">
                       <?php
                       if (isset ($errors['select_roles'])) {
                         echo $errors['select_roles'];

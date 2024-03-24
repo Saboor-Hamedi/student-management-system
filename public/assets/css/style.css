@@ -1,16 +1,18 @@
 .active {
   color: red;
 }
+
 .custom-table {
   table-layout: fixed;
 }
 
-.span-error {
+.error {
   font-size: 10px;
   color: red;
   margin: 0;
   padding: 0;
 }
+
 .table-condensed {
   font-size: 12px;
   font-weight: normal;
@@ -27,16 +29,20 @@
   border-radius: 4px;
   cursor: pointer;
 
-  font-family: Arial, sans-serif; /* Change the font family here */
+  font-family: Arial, sans-serif;
+  /* Change the font family here */
 }
+
 .my-small-button:hover {
   background-color: blue;
   color: #fff;
 }
+
 .fa,
 .fas {
   font-size: 10px;
 }
+
 .card-body {
   word-break: break-all;
 }
@@ -49,6 +55,7 @@
 #search-results4 {
   display: none;
 }
+
 #search-results ul,
 #search-results1 ul,
 #search-results2 ul,
@@ -93,7 +100,8 @@
   max-height: 200px;
   overflow-y: auto;
   width: 100%;
-  top: 100%; /* Position the container right below the input */
+  top: 100%;
+  /* Position the container right below the input */
   left: 0;
   z-index: 999;
   border-radius: 5px;

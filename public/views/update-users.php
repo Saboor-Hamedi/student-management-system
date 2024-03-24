@@ -58,7 +58,7 @@ if ($id) {
                       <div class="form-group">
                         <input type="text" class="form-control" name="username" placeholder="Full Name"
                           value="<?php echo $user_results['username'] ?? ''; ?>">
-                        <span class="span-error">
+                        <span class="error">
                           <?php
                           if (isset ($errors['username'])) {
                             echo $errors['username'];
@@ -71,7 +71,7 @@ if ($id) {
                       <div class="form-group">
                         <input type="text" class="form-control" name="email" placeholder="Example@gmail.com"
                           value="<?php echo $user_results['email'] ?? ''; ?>">
-                        <span class="span-error">
+                        <span class="error">
                           <?php
                           if (isset ($errors['email'])) {
                             echo $errors['email'];
@@ -83,7 +83,7 @@ if ($id) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <input type="password" class="form-control" name="password" placeholder="Password">
-                        <span class="span-error">
+                        <span class="error">
                           <?php
                           if (isset ($errors['password'])) {
                             echo $errors['password'];
@@ -99,7 +99,7 @@ if ($id) {
                         <option value="1" <?php echo $user_results['roles'] == 1 ? 'selected' : ''; ?>>Student</option>
                         <option value="2" <?php echo $user_results['roles'] == 2 ? 'selected' : ''; ?>>Teacher</option>
                       </select>
-                      <span class="span-error">
+                      <span class="error">
                         <?php
                         if (isset ($errors['select_roles'])) {
                           echo $errors['select_roles'];

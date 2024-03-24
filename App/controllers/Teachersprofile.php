@@ -31,28 +31,29 @@ class TeachersProfile
         try {
             $validate = new Validation();
             // ! validate selected_teacher_id 
-            $selected_teacher_id_error = $validate->validate_id($selected_teacher_id, [
+            $selected_teacher_id_error = $validate->number($selected_teacher_id, [
                 ['required', 'Required teacher ID'],
                 ['integer', 'ID must be integer'],
                 ['min_value', 'ID Must not be less then 1', 1]
             ]);
-            $search_teacher_live_error = $validate->validate_names($search_teacher_live, [
+            $search_teacher_live_error = $validate->string($search_teacher_live, [
                 ['required', 'Required name']
             ]);
-            $teacher_lastname_error = $validate->validate_names($teacher_lastname, [
-                ['required', 'Required Last name']
+            $teacher_lastname_error = $validate->string($teacher_lastname, [
+                ['required', 'Required Last name'],
+                ['min_length', 'Name atleast show be 5 character',5]
             ]);
-            $teacher_qualification_lastname_error = $validate->validate_names($teacher_qualification_lastname, [
+            $teacher_qualification_lastname_error = $validate->string($teacher_qualification_lastname, [
                 ['required', 'Required qualifications']
             ]);
-            //  ! validate_names are different, you can make if you want for experiences
-            $length_of_experience_error = $validate->validate_phone_number($length_of_experience, [
+            //  ! string are different, you can make if you want for experiences
+            $length_of_experience_error = $validate->phone_number($length_of_experience, [
                 ["required", "Required Experiences"],
                 ["pattern", "Experiences must contain numbers", '/^[0-9]+$/'],
                 ['min_length', 'Experiences at least 1 year', 1]
 
             ]);
-            $subject_taught_error = $validate->validate_names($subject_taught, [
+            $subject_taught_error = $validate->string($subject_taught, [
                 ['required', 'Required qualifications']
             ]);
         } catch (Exception $e) {
@@ -71,7 +72,7 @@ class TeachersProfile
             $this->errors['search_teacher_live'] = 'Teacher name did not match';
         }
         if (!empty($teacher_lastname_error)) {
-            $this->errors['teacher_lastname'] = $teacher_lastname;
+            $this->errors['teacher_lastname'] = $teacher_lastname_error;
         }
         if (!empty($search_teacher_live_error)) {
             $this->errors['search_teacher_live'] = $search_teacher_live_error;

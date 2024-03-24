@@ -1,6 +1,8 @@
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
-<?php use Thesis\config\Auth; ?>
+<?php
+
+use Thesis\config\Auth; ?>
 <?php Auth::isLogged([1]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
@@ -16,7 +18,7 @@
       <div class="row">
         <div class="col-md-12">
           <?php $sql = "SELECT * FROM scores
-                        INNER JOIN classes on scores.class_id=classes.id
+                        INNER JOIN grades on scores.grades_id=grades.id
                         INNER JOIN teachers on scores.teacher_id=teachers.teacher_id
                         INNER JOIN students on scores.student_id=students.student_id
                         WHERE scores.student_id = {$user_id}"; ?>
@@ -26,41 +28,41 @@
             <div class="card-body">
               <table class="table table-hover table-condensed custom-table">
                 <?php if (!empty($scores)) : ?>
-                <thead>
-                  <tr>
-                    <th>Teacher</th>
-                    <th>Student</th>
-                    <th>Grade</th>
-                    <th>Subject</th>
-                    <th>Score</th>
-                  </tr>
-                </thead>
-                <?php foreach ($scores as $score) : ?>
+                  <thead>
+                    <tr>
+                      <th>Teacher</th>
+                      <th>Student</th>
+                      <th>Grade</th>
+                      <th>Subject</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <?php foreach ($scores as $score) : ?>
 
-                <tbody>
-                  <tr>
-                    <td>
-                      <?php echo $score['teacher_lastname']; ?>
-                    </td>
-                    <td>
-                      <?php echo $score['lastname']; ?>
-                    </td>
-                    <td>
-                      <?php echo $score['grades']; ?>
-                    </td>
-                    <td>
-                      <?php echo $score['subject_name']; ?>
-                    </td>
-                    <td>
-                      <?php echo $score['score']; ?>
-                    </td>
-                  </tr>
-                </tbody>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <?php echo $score['teacher_lastname']; ?>
+                        </td>
+                        <td>
+                          <?php echo $score['lastname']; ?>
+                        </td>
+                        <td>
+                          <?php echo $score['name']; ?>
+                        </td>
+                        <td>
+                          <?php echo $score['subject_names']; ?>
+                        </td>
+                        <td>
+                          <?php echo $score['score']; ?>
+                        </td>
+                      </tr>
+                    </tbody>
+                  <?php endforeach ?>
+                <?php else : ?>
+                  <td>No score added yet.</td>
+                <?php endif; ?>
               </table>
-              <?php endforeach ?>
-              <?php else : ?>
-              <td>No score added yet.</td>
-              <?php endif; ?>
             </div>
           </div>
         </div>

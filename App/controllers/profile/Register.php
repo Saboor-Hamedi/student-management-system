@@ -43,15 +43,15 @@ class Register
         try {
             $validate = new Validation();
             // ! validate student_profile_id
-            $student_profile_id_error = $validate->validate_id($student_profile_id, [
+            $student_profile_id_error = $validate->number($student_profile_id, [
                 ['required', 'Required student ID'],
                 ['integer', 'ID must be integer'],
                 ['min_value', 'ID Must not be less then 1', 1],
             ]);
-            $search_student_profile_name_error = $validate->validate_names($search_student_profile_name, [
+            $search_student_profile_name_error = $validate->string($search_student_profile_name, [
                 ['required', 'Required name'],
             ]);
-            $student_lastname_error = $validate->validate_names($student_lastname, [
+            $student_lastname_error = $validate->string($student_lastname, [
                 ['required', 'Required name'],
             ]);
 
@@ -101,10 +101,6 @@ class Register
                 $insert_result = $this->database->insert('school.students', $data);
                 if ($insert_result) {
                     FlashMessage::setMessage('Student added into students table.', 'primary');
-                    $_POST['student_profile_id'] = '';
-                    $_POST['search_student_profile_name'] = '';
-                    $_POST['student_lastname'] = '';
-                    $_POST['student_sex'] = '';
                     ClearInput::clear(
                         'student_profile_id',
                         'search_student_profile_name',

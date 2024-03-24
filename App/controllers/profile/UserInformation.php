@@ -13,7 +13,7 @@ class UserInformation
 {
     private $database;
     private $errors = [];
-    /**c
+    /*c
      * Summary of __construct
      */
     public function __construct()
@@ -33,20 +33,20 @@ class UserInformation
     public function validate_user_profile($user_main_id, $user_country, $user_address, $user_post_code, $phone_number)
     {
         $validation = new Validation();
-        $user_country_error = $validation->validate_names($user_country, [
+        $user_country_error = $validation->string($user_country, [
             ['required', 'Country is required'],
             ['min_length', 'Country name must be at lest 2 character long', 2]
         ]);
-        $user_address_error = $validation->validate_address($user_address, [
+        $user_address_error = $validation->string($user_address, [
             ['required', 'Address is required'],
             ['min_length', 'Address must be at least 5 characters long', 5]
         ]);
-        $user_post_code_error = $validation->validate_post_code($user_post_code, [
+        $user_post_code_error = $validation->post_code($user_post_code, [
             ['required', 'Postal code is required'],
             ['pattern', 'Postal code must contain only numbers', '/^[0-9]+$/'],
             ['min_length', 'Postal code must be at least 5 characters long', 5]
         ]);
-        $phone_number_error = $validation->validate_phone_number($phone_number, [
+        $phone_number_error = $validation->phone_number($phone_number, [
             ['required', 'Phone number is required'],
             ['pattern', 'Phone number must contain only numbers', '/^[0-9]+$/'],
             ['min_length', 'Phone number must be at least 10 characters long', 10]

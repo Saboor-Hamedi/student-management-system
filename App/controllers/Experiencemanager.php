@@ -6,10 +6,9 @@ use Thesis\controllers\Login;
 
 class ExperienceManager
 {
-    private $database;
-    private $connection;
-    private $errors = [];
-    private $duplicate_message = [];
+    protected $database;
+    protected $connection;
+    protected $errors = [];
 
     public function __construct()
     {
@@ -19,21 +18,21 @@ class ExperienceManager
     public function validate_user_experiences($qualifications, $experience, $subjects_taught, $specialization)
     {
         $validation = new Validation();
-        $qualifications_errors = $validation->validate_names($qualifications, [
+        $qualifications_errors = $validation->string($qualifications, [
             ['required', 'Qualifications are required'],
             ['min_length', 'Qualifications must be at least 10 characters', 10]
         ]);
-        $experience_errors = $validation->validate_experience($experience, [
+        $experience_errors = $validation->number($experience, [
             ['required', 'Experience is required'],
             ['integer', 'Experience must be an integer'],
-            ['min_value', 'Experience must be at least 1', 1],
-            ['max_value', 'Experience cannot exceed 50', 50]
+            ['max_value', 'Experience cannot exceed 50 years', 50], // Maximum value is 50
         ]);
-        $subjects_taught_errors = $validation->validate_names($subjects_taught, [
+        
+        $subjects_taught_errors = $validation->string($subjects_taught, [
             ['required', 'Subjects taught are required'],
             ['min_length', 'Subjects taught must be at least 5 characters', 5]
         ]);
-        $specialization_errors = $validation->validate_names($specialization, [
+        $specialization_errors = $validation->string($specialization, [
             ['required', 'Specialization is required'],
             ['min_length', 'Specialization must be at least 5 characters', 5]
         ]);

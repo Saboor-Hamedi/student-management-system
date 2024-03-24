@@ -10,40 +10,12 @@ use DateTime;
 class Validation
 {
     /**
-     * Summary of validate_names
+     * Summary of string
      * @param mixed $input
      * @param mixed $validation_rules
      * @return mixed
      */
-    public function validate_names($input, $validation_rules)
-    {
-        foreach ($validation_rules as $rule) {
-            $rule_name = $rule[0];
-            $rule_message = $rule[1];
-
-            switch ($rule_name) {
-                case 'required':
-                    if (empty($input)) {
-                        return $rule_message;
-                    }
-                    break;
-                case 'min_length':
-                    $min_length = $rule[2];
-                    if (strlen($input) < $min_length) {
-                        return $rule_message;
-                    }
-                    break;
-            }
-        }
-        return ''; // No validation errors
-    }
-    /**
-     * Summary of validate_address
-     * @param mixed $address
-     * @param mixed $validate_addredd_rule
-     * @return mixed
-     */
-    public function validate_address($input, $validation_rules)
+    public function string($input, $validation_rules)
     {
         foreach ($validation_rules as $rule) {
             $rule_name = $rule[0];
@@ -94,16 +66,16 @@ class Validation
             ['required', 'Password is required'],
             ['min_length', 'Password should be at least 6 characters', 6]
         ];
-        return $this->validate_names($password, $password_rules);
+        return $this->string($password, $password_rules);
     }
 
     /**
-     * Summary of validate_post_code
+     * Summary of post_code
      * @param mixed $post_code
      * @param mixed $validation_rules
      * @return mixed
      */
-    public function validate_post_code($post_code, $validation_rules)
+    public function post_code($post_code, $validation_rules)
     {
         foreach ($validation_rules as $rule) {
             $rule_name = $rule[0];
@@ -134,7 +106,7 @@ class Validation
     }
 
 
-    public function validate_phone_number($phone_number, $validation_rules)
+    public function phone_number($phone_number, $validation_rules)
     {
         foreach ($validation_rules as $rule) {
             $rule_name = $rule[0];
@@ -163,7 +135,8 @@ class Validation
 
         return '';
     }
-    public function validate_experience($experience, $validation_rules)
+
+    public function number($number, $validation_rules)
     {
         foreach ($validation_rules as $rule) {
             $rule_name = $rule[0];
@@ -171,63 +144,31 @@ class Validation
 
             switch ($rule_name) {
                 case 'required':
-                    if (empty($experience)) {
+                    if (empty($number)) {
                         return $rule_message;
                     }
                     break;
-                case 'integer':
-                    if (!is_numeric($experience)) {
-                        return $rule_message;
-                    }
-                    break;
-                case 'min_value':
-                    $min_value = $rule[2];
-                    if ($experience < $min_value) {
+                case 'integer': // Check if $number is an integer
+                    if (!is_numeric($number)) {
                         return $rule_message;
                     }
                     break;
                 case 'max_value':
-                    $max_value = $rule[2];
-                    if ($experience > $max_value) {
+                    $max_value = isset($rule[2]) ? $rule[2] : null;
+                    if ($max_value !== null && $number > intval($max_value)) {
                         return $rule_message;
                     }
                     break;
             }
         }
 
+        // If all validation rules pass, return an empty string to indicate success
         return '';
     }
 
-    public function validate_id($teacher_id, $validation_rules)
-    {
-        foreach ($validation_rules as $rule) {
-            $rule_name = $rule[0];
-            $rule_message = $rule[1];
 
-            switch ($rule_name) {
-                case 'required':
-                    if (empty($teacher_id)) {
-                        return $rule_message;
-                    }
-                    break;
-                case 'integer': // Check if $teacher_id is an integer
-                    if (!is_numeric($teacher_id)) {
-                        return $rule_message;
-                    }
-                    break;
-                case 'min_value':
-                    $min_value = $rule[2];
-                    if ($teacher_id < $min_value) {
-                        return $rule_message;
-                    }
-                    break;
-                    // Add more cases for other validation rules if needed in the future.
-                    // For example, 'max_value', 'pattern', etc.
-            }
-        }
 
-        return '';
-    }
+
 
     /**
      * Summary of validated_select_option
