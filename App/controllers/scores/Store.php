@@ -23,9 +23,9 @@ class Store
     
     public function validate(
         $student_id,
+        $teacher_id,
         $search_student_names,
         $student_grade_id,
-        $student_subject_name,
         $subject_names,
         $score
     ) {
@@ -34,6 +34,10 @@ class Store
         $student_id_error = $validation->number($student_id, [
             ['required', 'Required Student ID'],
             ['integer', 'Student ID must be number'],
+        ]);
+        $teacher_id_error = $validation->number($teacher_id, [
+            ['required', 'Required Teacher ID'],
+            ['integer', 'Teacher ID must be number'],
         ]);
 
         $search_student_names_error = $validation->string($search_student_names, [
@@ -45,9 +49,9 @@ class Store
         ]);
        
        
-        $student_subject_name_error = $validation->string($student_subject_name, [
-            ['required', 'Required Subject']
-        ]);
+        // $student_subject_name_error = $validation->string($student_subject_name, [
+        //     ['required', 'Required Subject']
+        // ]);
         $subject_names_error = $validation->string($subject_names, [
             ['required', 'Required Subject']
         ]);
@@ -63,6 +67,9 @@ class Store
         // ! check if the roles are 2, teachers
         if (!$this->callbyid->if_user_exists('school.users', $student_id, 1)) { // check if teacher userid is match 
             $this->errors['student_id'] = 'This student does not exists';
+        }
+        if (!empty ($teacher_id_error)) {
+            $this->errors['teacher_id'] = $teacher_id_error;
         }
         // ! check if student name is empty
         if (!empty ($search_student_names_error)) {
@@ -82,9 +89,9 @@ class Store
             $this->errors['student_id'] = 'Student ID did not match';
         }
         // ! search with student names, on students table, using ajax
-        if (!$this->callbyid->get_by_roles('school.users', $search_student_names, 1)) {
-            $this->errors['search_student_names'] = 'Student name did not match';
-        }
+        // if (!$this->callbyid->get_by_roles('school.users', $search_student_names, 1)) {
+        //     $this->errors['search_student_names'] = 'Student name did not match';
+        // }
         // ! search for students 
         if (!empty ($search_student_names_error)) {
             $this->errors['search_student_names'] = $search_student_names_error;
@@ -108,7 +115,7 @@ class Store
         try {
             $data = [
                 'student_id' => $student_id,
-                'teacher_id' => $this->user_id(),
+                'teacher_id' => $teacher_id,
                 'grades_id' => $student_grade_id,
                 'subject_names' => $subject_names,
                 'score' => $score,
@@ -116,17 +123,17 @@ class Store
 
             $result = $this->database->insert('school.scores', $data);
             if ($result) {
-                FlashMessage::setMessage('New Score added', 'primary');
+                header('Location:', BASE_URL. '/teacher/classes.php');
                 // clear inputs 
-                ClearInput::clear(
-                    'student_id',
-                    'search_student_names',
-                    'student_grade_id',
-                    'student_subject_name',
-                    'subject_names',
-                    'score',
-                );
-               
+                // ClearInput::clear(
+                //     'student_id',
+                //     'teacher_id',
+                //     'grades_id',
+                //     'subject_names',
+                //     'score',
+                // );
+                FlashMessage::setMessage('New Score added', 'primary');
+                
             } else {
                 FlashMessage::setMessage('No Score added', 'info');
             }

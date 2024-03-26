@@ -8,8 +8,8 @@
 <script src="<?php assets("datetimepicker/jquery.datetimepicker.full.js") ?>"></script>
 <script src="<?php assets("datetimepicker/jquery.datetimepicker.full.min.js") ?>"></script>
 <script src="<?php assets("datetimepicker/jquery.datetimepicker.min.js") ?>"></script>
-<script src="<?php assets("js/Loadgrades.js") ?>"></script>
-<script src="<?php assets("js/Loadstudents.js") ?>"></script>
+<script src="<?php //assets("js/Loadgrades.js") ?>"></script>
+<script src="<?php //assets("js/Loadstudents.js") ?>"></script>
 <script src="<?php assets("js/Loadstudentsprofile.js") ?>"></script>
 <script src="<?php assets("js/Loadteachers.js") ?>"></script>
 

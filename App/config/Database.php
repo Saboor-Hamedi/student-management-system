@@ -21,10 +21,10 @@ class Database
      */
     private $connection; // Declare the $connection property
     /**
-     * Summary of this->statement
+     * Summary of statement
      * @var 
      */
-    public $statement;
+    private $statement;
     /**
      * Summary of GetInstance
      * @return Database
@@ -64,32 +64,10 @@ class Database
      */
     public function query($sql, $params = [])
     {
-        $this->statement = $this->connection->prepare($sql);
-        $this->statement->execute($params);
-        // return $this->statement->fetchAll();
-        $this->statement->execute($params);
-        return $this->statement;
+        $statement = $this->connection->prepare($sql);
+        $statement->execute($params);
+        return $statement->fetchAll();
     }
-  
-    public function fetch($sql, $params = [])
-    {
-        $this->statement = $this->connection->prepare($sql);
-        $this->statement->execute($params);
-        return $this->statement->fetch();
-        $this->statement->execute($params);
-        return $this->statement;
-    }
-    public function fetchAll($sql, $params = [])
-    {
-        $this->statement = $this->connection->prepare($sql);
-        $this->statement->execute($params);
-        return $this->statement->fetchAll();
-        $this->statement->execute($params);
-        return $this->statement;
-    }
-
-    
-
 
     public function insert($table, $data)
     {
@@ -102,14 +80,14 @@ class Database
 
         $sql .= implode(", ", $placeholders);
 
-        $this->statement = $this->connection->prepare($sql);
+        $statement = $this->connection->prepare($sql);
 
         // Bind values to named placeholders
         foreach ($data as $key => $value) {
-            $this->statement->bindValue(":$key", $value);
+            $statement->bindValue(":$key", $value);
         }
 
-        return $this->statement->execute();
+        return $statement->execute();
     }
 
     // ... other methods ..
@@ -123,13 +101,13 @@ class Database
         $sql .= implode(", ", $placeholders);
         $sql .= " WHERE $where";
 
-        $this->statement = $this->connection->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         foreach ($data as $key => $value) {
-            $this->statement->bindValue(":$key", $value);
+            $statement->bindValue(":$key", $value);
         }
-        $this->statement->execute();
+        $statement->execute();
 
-        return $this->statement->rowCount(); // Return the number of affected rows
+        return $statement->rowCount(); // Return the number of affected rows
     }
 
     /**
@@ -141,8 +119,8 @@ class Database
     public function delete($table, $where)
     {
         $sql = "DELETE FROM $table WHERE $where";
-        $this->statement = $this->connection->prepare($sql);
-        $this->statement->execute();
+        $statement = $this->connection->prepare($sql);
+        $statement->execute();
     }
     /**
      * Summary of GetUserInformation
@@ -152,18 +130,18 @@ class Database
     public function GetUserInformation($tableName, $id)
     {
         $query = "SELECT * FROM $tableName WHERE user_id = :id";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->bindValue(':id', $id, PDO::PARAM_INT);
-        $this->statement->execute();
-        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
     public function adminUsers($table, $roles)
     {
         $query = "SELECT * FROM $table WHERE roles = :roles";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->bindValue(':roles', $roles, PDO::PARAM_INT);
-        $this->statement->execute();
-        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(':roles', $roles, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
 
 
@@ -186,14 +164,14 @@ class Database
         $user_id = $login->getUserId();
         // Bind the user ID parameter
         $query .= " WHERE id != :user_id"; // dont load the user itself data
-        $this->statement = $this->connection->prepare($query);
+        $statement = $this->connection->prepare($query);
         // Bind the role ID parameter if it is provided
         if ($roles !== null) {
-            $this->statement->bindParam(':roles', $roles, PDO::PARAM_INT);
+            $statement->bindParam(':roles', $roles, PDO::PARAM_INT);
         }
-        $this->statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $this->statement->execute();
-        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
     public function users($tableName, $roles = null)
     {
@@ -216,16 +194,16 @@ class Database
             $query .= " WHERE " . implode(" AND ", $conditions);
         }
 
-        $this->statement = $this->connection->prepare($query);
+        $statement = $this->connection->prepare($query);
 
         // Bind parameters
         if ($roles !== null) {
-            $this->statement->bindParam(':roles', $roles, PDO::PARAM_INT);
+            $statement->bindParam(':roles', $roles, PDO::PARAM_INT);
         }
-        $this->statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $this->statement->execute();
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
 
-        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -238,12 +216,12 @@ class Database
     public function GetUsersByRoleAndUserId($tableName, $roles, $user_id)
     {
         $query = "SELECT * FROM $tableName WHERE roles = :roles AND id = :user_id";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->bindParam(':roles', $roles, PDO::PARAM_INT);
-        $this->statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $this->statement->execute();
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':roles', $roles, PDO::PARAM_INT);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
 
-        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -259,12 +237,12 @@ class Database
         $offset = ($page - 1) * $perPage;
 
         $query = "SELECT * FROM $tableName LIMIT :offset, :perPage";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $this->statement->bindValue(':perPage', $perPage, PDO::PARAM_INT);
-        $this->statement->execute();
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $statement->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+        $statement->execute();
 
-        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -275,9 +253,9 @@ class Database
     public function GetTotalUserCount($tableName)
     {
         $query = "SELECT COUNT(*) as total FROM $tableName";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->execute();
-        $result = $this->statement->fetch(PDO::FETCH_ASSOC);
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
 
         return $result['total'];
     }
@@ -289,10 +267,10 @@ class Database
     public function EmailExists($email)
     {
         $query = "SELECT * FROM school.users WHERE email = :email";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->bindParam(':email', $email);
-        $this->statement->execute();
-        $user = $this->statement->fetch();
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':email', $email);
+        $statement->execute();
+        $user = $statement->fetch();
 
         if ($user) {
             return true;
@@ -309,10 +287,10 @@ class Database
     public function getById($tableName, $id)
     {
         $query = "SELECT * FROM $tableName WHERE id = :id";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->bindParam(':id', $id);
-        $this->statement->execute();
-        $user = $this->statement->fetch(PDO::FETCH_ASSOC);
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
         return $user;
     }
 
@@ -327,31 +305,29 @@ class Database
     public function getUserId($tableName, $idColumn, $id)
     {
         $query = "SELECT * FROM $tableName WHERE $idColumn = :id LIMIT 1";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->bindParam(':id', $id);
-        $this->statement->execute();
-        $row = $this->statement->fetch(PDO::FETCH_ASSOC);
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
         return $row;
     }
     public function rowCount($query, $params = [])
     {
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->execute($params);
-        return $this->statement->rowCount();
+        $statement = $this->connection->prepare($query);
+        $statement->execute($params);
+        return $statement->rowCount();
     }
 
     public function getUserCountByRole($role)
     {
         $query = "SELECT COUNT(*) AS count FROM users WHERE roles = :role";
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->bindParam(':role', $role, PDO::PARAM_INT);
-        $this->statement->execute();
-        $result = $this->statement->fetch(PDO::FETCH_ASSOC);
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':role', $role, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
 
         return $result['count'];
     }
-
-
     /**
      * Summary of disconnect
      * @return void
