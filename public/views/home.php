@@ -5,10 +5,8 @@ path('header'); ?>
 
 use Thesis\config\Auth;
 
-Auth::isLogged([0, 1, 2]);
+Auth::isLogged([0,1,2]);
 ?>
-
-
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->
@@ -17,9 +15,7 @@ Auth::isLogged([0, 1, 2]);
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="height: auto;">
   <section class="content">
-
     <?php path('cards'); ?>
-
     <div class="container-fluid">
       <div class="row">
         <?php if ($roles == 0) : ?>
@@ -27,7 +23,7 @@ Auth::isLogged([0, 1, 2]);
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                  All Data
+                  Admin
                 </h3>
               </div>
               <!-- body -->
@@ -39,49 +35,48 @@ Auth::isLogged([0, 1, 2]);
                         <th>Name</th>
                         <th>Email</th>
                         <th>Date</th>
-                        <th>Roles</th>
                         <th>Update</th>
                       </tr>
                     </thead>
                     <!-- fetch data -->
                     <tbody>
                       <?php
-                      $result = $database->GetAllUsers('school.users', null);
-                      $perPage = 4; // Number of users to display per page
+                      $result = $database->adminUsers('school.users',0);
+                      $perPage = 1; // Number of users to display per page
                       $totalUsers = count($result); // Total number of users
                       $totalPages = ceil($totalUsers / $perPage); // Total number of pages
-                      $currentPage = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
-                      $startIndex = ($currentPage - 1) * $perPage; // Starting index for the current page
-                      $endIndex = $startIndex + $perPage - 1; // Ending index for the current page
+                      $currentPage = isset($_GET['page']) ? $_GET['page'] : 1; // Current page 
+                      $startIndex = 0;
+                      $endIndex = 0;
+
+                      // Check if index is smaller than the users 
+                      if ($totalUsers == 1) {
+                        // If there's only one user, set startIndex to 0 and endIndex to 0
+                        $startIndex = 0;
+                        $endIndex = 0;
+                      } elseif ($totalUsers < $perPage) {
+                        // If total users is less than perPage, show all users
+                        $startIndex = 0;
+                        $endIndex = $totalUsers - 1;
+                      } else {
+                        // Otherwise, calculate startIndex and endIndex normally
+                        $startIndex = ($currentPage - 1) * $perPage; // Starting index for the current page
+                        $endIndex = min($startIndex + $perPage - 1, $totalUsers - 1); // Ending index for the current page
+                      }
                       ?>
                       <?php if (!empty($result)) : ?>
-                        <?php
-                        for ($i = $startIndex; $i <= $endIndex && $i < $totalUsers; $i++) : ?>
+                        <?php for ($i = $startIndex; $i <= $endIndex; $i++) : ?>
                           <?php $user = $result[$i]; ?>
                           <tr class="odd">
                             <td class="dtr-control sorting_1" tabindex="0">
                               <?php echo ucfirst($user['username']); ?>
                             </td>
-                            <?php
-
-                            ?>
                             <td>
                               <?php echo $user['email']; ?>
                             </td>
                             <td>
                               <?php echo formatCreatedAt($user['created_at']); ?>
                             </td>
-                            <td>
-
-                              <?php if ($user['roles'] === 0) : ?>
-                                <p>Admin</p>
-                              <?php elseif ($user['roles'] === 1) : ?>
-                                <p>Student</p>
-                              <?php elseif ($user['roles'] === 2) : ?>
-                                <p>Teacher</p>
-                              <?php endif; ?>
-                            </td>
-
                             <td><a href="update-users.php?id=<?php echo encrypt($user['id'], 'no@hack_$_can_%_be_^_done'); ?>" class=" my-small-button">Edit</a></td>
                           </tr>
                         <?php endfor ?>
@@ -89,7 +84,6 @@ Auth::isLogged([0, 1, 2]);
                         <tr>
                           <td colspan="3">No user added yet</td>
                         </tr>
-                        <?php ?>
                       <?php endif ?>
                     </tbody>
                     <tbody>

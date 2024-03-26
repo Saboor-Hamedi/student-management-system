@@ -1,4 +1,3 @@
 
-if (window.history.replaceState) {
-  window.history.replaceState(null, null, window.location.href);
-}
+// Save session data to sessionStorage before tab close
+

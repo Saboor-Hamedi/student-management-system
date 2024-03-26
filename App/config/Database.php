@@ -135,16 +135,25 @@ class Database
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function adminUsers($table, $roles)
+    {
+        $query = "SELECT * FROM $table WHERE roles = :roles";
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(':roles', $roles, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC); 
+    }
+
 
 
     // select data based on user roles
     /**
-     * Summary of GetAllUsers
+     * Summary of users
      * @param mixed $tableName
      * @param mixed $roles
      * @return array
      */
-    public function GetAllUsers($tableName, $roles = null)
+    public function allByUser($tableName, $roles = null)
     {
         $query = "SELECT * FROM $tableName";
         if ($roles !== null) {
@@ -164,6 +173,39 @@ class Database
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function users($tableName, $roles = null)
+    {
+        $query = "SELECT * FROM $tableName";
+        $conditions = array();
+
+        if ($roles !== null) {
+            $conditions[] = "roles = :roles";
+        }
+
+        // Get the user ID from the login class
+        $login = new Login($this->connection);
+        $user_id = $login->getUserId();
+
+        // Add condition to exclude the current user's ID
+        $conditions[] = "id != :user_id";
+
+        // Combine conditions into a single WHERE clause
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $statement = $this->connection->prepare($query);
+
+        // Bind parameters
+        if ($roles !== null) {
+            $statement->bindParam(':roles', $roles, PDO::PARAM_INT);
+        }
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     /**
      * Summary of GetUsersByRoleAndUserId
      * @param mixed $tableName

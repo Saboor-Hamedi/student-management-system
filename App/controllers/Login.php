@@ -52,7 +52,6 @@ class Login
                     $_SESSION['roles'] = $user['roles'];
                     $_SESSION['username'] = $user['username'];
                     header("Location: ../views/home.php");
-                   
                     exit();
                 }
             }

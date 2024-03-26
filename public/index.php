@@ -17,12 +17,9 @@ $login = new Login($database);
 $errors = '';
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Get the submitted username and password
   $username = $_POST['username'];
   $password = $_POST['password'];
-  // Call the loginUser method to perform the login functionality
   $errors = $login->loginUser($username, $password);
-  // If there are errors, display them
 }
 ?>
 <!-- start -->

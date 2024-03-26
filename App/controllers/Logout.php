@@ -1,4 +1,5 @@
 <?php
+
 namespace Thesis\controllers;
 
 class Logout
@@ -9,6 +10,8 @@ class Logout
         // Unset specific session variables
         unset($_SESSION['user_id']);
         unset($_SESSION['username']);
+        // Set session cookie lifetime to 0 (destroy on close)
+        ini_set('session.cookie_lifetime', 0);
         // Clear all session variables
         session_unset();
         // Destroy the session
@@ -18,3 +21,4 @@ class Logout
         exit();
     }
 }
+

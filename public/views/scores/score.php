@@ -49,7 +49,7 @@ $score_error = '';
   );
   // check for error
   if (isset($valid['errors'])) {
-    $student_id_error= $valid['errors']['student_id'] ?? '';
+    $student_id_error = $valid['errors']['student_id'] ?? '';
   }
   if (isset($valid['errors'])) {
     $search_student_names_error = $valid['errors']['search_student_names'] ?? '';
@@ -97,53 +97,53 @@ path('sidebar', ['roles' => $roles]);
                   <div class="row">
                     <!-- display user_id -->
                     <div class="col-lg-12 ">
-                      <div class="form-group">
-                        <input type="text" class="form-control"  id="student_id" name="student_id" placeholder="Student ID" value="<?php echo getInputValue("student_id")?>" readonly>
-                        <span class="error">
-                          <?php
-                          if (!empty($student_id_error)) {
-                            echo $student_id_error;
-                          }
-                          ?>
-                        </span>
-                      </div>
+                      <!-- <div class="form-group"> -->
+                      <input type="hidden" class="form-control" id="student_id" name="student_id" placeholder="Student ID" value="<?php echo getInputValue("student_id") ?>" readonly>
+                      <span class="error">
+                        <?php
+                        // if (!empty($student_id_error)) {
+                        //   echo $student_id_error;
+                        // }
+                        ?>
+                      </span>
+                      <!-- </div> -->
                     </div>
                     <div class="col-lg-12">
                       <div class="form-group">
                         <div class="search-container">
-                          <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo getInputValue("search_student_names")?>">
+                          <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo getInputValue("search_student_names") ?>">
                           <span class="error">
-                          <?php
-                          if (!empty($search_student_names_error)) {
-                            echo $search_student_names_error;
-                          }
-                          ?>
-                        </span>
+                            <?php
+                            // if (!empty($search_student_names_error)) {
+                            //   echo $search_student_names_error;
+                            // }
+                            ?>
+                          </span>
                           <div id="search-results2"></div>
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-12">
-                      <div class="form-group">
-                        <input type="text" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" value="<?php echo getInputValue("student_grade_id"); ?>" readonly>
-                        <span class="error">
-                          <?php
-                          if (!empty($student_grade_id_error)) {
-                            echo $student_grade_id_error;
-                          }
-                          ?>
-                        </span>
-                      </div>
+                      <!-- <div class="form-group"> -->
+                      <input type="hidden" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" value="<?php echo getInputValue("student_grade_id"); ?>" readonly>
+                      <span class="error">
+                        <?php
+                        if (!empty($student_grade_id_error)) {
+                          echo $student_grade_id_error;
+                        }
+                        ?>
+                      </span>
+                      <!-- </div> -->
                       <div class="form-group">
                         <div class="search-container">
                           <input type="text" class="form-control" name="student_subject_name" id="student_subject_name" placeholder="Search for student class" value="<?php echo getInputValue("student_subject_name") ?>">
                           <span class="error">
-                          <?php
-                          if (!empty($student_subject_name_error)) {
-                            echo $student_subject_name_error;
-                          }
-                          ?>
-                        </span>
+                            <?php
+                            if (!empty($student_subject_name_error)) {
+                              echo $student_subject_name_error;
+                            }
+                            ?>
+                          </span>
                           <div id="search-results3"></div>
                         </div>
                       </div>
@@ -151,13 +151,13 @@ path('sidebar', ['roles' => $roles]);
                     <div class="col-lg-12">
                       <div class="form-group">
                         <div class="search-container">
-                          <input type="text" class="form-control" name="subject_names" id="subject_names"  placeholder="Subject Names" value="<?php echo getInputValue("subject_names");?>">
+                          <input type="text" class="form-control" name="subject_names" id="subject_names" placeholder="Subject Names" value="<?php echo getInputValue("subject_names"); ?>">
                           <span class="error">
-                          <?php
-                          if (!empty($subject_names_error)) {
-                            echo $subject_names_error;
-                          }
-                          ?>
+                            <?php
+                            if (!empty($subject_names_error)) {
+                              echo $subject_names_error;
+                            }
+                            ?>
                           </span>
                           <div id="search-results1"></div>
                         </div>
@@ -165,7 +165,7 @@ path('sidebar', ['roles' => $roles]);
                       <div class="form-group">
                         <input type="text" class="form-control" name="score" id="score" placeholder="Score" value="<?php echo getInputValue("score") ?>">
                         <span class="error">
-                        <?php
+                          <?php
                           if (!empty($score_error)) {
                             echo $score_error;
                           }
