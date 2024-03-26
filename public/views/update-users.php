@@ -4,7 +4,7 @@
 use Thesis\config\Auth;
 use Thesis\config\FlashMessage;
 use Thesis\controllers\UpdateUserInfo; ?>
-<?php Auth::isLogged([0]); ?>
+<?php Auth::authenticate([0]); ?>
 <?php
 
 $user_update = new UpdateUserInfo();

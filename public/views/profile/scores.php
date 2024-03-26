@@ -3,7 +3,7 @@
 <?php
 
 use Thesis\config\Auth; ?>
-<?php Auth::isLogged([1]); ?>
+<?php Auth::authenticate([1]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->

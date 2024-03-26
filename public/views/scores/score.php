@@ -1,16 +1,14 @@
 <?php
 require_once __DIR__ . '/../../../App/config/path.php';
 path('header');
-
 use Thesis\config\Auth;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
 use Thesis\controllers\scores\Store;
-
 ?>
 
 <?php
-Auth::isLogged([2]);
+Auth::authenticate([2]);
 ?>
 <!-- insert here -->
 <?php
@@ -95,45 +93,49 @@ path('sidebar', ['roles' => $roles]);
                 <?php FlashMessage::displayMessages(); ?>
                 <form method="POST" action="<?php ClearInput::getSelfULR(); ?>">
                   <div class="row">
-                    <!-- display user_id -->
-                    <div class="col-lg-12 ">
-                      <!-- <div class="form-group"> -->
-                      <input type="hidden" class="form-control" id="student_id" name="student_id" placeholder="Student ID" value="<?php echo getInputValue("student_id") ?>" readonly>
-                      <span class="error">
-                        <?php
-                        // if (!empty($student_id_error)) {
-                        //   echo $student_id_error;
-                        // }
-                        ?>
-                      </span>
-                      <!-- </div> -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Student ID" value="<?php echo getInputValue("student_id") ?>" readonly>
+                        <span class="error">
+                          <?php
+                          if (!empty($student_id_error)) {
+                            echo $student_id_error;
+                          }
+                          ?>
+                        </span>
+                      </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-md-6">
                       <div class="form-group">
                         <div class="search-container">
                           <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo getInputValue("search_student_names") ?>">
                           <span class="error">
                             <?php
-                            // if (!empty($search_student_names_error)) {
-                            //   echo $search_student_names_error;
-                            // }
+                            if (!empty($search_student_names_error)) {
+                              echo $search_student_names_error;
+                            }
                             ?>
                           </span>
                           <div id="search-results2"></div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-12">
-                      <!-- <div class="form-group"> -->
-                      <input type="hidden" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" value="<?php echo getInputValue("student_grade_id"); ?>" readonly>
-                      <span class="error">
-                        <?php
-                        if (!empty($student_grade_id_error)) {
-                          echo $student_grade_id_error;
-                        }
-                        ?>
-                      </span>
-                      <!-- </div> -->
+                  </div>
+                  <!--  -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" value="<?php echo getInputValue("student_grade_id"); ?>" readonly>
+                        <span class="error">
+                          <?php
+                          if (!empty($student_grade_id_error)) {
+                            echo $student_grade_id_error;
+                          }
+                          ?>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
                       <div class="form-group">
                         <div class="search-container">
                           <input type="text" class="form-control" name="student_subject_name" id="student_subject_name" placeholder="Search for student class" value="<?php echo getInputValue("student_subject_name") ?>">
@@ -148,7 +150,10 @@ path('sidebar', ['roles' => $roles]);
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-12">
+                  </div>
+                  <!--  -->
+                  <div class="row">
+                    <div class="col-md-6">
                       <div class="form-group">
                         <div class="search-container">
                           <input type="text" class="form-control" name="subject_names" id="subject_names" placeholder="Subject Names" value="<?php echo getInputValue("subject_names"); ?>">
@@ -162,6 +167,8 @@ path('sidebar', ['roles' => $roles]);
                           <div id="search-results1"></div>
                         </div>
                       </div>
+                    </div>
+                    <div class="col-md-6">
                       <div class="form-group">
                         <input type="text" class="form-control" name="score" id="score" placeholder="Score" value="<?php echo getInputValue("score") ?>">
                         <span class="error">
@@ -173,18 +180,17 @@ path('sidebar', ['roles' => $roles]);
                         </span>
                       </div>
                     </div>
-
                   </div>
-                  <button type="submit" name="insert_student_scores" class="btn btn-primary">Submit</button>
-                </form>
-                <!-- end grades -->
               </div>
+              <button type="submit" name="insert_student_scores" class="btn btn-primary">Submit</button>
+              </form>
+              <!-- end grades -->
             </div>
           </div>
         </div>
-
       </div>
     </div>
-  </section>
+</div>
+</section>
 </div>
 <?php path('footer'); ?>

@@ -11,7 +11,7 @@ use Thesis\config\Validation;
 
 ?>
 
-<?php Auth::isLogged([0]); ?>
+<?php Auth::authenticate([0]); ?>
 
 <?php
 $fullname_errors = '';

@@ -6,7 +6,7 @@ use Thesis\config\Auth;
 use Thesis\config\FlashMessage;
 use Thesis\controllers\subjects\StoreSubjects;
 
-Auth::isLogged([0]);
+Auth::authenticate([0]);
 $handleSubjects = new StoreSubjects();
 $grades = $handleSubjects->load_grades();
 ?>

@@ -1,0 +1,8 @@
+{
+  "development": {
+    "HOME_PATH": "http://localhost:8888/views/home.php"
+  },
+  "production": {
+    "HOME_PATH": "https://example.com/home.php"
+  }
+}

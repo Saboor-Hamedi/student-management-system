@@ -8,7 +8,7 @@ use Thesis\controllers\profile\Register;
 
 ?>
 
-<?php Auth::isLogged([0]); ?>
+<?php Auth::authenticate([0]); ?>
 
 <!-- insert data -->
 <?php $students_profile = new Register(); ?>

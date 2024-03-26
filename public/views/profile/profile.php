@@ -10,7 +10,7 @@ use Thesis\controllers\profile\UserInformation;
 <?php
 $insert_information = new UserInformation();
 ?>
-<?php Auth::isLogged([1, 2]); ?>
+<?php Auth::authenticate([1, 2]); ?>
 <?php
 
 $user_country_errors = '';

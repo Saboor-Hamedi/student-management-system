@@ -8,7 +8,7 @@ use Thesis\controllers\Logout;
 // Logout::logout();
 ?>
 
-<?php Auth::check_loggedout(); ?>
+<?php Auth::logoutGuard(); ?>
 <?php
 
 $login = new Login($database);

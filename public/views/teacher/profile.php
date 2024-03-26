@@ -10,7 +10,7 @@ use Thesis\controllers\TeachersProfile;
 
 ?>
 
-<?php Auth::isLogged([0]); ?>
+<?php Auth::authenticate([0]); ?>
 <!-- insert data -->
 <?php $teachers_profile = new TeachersProfile(); ?>
 <?php

@@ -5,7 +5,7 @@ path('header'); ?>
 
 use Thesis\config\Auth;
 
-Auth::isLogged([0,1,2]);
+Auth::authenticate([0,1,2]);
 ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
