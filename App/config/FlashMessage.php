@@ -1,6 +1,6 @@
 <?php
-
 namespace Thesis\config;
+
 
 use Exception;
 
@@ -28,6 +28,7 @@ class FlashMessage
 
     public static function displayMessages()
     {
+        ob_start();
         $messages = self::getMessages();
         if ($messages) {
             echo '<div class="flash-messages">';
@@ -37,6 +38,8 @@ class FlashMessage
             echo '</div>';
             self::clearMessages();
         }
+        ob_end_flush();
+
     }
     public static function addMessageWithException(string $message, Exception $exception, string $type = 'info')
     {
@@ -44,6 +47,12 @@ class FlashMessage
             'message' => $message . ' ' . $exception->getMessage(),
             'type' => $type,
         ];
+    }
+    public static function redirect(string $url, string $message, string $type = 'info')
+    {
+        self::setMessage($message, $type);
+        header("Location: $url");
+        exit();
     }
 }
 

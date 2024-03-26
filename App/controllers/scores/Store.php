@@ -126,7 +126,7 @@ class Store
                     'subject_names',
                     'score',
                 );
-
+               
             } else {
                 FlashMessage::setMessage('No Score added', 'info');
             }

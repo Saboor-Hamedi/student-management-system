@@ -4,6 +4,7 @@ path('header'); ?>
 <?php
 
 use Thesis\config\Auth;
+use Thesis\config\FlashMessage;
 
 Auth::authenticate([2]);
 ?>
@@ -29,6 +30,9 @@ Auth::authenticate([2]);
             <!-- body -->
             <div class="card-body">
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <?php FlashMessage::displayMessages();
+                
+                ?>
                 <table class="table table-hover table-condensed">
                   <thead>
                     <tr>
@@ -42,7 +46,9 @@ Auth::authenticate([2]);
                   </thead>
                   <!-- fetch data -->
                   <tbody>
-                    <?php $result = $database->query("SELECT classes.id,teachers.teacher_id,
+                    <?php $sql = "SELECT classes.id AS class_id,teachers.teacher_id,
+                                  /* users.id, 
+                                  users.username AS username, */
                                   students.student_id ,
                                   students.lastname,
                                   classes.subject_name,
@@ -52,9 +58,10 @@ Auth::authenticate([2]);
                                   classes.approve,
                                   classes.created_at FROM classes 
                               INNER JOIN teachers ON classes.teacher_id = teachers.teacher_id
-                              INNER JOIN students ON classes.student_id = students.student_id              WHERE teachers.teacher_id = {$user_id}
-                      
-                      "); ?>
+                              /* INNER JOIN users ON teachers.teacher_id = users.id */
+                              INNER JOIN students ON classes.student_id = students.student_id              
+                              WHERE teachers.teacher_id = {$user_id}";?>
+                    <?php $result = $database->query($sql); ?>
                     <?php if (!empty($result)) : ?>
                       <?php foreach ($result as $row) : ?>
                         <tr class="odd">
@@ -70,7 +77,7 @@ Auth::authenticate([2]);
                           <td>
                             <?php echo formatCreatedAt($row['start_class']); ?>
                           </td>
-                          <td><a href="<?php echo BASE_URL ?>/scores/score.php?id=<?php echo $row['id']?>" class="btn btn-primary btn-xs">insert</a></td>
+                          <td><a href="<?php echo BASE_URL ?>/scores/score.php?id=<?php echo $row['class_id']?>" class="btn btn-primary btn-xs">insert</a></td>
                         </tr>
                       <?php endforeach; ?>
                     <?php else : ?>

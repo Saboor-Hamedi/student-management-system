@@ -79,7 +79,6 @@ path('sidebar', ['roles' => $roles]);
     <div class="container-fluid">
       <div class="row">
         <!-- student -->
-
         <div class="col-12">
           <div class="card">
             <div class="card-header">
@@ -89,13 +88,36 @@ path('sidebar', ['roles' => $roles]);
             </div>
             <!-- body -->
             <div class="card-body">
+            <?php $id = isset ($_GET['id']) ? $_GET['id'] : null; ?>
+            <?php $sql = "SELECT classes.id AS class_id, teachers.teacher_id,
+                                 students.student_id,
+                                 students.lastname,
+                                 classes.subject_name,
+                                 classes.start_class,
+                                 classes.end_class,
+                                 classes.grades,
+                                 classes.approve,
+                                 classes.created_at 
+                          FROM classes 
+                          INNER JOIN teachers ON classes.teacher_id = teachers.teacher_id
+                          INNER JOIN students ON classes.student_id = students.student_id        
+                           LIMIT 1"  ?>
+                <?php $update =  $database->query($sql); ?>
+                <?php $row = $update->fetch(PDO::FETCH_ASSOC); ?>
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <?php FlashMessage::displayMessages(); ?>
                 <form method="POST" action="<?php ClearInput::getSelfULR(); ?>">
+                
+
                   <div class="row">
+                    <div class="col-lg-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="student_update_id" value="<?php echo $row['class_id'];?>" placeholder="Class ID">
+                    </div>
+                    </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Student ID" value="<?php echo getInputValue("student_id") ?>" readonly>
+                        <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Student ID" value="<?php echo $row['student_id'] ?>" readonly>
                         <span class="error">
                           <?php
                           if (!empty($student_id_error)) {
@@ -108,7 +130,7 @@ path('sidebar', ['roles' => $roles]);
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="search-container">
-                          <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo getInputValue("search_student_names") ?>">
+                          <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo $row['lastname']?>">
                           <span class="error">
                             <?php
                             if (!empty($search_student_names_error)) {
@@ -125,7 +147,8 @@ path('sidebar', ['roles' => $roles]);
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" value="<?php echo getInputValue("student_grade_id"); ?>" readonly>
+                        <input type="text" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" 
+                        value="<?php echo $row['grades']?>" readonly>
                         <span class="error">
                           <?php
                           if (!empty($student_grade_id_error)) {
@@ -138,7 +161,7 @@ path('sidebar', ['roles' => $roles]);
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="search-container">
-                          <input type="text" class="form-control" name="student_subject_name" id="student_subject_name" placeholder="Search for student class" value="<?php echo getInputValue("student_subject_name") ?>">
+                          <input type="text" class="form-control" name="student_subject_name" id="student_subject_name" placeholder="Search for student class" value="">
                           <span class="error">
                             <?php
                             if (!empty($student_subject_name_error)) {
@@ -156,7 +179,7 @@ path('sidebar', ['roles' => $roles]);
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="search-container">
-                          <input type="text" class="form-control" name="subject_names" id="subject_names" placeholder="Subject Names" value="<?php echo getInputValue("subject_names"); ?>">
+                          <input type="text" class="form-control" name="subject_names" id="subject_names" placeholder="Subject Names" value="<?php echo $row['subject_name'] ?>">
                           <span class="error">
                             <?php
                             if (!empty($subject_names_error)) {

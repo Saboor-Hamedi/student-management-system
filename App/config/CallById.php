@@ -61,6 +61,7 @@ class CallById
         $sql = "SELECT id, name FROM $table WHERE name LIKE :name GROUP BY name LIMIT 12";
         $param = [":name" => '%' . $name . '%'];
         $result = $this->database->query($sql, $param);
+        
 
         if (count($result) > 0) {
             $subjects = [];
