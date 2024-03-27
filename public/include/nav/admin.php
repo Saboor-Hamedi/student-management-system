@@ -26,7 +26,6 @@
         <p>Teachers</p>
       </a>
     </li>
-    
   </ul>
 </li>
 <li class="nav-header">REGISTER</li>
@@ -56,4 +55,3 @@
     </p>
   </a>
 </li>
-

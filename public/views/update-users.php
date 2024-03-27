@@ -1,10 +1,14 @@
 <?php require_once __DIR__ . '/../../App/config/path.php'; ?>
 <?php path("header"); ?>
 <?php
+
 use Thesis\config\Auth;
 use Thesis\config\FlashMessage;
-use Thesis\controllers\UpdateUserInfo; ?>
-<?php Auth::authenticate([0]); ?>
+use Thesis\controllers\UpdateUserInfo;
+use Thesis\functions\Roles;
+
+?>
+<?php Auth::authenticate([Roles::getRole('isAdmin')]); ?>
 <?php
 
 $user_update = new UpdateUserInfo();
@@ -17,13 +21,13 @@ $email = '';
 $password = '';
 $select_roles = '';
 
-$id = isset ($_GET['id']) ? $_GET['id'] : null;
+$id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($id) {
   $unhashed_id = decrypt($id, 'no@hack_$_can_%_be_^_done');
   // Check if the ID exists
   $user_results = $database->getById('school.users', $unhashed_id);
   // Proceed with the update if the ID exists
-  if (isset ($_POST['update_userinfo_button'])) {
+  if (isset($_POST['update_userinfo_button'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -60,7 +64,7 @@ if ($id) {
                           value="<?php echo $user_results['username'] ?? ''; ?>">
                         <span class="error">
                           <?php
-                          if (isset ($errors['username'])) {
+                          if (isset($errors['username'])) {
                             echo $errors['username'];
                           }
                           ?>
@@ -73,7 +77,7 @@ if ($id) {
                           value="<?php echo $user_results['email'] ?? ''; ?>">
                         <span class="error">
                           <?php
-                          if (isset ($errors['email'])) {
+                          if (isset($errors['email'])) {
                             echo $errors['email'];
                           }
                           ?>
@@ -85,7 +89,7 @@ if ($id) {
                         <input type="password" class="form-control" name="password" placeholder="Password">
                         <span class="error">
                           <?php
-                          if (isset ($errors['password'])) {
+                          if (isset($errors['password'])) {
                             echo $errors['password'];
                           }
                           ?>
@@ -101,7 +105,7 @@ if ($id) {
                       </select>
                       <span class="error">
                         <?php
-                        if (isset ($errors['select_roles'])) {
+                        if (isset($errors['select_roles'])) {
                           echo $errors['select_roles'];
                         }
                         ?>

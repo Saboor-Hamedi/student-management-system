@@ -33,7 +33,7 @@ $score_error = '';
 ?>
 <!-- $_SERVER['REQUEST_METHOD'] === 'POST' -->
 <?php if ($_SERVER['REQUEST_METHOD'] === 'POST') : ?>
-  <?php
+<?php
   $student_id = $_POST['student_id'] ?? '';
   $teacher_id = $_POST['teacher_id'] ?? '';
   $search_student_names = $_POST['search_student_names'] ?? '';
@@ -72,13 +72,14 @@ $score_error = '';
 <!-- end of insertation -->
 <?php
 path('navbar');
-path('sidebar', ['roles' => $roles]);
+path('sidebar', ['roles' => $roles, 'username' => $username]);
 ?>
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <section class="content">
-    <?php path('cards'); ?>
+    <?php //path('cards'); 
+    ?>
+    <div class="card"></div>
     <div class="container-fluid">
       <div class="row">
         <!-- student -->
@@ -109,82 +110,86 @@ path('sidebar', ['roles' => $roles]);
     students.student_id ,
     students.lastname AS student_lastname,
     students.sex
-FROM 
-    classes
-INNER JOIN teachers ON classes.teacher_id = teachers.teacher_id
-INNER JOIN students ON classes.student_id = students.student_id
-WHERE classes.id = $id
+    FROM 
+        classes
+    INNER JOIN teachers ON classes.teacher_id = teachers.teacher_id
+    INNER JOIN students ON classes.student_id = students.student_id
+    WHERE classes.id = $id
  "  ?>
               <?php $update =  $database->query($sql); ?>
 
               <?php foreach ($update as $row) :
               ?>
 
-                <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
-                  <?php FlashMessage::displayMessages(); ?>
-                  <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $id; ?>">
+              <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <?php FlashMessage::displayMessages(); ?>
+                <form method="POST" action="<?php ClearInput::selfURL(); ?>?id=<?php echo $id; ?>">
 
 
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <input type="text" class="form-control" name="teacher_id" value="<?php echo $user_id; ?>" placeholder="Teacher ID">
-                          <span class="error">
-                            <?php
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="teacher_id" value="<?php echo $user_id; ?>"
+                          placeholder="Teacher ID">
+                        <span class="error">
+                          <?php
                             if (!empty($teacher_id_error)) {
                               echo $teacher_id_error;
                             }
                             ?>
-                          </span>
-                        </div>
+                        </span>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Student ID" value="<?php echo $row['student_id'] ?>">
-                          <span class="error">
-                            <?php
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="student_id" name="student_id"
+                          placeholder="Student ID" value="<?php echo $row['student_id'] ?>">
+                        <span class="error">
+                          <?php
                             if (!empty($student_id_error)) {
                               echo $student_id_error;
                             }
                             ?>
-                          </span>
-                        </div>
+                        </span>
                       </div>
-                      
                     </div>
-                    <div class="row">
+
+                  </div>
+                  <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                          <input type="text" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" value="<?php echo $row['grades'] ?>">
-                          <span class="error">
-                            <?php
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="student_grade_id" id="student_grade_id"
+                          placeholder="Grade ID" value="<?php echo $row['grades'] ?>">
+                        <span class="error">
+                          <?php
                             if (!empty($student_grade_id_error)) {
                               echo $student_grade_id_error;
                             }
                             ?>
-                          </span>
-                        </div>
+                        </span>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <div class="search-container">
-                            <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo $row['student_lastname'] ?>">
-                            <span class="error">
-                              <?php
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="search-container">
+                          <input type="text" class="form-control" id="search_student_names" name="search_student_names"
+                            placeholder="Search for students" value="<?php echo $row['student_lastname'] ?>">
+                          <span class="error">
+                            <?php
                               if (!empty($search_student_names_error)) {
                                 echo $search_student_names_error;
                               }
                               ?>
-                            </span>
-                            <div id="search-results2"></div>
-                          </div>
+                          </span>
+                          <div id="search-results2"></div>
                         </div>
                       </div>
                     </div>
-                    <!--  -->
-                    <div class="row">
-                      
-                      <!-- <div class="col-md-6">
+                  </div>
+                  <!--  -->
+                  <div class="row">
+
+                    <!-- <div class="col-md-6">
                       <div class="form-group">
                         <div class="search-container">
                           <input type="text" class="form-control" name="student_subject_name" id="student_subject_name" placeholder="Search for student class" value="<?php echo $row['grades'] ?>">
@@ -199,43 +204,45 @@ WHERE classes.id = $id
                         </div>
                       </div>
                     </div> -->
-                    </div>
-                    <!--  -->
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <div class="search-container">
-                            <input type="text" class="form-control" name="subject_names" id="subject_names" placeholder="Subject Names" value="<?php echo $row['subject_name'] ?>">
-                            <span class="error">
-                              <?php
+                  </div>
+                  <!--  -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="search-container">
+                          <input type="text" class="form-control" name="subject_names" id="subject_names"
+                            placeholder="Subject Names" value="<?php echo $row['subject_name'] ?>">
+                          <span class="error">
+                            <?php
                               if (!empty($subject_names_error)) {
                                 echo $subject_names_error;
                               }
                               ?>
-                            </span>
-                            <div id="search-results1"></div>
-                          </div>
+                          </span>
+                          <div id="search-results1"></div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <input type="text" class="form-control" name="score" id="score" placeholder="Score" value="<?php echo getInputValue("score") ?>">
-                          <span class="error">
-                            <?php
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="score" id="score" placeholder="Score"
+                          value="<?php echo getInputValue("score") ?>">
+                        <span class="error">
+                          <?php
                             if (!empty($score_error)) {
                               echo $score_error;
                             }
                             ?>
-                          </span>
-                        </div>
+                        </span>
                       </div>
                     </div>
-                </div>
-                <button type="submit" name="insert_student_scores" class="btn btn-primary">Submit</button>
-                </form>
-                <!-- end grades -->
+                  </div>
+              </div>
+              <button type="submit" name="insert_student_scores" class="btn btn-primary">Submit</button>
+              </form>
+              <!-- end grades -->
             </div>
-          <?php endforeach;
+            <?php endforeach;
           ?>
           </div>
         </div>

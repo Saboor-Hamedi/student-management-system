@@ -4,7 +4,7 @@
     <p>Home</p>
   </a>
 </li>
-<li class="nav-item menu-is-opening menu-open">
+<li class="nav-item menu-open">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-tachometer-alt"></i>
     <p>
@@ -20,18 +20,13 @@
         <p>Schedule</p>
       </a>
     </li>
-</li>
-<li class="nav-item">
-  <a href="<?php echo BASE_URL ?>/profile/scores.php" class="nav-link">
-    <i class="fas fa-book nav-icon"></i>
-    <p>Scores</p>
-  </a>
-</li>
-
-</ul>
-
-</li>
-<!-- end drop down -->
+    <li class="nav-item">
+      <a href="<?php echo BASE_URL ?>/profile/scores.php" class="nav-link">
+        <i class="fas fa-book nav-icon"></i>
+        <p>Scores</p>
+      </a>
+    </li>
+  </ul>
 <li class="nav-header">REGISTER</li>
 <li class="nav-item">
   <a href="<?php echo BASE_URL ?>/profile/profile.php" class="nav-link">
@@ -39,3 +34,5 @@
     <p>Profile</p>
   </a>
 </li>
+</li>
+<!-- end drop down -->

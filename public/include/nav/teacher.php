@@ -27,9 +27,6 @@
     </li>
 
   </ul>
-
-</li>
-<!-- end drop down -->
 <li class="nav-header">REGISTER</li>
 <li class="nav-item">
   <a href="<?php echo BASE_URL ?>/profile/profile.php" class="nav-link">
@@ -37,5 +34,4 @@
     <p>Profile</p>
   </a>
 </li>
-
-
+</li>
