@@ -123,11 +123,11 @@ class Database
         $statement->execute();
     }
     /**
-     * Summary of GetUserInformation
+     * Summary of UserInfomation
      * @param mixed $tableName
      * @return array
      */
-    public function GetUserInformation($tableName, $id)
+    public function UserInfomation($tableName, $id)
     {
         $query = "SELECT * FROM $tableName WHERE user_id = :id";
         $statement = $this->connection->prepare($query);

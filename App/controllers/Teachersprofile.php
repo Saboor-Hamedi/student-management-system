@@ -41,7 +41,7 @@ class TeachersProfile
             ]);
             $teacher_lastname_error = $validate->string($teacher_lastname, [
                 ['required', 'Required Last name'],
-                ['min_length', 'Name atleast show be 5 character',5]
+                ['min_length', 'Name atleast show be 5 character', 5]
             ]);
             $teacher_qualification_lastname_error = $validate->string($teacher_qualification_lastname, [
                 ['required', 'Required qualifications']
@@ -53,8 +53,8 @@ class TeachersProfile
                 ['min_length', 'Experiences at least 1 year', 1]
 
             ]);
-            $subject_taught_error = $validate->string($subject_taught, [
-                ['required', 'Required qualifications']
+            $teacher_expecialization_error = $validate->string($teacher_expecialization, [
+                ['required', 'Required expecialization']
             ]);
         } catch (Exception $e) {
             FlashMessage::addMessageWithException('Something went wrong', $e, 'danger');
@@ -86,12 +86,14 @@ class TeachersProfile
         if (!empty($length_of_experience_error)) {
             $this->errors['length_of_experience'] = $length_of_experience_error;
         }
-        if (!empty($subject_taught_error)) {
-            $this->errors['subject_taught'] = $subject_taught_error;
-        }
-        $teacher_expecialization_error = $validate->validated_select_option($teacher_expecialization);
+
+
         if (!empty($teacher_expecialization_error)) {
             $this->errors['teacher_expecialization'] = $teacher_expecialization_error;
+        }
+        $subject_taught_erorr = $validate->options($subject_taught);
+        if (!empty($subject_taught_erorr)) {
+            $this->errors['subject_taught'] = $subject_taught_erorr;
         }
         // ! display error 
         if (!empty($this->errors)) {
@@ -114,16 +116,16 @@ class TeachersProfile
 
                 $insert_result = $this->database->insert('school.teachers', $data);
                 if ($insert_result) {
-                    FlashMessage::setMessage('Profile Updated', 'primary');
                     ClearInput::clear(
                         "selected_teacher_id",
                         "search_teacher_live",
                         "teacher_lastname",
                         "teacher_qualification_lastname",
-                        "length_of_experienceddd",
+                        "length_of_experience",
                         "subject_taught",
                         "teacher_expecialization",
                     );
+                    FlashMessage::setMessage('Profile Updated', 'primary');
                 } else {
                     FlashMessage::setMessage('Profile did not updated', 'danger');
                 }

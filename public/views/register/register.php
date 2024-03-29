@@ -35,7 +35,7 @@ if (isset ($_POST['make_new_user'])) {
   $fullname_errors = $validation->string($fullname, $fullname_rules);
   $email_errors = $validation->validate_email($email);
   $password_errors = $validation->validate_password($password);
-  $select_errors = $validation->validated_select_option($select_roles);
+  $select_errors = $validation->options($select_roles);
   if (!empty ($fullname_errors)) {
     $errors['fullname'] = $fullname_errors;
   }
@@ -91,8 +91,6 @@ if (isset ($_POST['make_new_user'])) {
 <div class="content-wrapper" style="height: auto;">
   <section class="content">
     <?php path('cards'); ?>
-
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -160,8 +158,12 @@ if (isset ($_POST['make_new_user'])) {
                     </span>
                   </div>
                 </div>
-                <button type="submit" name="make_new_user" class="btn
-                                                        btn-primary">Submit</button>
+                <!-- button -->
+                <div class="card">
+                  <div class="card-footer">
+                    <button type="submit" name="make_new_user" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
               </form>
             </div>
           </div>

@@ -125,7 +125,6 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                 <?php FlashMessage::displayMessages(); ?>
                 <form method="POST" action="<?php ClearInput::selfURL(); ?>?id=<?php echo $id; ?>">
 
-
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -225,8 +224,7 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="score" id="score" placeholder="Score"
-                          value="<?php echo getInputValue("score") ?>">
+                        <input type="text" class="form-control" name="score" id="score" placeholder="Score">
                         <span class="error">
                           <?php
                             if (!empty($score_error)) {

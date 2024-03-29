@@ -106,7 +106,7 @@ class StoreSubjects
         $end_subject_time_error = $validation->validate_datetime($end_subject_time, [
             ['required', 'Required dateTime']
         ]);
-        $select_grades_error = $validation->validated_select_option($select_grades);
+        $select_grades_error = $validation->options($select_grades);
         // ======================================================================
 
         if (!empty ($selected_teacher_id_error)) {

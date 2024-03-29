@@ -1,5 +1,7 @@
 <?php
+
 namespace Thesis\controllers\scores;
+
 use Thesis\config\CallById;
 use Thesis\config\Database;
 use Thesis\config\FlashMessage;
@@ -19,8 +21,7 @@ class Store
         $this->database = Database::GetInstance();
         $this->callbyid = new CallById();
     }
-    
-    
+
     public function validate(
         $student_id,
         $teacher_id,
@@ -30,7 +31,7 @@ class Store
         $score
     ) {
         $validation = new Validation();
-     
+
         $student_id_error = $validation->number($student_id, [
             ['required', 'Required Student ID'],
             ['integer', 'Student ID must be number'],
@@ -47,8 +48,8 @@ class Store
             ['required', 'Required subjects'],
             ['integer', 'Grade ID must be number'],
         ]);
-       
-       
+
+
         // $student_subject_name_error = $validation->string($student_subject_name, [
         //     ['required', 'Required Subject']
         // ]);
@@ -61,22 +62,22 @@ class Store
         ]);
 
         // ======================================================================
-        if (!empty ($student_id_error)) {
+        if (!empty($student_id_error)) {
             $this->errors['student_id'] = $student_id_error;
         }
         // ! check if the roles are 2, teachers
         if (!$this->callbyid->if_user_exists('school.users', $student_id, 1)) { // check if teacher userid is match 
             $this->errors['student_id'] = 'This student does not exists';
         }
-        if (!empty ($teacher_id_error)) {
+        if (!empty($teacher_id_error)) {
             $this->errors['teacher_id'] = $teacher_id_error;
         }
         // ! check if student name is empty
-        if (!empty ($search_student_names_error)) {
+        if (!empty($search_student_names_error)) {
             $this->errors['search_student_names'] = $search_student_names_error;
         }
         //  ! validate subjects
-        if (!empty ($student_grade_id_error)) {
+        if (!empty($student_grade_id_error)) {
             $this->errors['student_grade_id'] = $student_grade_id_error;
         }
 
@@ -93,25 +94,25 @@ class Store
         //     $this->errors['search_student_names'] = 'Student name did not match';
         // }
         // ! search for students 
-        if (!empty ($search_student_names_error)) {
+        if (!empty($search_student_names_error)) {
             $this->errors['search_student_names'] = $search_student_names_error;
         }
-        if (!empty ($student_subject_name_error)) {
+        if (!empty($student_subject_name_error)) {
             $this->errors['student_subject_name'] = $student_subject_name_error;
         }
-        if (!empty ($subject_names_error)) {
+        if (!empty($subject_names_error)) {
             $this->errors['subject_names'] = $subject_names_error;
         }
-        if (!empty ($score_error)) {
+        if (!empty($score_error)) {
             $this->errors['score'] = $score_error;
         }
         // check for error
-        if (!empty ($this->errors)) {
+        if (!empty($this->errors)) {
             return ['errors' => $this->errors];
         }
-        
+
         // insert into classes, it belongs to the students, where they entroll in a class
-        
+
         try {
             $data = [
                 'student_id' => $student_id,
@@ -123,27 +124,25 @@ class Store
 
             $result = $this->database->insert('school.scores', $data);
             if ($result) {
-                header('Location:', BASE_URL. '/teacher/classes.php');
                 // clear inputs 
-                // ClearInput::clear(
-                //     'student_id',
-                //     'teacher_id',
-                //     'grades_id',
-                //     'subject_names',
-                //     'score',
-                // );
+                ClearInput::clear(
+                    'student_id',
+                    'teacher_id',
+                    'grades_id',
+                    'subject_names',
+                    'score',
+                );
                 FlashMessage::setMessage('New Score added', 'primary');
-                
             } else {
                 FlashMessage::setMessage('No Score added', 'info');
             }
         } catch (Exception $e) {
-        FlashMessage::addMessageWithException('Something went wrong', $e, 'danger');
+            FlashMessage::addMessageWithException('Something went wrong', $e, 'danger');
         }
     }
-    private function user_id(){
+    private function user_id()
+    {
         $login = new Login($this->connection);
         return $login->getUserId();
     }
-    
 }

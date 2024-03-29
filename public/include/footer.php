@@ -13,6 +13,9 @@
 <script src="<?php assets("js/Loadstudents.js") ?>"></script>
 <script src="<?php assets("js/Loadstudentsprofile.js") ?>"></script>
 <script src="<?php assets("js/Loadteachers.js") ?>"></script>
+<script src="<?php assets("js/DeleteScore.js") ?>"></script>
+<script src="<?php assets("js/flashMessage.js") ?>"></script>
+<script src="<?php assets("js/RefreshPage.js") ?>"></script>
 
 <script src="<?php assets("js/custom.js") ?>"></script>
 

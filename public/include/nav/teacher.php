@@ -20,9 +20,15 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="<?php echo BASE_URL ?>/scores/score.php" class="nav-link">
+      <a href="<?php echo BASE_URL ?>/teacher/score.php" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Scores</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="<?php echo BASE_URL ?>/teacher/allscores.php" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>All Scores</p>
       </a>
     </li>
 

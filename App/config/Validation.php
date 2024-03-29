@@ -165,17 +165,12 @@ class Validation
         // If all validation rules pass, return an empty string to indicate success
         return '';
     }
-
-
-
-
-
     /**
-     * Summary of validated_select_option
+     * Summary of options
      * @param mixed $option
      * @return string
      */
-    public function validated_select_option($option)
+    public function options($option)
     {
         if ($option === '') {
             return 'Option is required';

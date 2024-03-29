@@ -79,7 +79,7 @@ Auth::authenticate([2]);
                       <td>
                         <?php echo formatCreatedAt($row['start_class']); ?>
                       </td>
-                      <td><a href="<?php echo BASE_URL ?>/scores/score.php?id=<?php echo $row['class_id'] ?>"
+                      <td><a href="<?php echo BASE_URL ?>/teacher/score.php?id=<?php echo $row['class_id'] ?>"
                           class="btn btn-primary btn-xs">insert</a></td>
                     </tr>
                     <?php endforeach; ?>

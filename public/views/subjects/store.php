@@ -90,154 +90,143 @@ if (isset($_POST['insert_grades_btn'])) {
       <div class="container-fluid">
         <div class="row">
           <?php if ($roles == 0) : ?>
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  Add Subjects
-                </h3>
-              </div>
-              <!-- body -->
-              <div class="card-body">
-                <?php
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    Add Subjects
+                  </h3>
+                </div>
+                <!-- body -->
+                <div class="card-body">
+                  <?php
                   FlashMessage::displayMessages();
                   ?>
-                <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                  <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
-                  <div class="row">
-                    <div class="col-md-6">
-                      <!-- <div class="form-group"> -->
-                      <!-- Hidden input to store the selected teacher's ID -->
-                      <input type="hidden" id="selected_teacher_id" class="form-control" name="selected_teacher_id"
-                        placeholder="Teacher's ID would set here"
-                        value="<?php echo getInputValue('selected_teacher_id'); ?>" readonly>
-                      <!-- </div> -->
-                      </d>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <!-- <div class="form-group"> -->
+                        <!-- Hidden input to store the selected teacher's ID -->
+                        <input type="hidden" id="selected_teacher_id" class="form-control" name="selected_teacher_id" placeholder="Teacher's ID would set here" value="<?php echo getInputValue('selected_teacher_id'); ?>" readonly>
+                        <!-- </div> -->
+                        </d>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <div class="search-container">
-                          <input type="text" id="search_teacher_live" name="search_teacher_live" class="form-control"
-                            value="<?php echo getInputValue('search_teacher_live') ?>"
-                            placeholder="Search for Teachers here">
-                          <span class="error">
-                            <?php
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <div class="search-container">
+                            <input type="text" id="search_teacher_live" name="search_teacher_live" class="form-control" value="<?php echo getInputValue('search_teacher_live') ?>" placeholder="Search for Teachers here">
+                            <span class="error">
+                              <?php
                               if (!empty($search_teacher_live_error)) {
                                 echo $search_teacher_live_error;
                               }
                               ?>
-                          </span>
-                          <div id="search-results"></div>
+                            </span>
+                            <div id="search-results"></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- search for subject on subject repository table -->
-                    <div class="col-md-6">
-                      <div class="search-container">
-                        <input type="text" class="form-control" id="subject_names" name="subject_names"
-                          placeholder="Subject Names" value="<?php echo getInputValue('subject_names'); ?>">
-                        <span class=" error">
-                          <?php
+                      <!-- search for subject on subject repository table -->
+                      <div class="col-md-6">
+                        <div class="search-container">
+                          <input type="text" class="form-control" id="subject_names" name="subject_names" placeholder="Subject Names" value="<?php echo getInputValue('subject_names'); ?>">
+                          <span class=" error">
+                            <?php
                             if (!empty($subject_names_error)) {
                               echo $subject_names_error;
                             }
                             ?>
-                        </span>
-                        <div id="search-results1"></div>
+                          </span>
+                          <div id="search-results1"></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <!-- ---------------student search-------------- -->
-                  <!-- <div class="form-group"> -->
-                  <input type="hidden" class="form-control" id="student_id" name="student_id"
-                    placeholder="Student's ID would set here" value="<?php echo getInputValue('student_id'); ?>"
-                    readonly>
+                    <!-- ---------------student search-------------- -->
+                    <!-- <div class="form-group"> -->
+                    <input type="hidden" class="form-control" id="student_id" name="student_id" placeholder="Student's ID would set here" value="<?php echo getInputValue('student_id'); ?>" readonly>
 
-                  <!-- </div> -->
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <div class="search-container">
-                          <input type="text" class="form-control" id="search_student_names" name="search_student_names"
-                            placeholder="Search for students"
-                            value="<?php echo getInputValue('search_student_names'); ?>">
-                          <span class=" error">
-                            <?php
+                    <!-- </div> -->
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="search-container">
+                            <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo getInputValue('search_student_names'); ?>">
+                            <span class=" error">
+                              <?php
                               if (!empty($search_student_names_error)) {
                                 echo $search_student_names_error;
                               }
                               ?>
-                          </span>
-                          <div id="search-results2"></div>
+                            </span>
+                            <div id="search-results2"></div>
+                          </div>
                         </div>
                       </div>
+
                     </div>
 
-                  </div>
-
-                  <div class="row">
-                    <!--  -->
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <input type="text" class="form-control" id="start_subject_time" name="start_subject_time"
-                          placeholder="Subject Start Time" value="<?php echo getInputValue('start_subject_time') ?>">
-                        <span class=" error">
-                          <?php
+                    <div class="row">
+                      <!--  -->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="start_subject_time" name="start_subject_time" placeholder="Subject Start Time" value="<?php echo getInputValue('start_subject_time') ?>">
+                          <span class=" error">
+                            <?php
                             if (!empty($start_subject_time_error)) {
                               echo $start_subject_time_error;
                             }
                             ?>
-                        </span>
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <!--  -->
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <input type="text" class="form-control" id="end_subject_time" name="end_subject_time"
-                          placeholder="Suject End Time" value="<?php echo getInputValue('end_subject_time') ?>">
-                        <span class=" error">
-                          <?php
+                      <!--  -->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="end_subject_time" name="end_subject_time" placeholder="Suject End Time" value="<?php echo getInputValue('end_subject_time') ?>">
+                          <span class=" error">
+                            <?php
                             if (!empty($end_subject_time_error)) {
                               echo $end_subject_time_error;
                             }
                             ?>
-                        </span>
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <!-- select a grade from here -->
-                        <select class="form-select" name="select_grades">
-                          <option value="" class="form-class">Select Grades</option>
-                          <?php foreach ($grades as $row) : ?>
-                          <option value="<?php echo $row['grade']; ?>">
-                            <?php echo $row['grade']; ?> Grade
-                          </option>
-                          <?php endforeach; ?>
-                        </select>
-                        <span class=" error">
-                          <?php
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <!-- select a grade from here -->
+                          <select class="form-select" name="select_grades">
+                            <option value="" class="form-class">Select Grades</option>
+                            <?php foreach ($grades as $row) : ?>
+                              <option value="<?php echo $row['grade']; ?>">
+                                <?php echo $row['grade']; ?> Grade
+                              </option>
+                            <?php endforeach; ?>
+                          </select>
+                          <span class=" error">
+                            <?php
                             if (!empty($select_grades_error)) {
                               echo $select_grades_error;
                             }
                             ?>
-                        </span>
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <button type="submit" class="btn btn-primary" id="insert_grades_btn"
-                    name="insert_grades_btn">Submit</button>
-                </form>
+                    <div class="card">
+                      <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" id="insert_grades_btn" name="insert_grades_btn">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
           <?php endif; ?>
-
-          <!-- main body -->
         </div>
       </div>
     </section>

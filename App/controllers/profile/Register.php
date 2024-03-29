@@ -78,7 +78,7 @@ class Register
         }
         
 
-        $student_sex_error = $validate->validated_select_option($student_sex);
+        $student_sex_error = $validate->options($student_sex);
         if (!empty ($student_sex_error)) {
             $this->errors['student_sex'] = $student_sex_error;
         }

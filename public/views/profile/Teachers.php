@@ -43,7 +43,7 @@ Auth::authenticate([0]);
                     <tbody>
                     <?php
                       $result = $database->users('school.users', 2);
-                      $perPage = 2; // Number of users to display per page
+                      $perPage = 5; // Number of users to display per page
                       $totalUsers = count($result); // Total number of users
                       $totalPages = ceil($totalUsers / $perPage); // Total number of pages
                       $currentPage = isset($_GET['page']) ? $_GET['page'] : 1; // Current page 
@@ -91,6 +91,7 @@ Auth::authenticate([0]);
                     </tbody>
                   </table>
                   <!-- Generate pagination links -->
+                  <?php if (!empty($result)) : ?>
                   <nav aria-label="Page navigation example">
                     <ul class="pagination">
                       <li class="page-item">
@@ -118,6 +119,7 @@ Auth::authenticate([0]);
                       </li>
                     </ul>
                   </nav>
+                  <?php endif;?>
                   <!-- end pagination -->
                 </div>
               </div>

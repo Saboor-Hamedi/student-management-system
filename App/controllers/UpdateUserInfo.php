@@ -45,7 +45,7 @@ class UpdateUserInfo
             }
         }
 
-        $errors = $validation->validated_select_option($studentRoles);
+        $errors = $validation->options($studentRoles);
         if (!empty($errors)) {
             return ['errors' => ['select_roles' => $errors]];
         } elseif ($studentRoles == null) {

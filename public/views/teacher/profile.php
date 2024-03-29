@@ -62,7 +62,7 @@ if (isset($_POST['teacher_profile_btn'])) {
   }
   if (isset($result['errors'])) {
     $subject_taught_error = $result['errors']['subject_taught'] ?? '';
-  }
+}
   if (isset($result['errors'])) {
     $teacher_expecialization_error = $result['errors']['teacher_expecialization'] ?? '';
   }
@@ -92,10 +92,7 @@ if (isset($_POST['teacher_profile_btn'])) {
               <form method="POST" action="<?php ClearInput::selfURL(); ?>">
                 <div class="row">
                   <div class="col-md-12">
-                    <!-- <div class="form-group"> -->
-                    <input type="hidden" class="form-control" id="selected_teacher_id" name="selected_teacher_id"
-                      placeholder="This will be set automatically"
-                      value="<?php echo getInputValue('selected_teacher_id') ?>" readonly>
+                    <input type="hidden" class="form-control" id="selected_teacher_id" name="selected_teacher_id" placeholder="This will be set automatically" value="<?php echo getInputValue('selected_teacher_id') ?>" readonly>
                     <span class="error">
                       <?php
                       if (!empty($selected_teacher_id_error)) {
@@ -103,17 +100,13 @@ if (isset($_POST['teacher_profile_btn'])) {
                       }
                       ?>
                     </span>
-
-                    <!-- </div> -->
                   </div>
-
-
+                </div>
+                <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <div class="search-container">
-
-                        <input type="text" class="form-control" id="search_teacher_live" name="search_teacher_live"
-                          placeholder="Search for teachers" value="<?php echo getInputValue('search_teacher_live') ?>">
+                        <input type="text" class="form-control" id="search_teacher_live" name="search_teacher_live" placeholder="Search for teachers" value="<?php echo getInputValue('search_teacher_live') ?>">
                         <span class="error">
                           <?php
                           if (!empty($search_teacher_live_error)) {
@@ -127,8 +120,7 @@ if (isset($_POST['teacher_profile_btn'])) {
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <input type="text" class="form-control" id="teacher_lastname" name="teacher_lastname"
-                        placeholder="Teacher Last names" value="<?php echo getInputValue('teacher_lastname') ?>">
+                      <input type="text" class="form-control" id="teacher_lastname" name="teacher_lastname" placeholder="Teacher Last names" value="<?php echo getInputValue('teacher_lastname') ?>">
                       <span class="error">
                         <?php
                         if (!empty($teacher_lastname_error)) {
@@ -138,12 +130,12 @@ if (isset($_POST['teacher_profile_btn'])) {
                       </span>
                     </div>
                   </div>
-                  <!-- lasttname end -->
+                </div>
+                <!-- lasttname end -->
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input type="text" class="form-control" id="teacher_qualification_lastname"
-                        name="teacher_qualification_lastname" placeholder="Teacher qualifications"
-                        value="<?php echo getInputValue('teacher_qualification_lastname') ?>">
+                      <input type="text" class="form-control" id="teacher_qualification_lastname" name="teacher_qualification_lastname" placeholder="Teacher qualifications" value="<?php echo getInputValue('teacher_qualification_lastname') ?>">
                       <span class="error">
                         <?php
                         if (!empty($teacher_qualification_lastname_error)) {
@@ -156,7 +148,7 @@ if (isset($_POST['teacher_profile_btn'])) {
                   <div class="col-md-6">
                     <div class="form-group">
                       <input type="text" class="form-control" id="length_of_experience" name="length_of_experience"
-                        placeholder="Length of Experience" value="<?php echo getInputValue('length_of_experience') ?>">
+                      placeholder="Length of Experience" value="<?php echo getInputValue('length_of_experience') ?>">
                       <span class="error">
                         <?php
                         if (!empty($length_of_experience_error)) {
@@ -166,38 +158,50 @@ if (isset($_POST['teacher_profile_btn'])) {
                       </span>
                     </div>
                   </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="teacher_expecialization"
-                        name="teacher_expecialization" placeholder="Teacher expecialization"
-                        value="<?php echo getInputValue('teacher_expecialization') ?>">
-                      <span class="error">
-                        <?php
-                        if (!empty($subject_taught_error)) {
-                          echo $subject_taught_error;
-                        }
-                        ?>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="subject_taught" name="subject_taught"
-                        placeholder="Subject teachers ever taughts"
-                        value="<?php echo getInputValue('subject_taught') ?>">
-                      <span class="error">
-                        <?php
-                        if (!empty($subject_taught_error)) {
-                          echo $subject_taught_error;
-                        }
-                        ?>
-                      </span>
-                    </div>
-                  </div>
-                  <!-- lastname -->
                 </div>
-                <button type="submit" name="teacher_profile_btn" class="btn btn-primary">Submit</button>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="teacher_expecialization" name="teacher_expecialization" placeholder="Teacher expecialization" value="<?php echo getInputValue('teacher_expecialization') ?>">
+                      <span class="error">
+                        <?php
+                        if (!empty($teacher_expecialization_error)) {
+                          echo $teacher_expecialization_error;
+                        }
+                        ?>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <select class="form-select" name="subject_taught">
+                      <option value="">What subject the teacher would teach?</option>
+                      <?php $subjects = $database->query("SELECT * FROM subjects"); ?>
+                      <?php if ($subjects) : ?>
+                        <?php foreach ($subjects as $row) : ?>
+                          <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
+                    </select>
+                    <span class="error">
+                      <?php
+                      if (!empty($subject_taught_error)) {
+                        echo $subject_taught_error; 
+                    }
+                      ?>
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+
+                </div>
+                <!-- button -->
+                <div class="card">
+                  <div class="card-footer">
+                    <button type="submit" name="teacher_profile_btn" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+
               </form>
             </div>
           </div>
