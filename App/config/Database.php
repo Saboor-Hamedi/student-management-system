@@ -2,7 +2,9 @@
 
 namespace Thesis\config;
 
+use Exception;
 use PDO;
+use PDOException;
 use Thesis\controllers\Login;
 
 /**
@@ -64,50 +66,86 @@ class Database
      */
     public function query($sql, $params = [])
     {
-        $statement = $this->connection->prepare($sql);
-        $statement->execute($params);
-        return $statement->fetchAll();
+        // try {
+            $statement = $this->connection->prepare($sql);
+            $statement->execute($params);
+            return $statement->fetchAll();
+        // } catch (\Exception  $e) {
+        //     $this->error($e);
+        // }
+    }
+    public function executeQuery($sql, $params = [])
+    {
+        try {
+            // Prepare the statement
+            $statement = $this->connection->prepare($sql);
+
+            // Bind parameters
+            foreach ($params as $param => &$value) {
+                $statement->bindParam($param, $value);
+            }
+
+            // Execute the statement
+            $statement->execute();
+
+            // Fetch the results
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (PDOException $e) {
+            // Log and handle the error
+            error_log('Database Error: ' . $e->getMessage());
+            throw new Exception('An error occurred while executing database query.');
+        }
     }
 
     public function insert($table, $data)
     {
-        $sql = "INSERT INTO $table SET ";
-        $placeholders = [];
+        try {
+            $sql = "INSERT INTO $table SET ";
+            $placeholders = [];
 
-        foreach ($data as $key => $value) {
-            $placeholders[] = "$key = :$key";
+            foreach ($data as $key => $value) {
+                $placeholders[] = "$key = :$key";
+            }
+
+            $sql .= implode(", ", $placeholders);
+
+            $statement = $this->connection->prepare($sql);
+
+            // Bind values to named placeholders
+            foreach ($data as $key => $value) {
+                $statement->bindValue(":$key", $value);
+            }
+
+            return $statement->execute();
+        } catch (PDOException $e) {
+            $this->error($e);
         }
-
-        $sql .= implode(", ", $placeholders);
-
-        $statement = $this->connection->prepare($sql);
-
-        // Bind values to named placeholders
-        foreach ($data as $key => $value) {
-            $statement->bindValue(":$key", $value);
-        }
-
-        return $statement->execute();
     }
 
     // ... other methods ..
     public function update($table, $data, $where)
     {
-        $sql = "UPDATE $table SET ";
-        $placeholders = array();
-        foreach ($data as $key => $value) {
-            $placeholders[] = "$key = :$key";
-        }
-        $sql .= implode(", ", $placeholders);
-        $sql .= " WHERE $where";
+        try {
+            $sql = "UPDATE $table SET ";
+            $placeholders = array();
+            foreach ($data as $key => $value) {
+                $placeholders[] = "$key = :$key";
+            }
+            $sql .= implode(", ", $placeholders);
+            $sql .= " WHERE $where";
 
-        $statement = $this->connection->prepare($sql);
-        foreach ($data as $key => $value) {
-            $statement->bindValue(":$key", $value);
-        }
-        $statement->execute();
+            $statement = $this->connection->prepare($sql);
+            foreach ($data as $key => $value) {
+                $statement->bindValue(":$key", $value);
+            }
+            $statement->execute();
 
-        return $statement->rowCount(); // Return the number of affected rows
+            return $statement->rowCount(); // Return the number of affected rows
+        } catch (PDOException $e) {
+            $this->error($e);
+        }
     }
 
     /**
@@ -141,7 +179,7 @@ class Database
         $statement = $this->connection->prepare($query);
         $statement->bindValue(':roles', $roles, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC); 
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -293,6 +331,46 @@ class Database
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         return $user;
     }
+    public function checkIdsExistence($student_id, $teacher_id, $database)
+    {
+        // Check if the student_id and teacher_id exist in their respective tables
+        $studentExistsQuery = "SELECT COUNT(*) AS count FROM students WHERE student_id = :student_id";
+        $teacherExistsQuery = "SELECT COUNT(*) AS count FROM teachers WHERE teacher_id = :teacher_id";
+
+        $studentExistsParams = ['student_id' => $student_id];
+        $teacherExistsParams = ['teacher_id' => $teacher_id];
+
+        $studentExistsResult = $this->query($studentExistsQuery, $studentExistsParams);
+        $teacherExistsResult = $this->query($teacherExistsQuery, $teacherExistsParams);
+
+        // Check both IDs existence
+        if (
+            $studentExistsResult && $studentExistsResult[0]['count'] > 0 &&
+            $teacherExistsResult && $teacherExistsResult[0]['count'] > 0
+        ) {
+            return true; // Both student and teacher exist
+        } else {
+            return false; // Either student or teacher does not exist
+        }
+    }
+    public function checkExistingScore($student_id, $teacher_id, $subject_names)
+    {
+        // Query to check if the entry already exists in the scores table
+        $existingEntryQuery = "SELECT COUNT(*) AS count 
+                            FROM school.scores 
+                            WHERE student_id = :student_id 
+                            AND teacher_id = :teacher_id 
+                            AND subject_names = :subject_names";
+        $existingEntryParams = [
+            'student_id' => $student_id,
+            'teacher_id' => $teacher_id,
+            'subject_names' => $subject_names
+        ];
+        $existingEntryResult = $this->query($existingEntryQuery, $existingEntryParams);
+
+        return ($existingEntryResult && $existingEntryResult[0]['count'] > 0);
+    }
+
 
 
     /**
@@ -328,6 +406,22 @@ class Database
 
         return $result['count'];
     }
+    public function checkScoreExistsForSubject($teacher_id, $student_id, $subject_names)
+    {
+        $query = "SELECT * FROM school.scores WHERE teacher_id = :teacher_id AND student_id = :student_id AND subject_names = :subject_names";
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':teacher_id', $teacher_id);
+        $statement->bindParam(':student_id', $student_id);
+        $statement->bindParam(':subject_names', $subject_names);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC) !== false;
+    }
+    public function error($error)
+    {
+        error_log('Database Error: ' . $error->getMessage());
+        throw new Exception('An error occurred while executing database operation.');
+    }
+
     /**
      * Summary of disconnect
      * @return void

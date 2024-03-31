@@ -5,6 +5,7 @@ path('header'); ?>
 
 use Thesis\config\Auth;
 use Thesis\config\FlashMessage;
+use Thesis\functions\Pagination;
 
 Auth::authenticate([2]);
 ?>
@@ -63,35 +64,38 @@ Auth::authenticate([2]);
                               /* INNER JOIN users ON teachers.teacher_id = users.id */
                               INNER JOIN students ON classes.student_id = students.student_id              
                               WHERE teachers.teacher_id = {$user_id}"; ?>
-                    <?php $result = $database->query($sql); ?>
-                    <?php if (!empty($result)) : ?>
-                    <?php foreach ($result as $row) : ?>
-                    <tr class="odd">
-                      <td class="dtr-control sorting_1" tabindex="0">
-                        <?php echo $row['subject_name']; ?>
-                      </td>
-                      <td>
-                        <?php echo $row['lastname']; ?>
-                      </td>
-                      <td>
-                        <?php echo $row['grades']; ?>
-                      </td>
-                      <td>
-                        <?php echo formatCreatedAt($row['start_class']); ?>
-                      </td>
-                      <td><a href="<?php echo BASE_URL ?>/teacher/score.php?id=<?php echo $row['class_id'] ?>"
-                          class="btn btn-primary btn-xs">insert</a></td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <?php $paginate = Pagination::paginate($database, $sql,2); ?>
+                    <?php if (!empty($paginate['records'])) : ?>
+                      <?php foreach ($paginate['records'] as $row) : ?>
+                        <tr class="odd">
+                          <td class="dtr-control sorting_1" tabindex="0">
+                            <?php echo $row['subject_name']; ?>
+                          </td>
+                          <td>
+                            <?php echo $row['lastname']; ?>
+                          </td>
+                          <td>
+                            <?php echo $row['grades']; ?>
+                          </td>
+                          <td>
+                            <?php echo formatCreatedAt($row['start_class']); ?>
+                          </td>
+                          <td><a href="<?php echo BASE_URL ?>/teacher/score.php?id=<?php echo $row['class_id'] ?>" class="btn btn-primary btn-xs">insert</a></td>
+                        </tr>
+                      <?php endforeach; ?>
                     <?php else : ?>
-                    <tr>
-                      <td colspan="3">No user added yet</td>
-                    </tr>
+                      <tr>
+                        <td colspan="3">No user added yet</td>
+                      </tr>
                     <?php endif; ?>
                   </tbody>
                   <tbody>
                   </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                  <?php
+                  echo $paginate['paginationHtml']; ?>
+                </nav>
               </div>
             </div>
           </div>

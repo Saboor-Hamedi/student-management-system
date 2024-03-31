@@ -25,8 +25,8 @@ $fullname_rules = [
   ['required', 'Full Name is required'],
   ['min_length', 'Full Name should be at least 2 characters', 2]
 ];
-
-if (isset ($_POST['make_new_user'])) {
+// REGISTER STUDENT
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $fullname = $_POST['fullname'];
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -36,17 +36,17 @@ if (isset ($_POST['make_new_user'])) {
   $email_errors = $validation->validate_email($email);
   $password_errors = $validation->validate_password($password);
   $select_errors = $validation->options($select_roles);
-  if (!empty ($fullname_errors)) {
+  if (!empty($fullname_errors)) {
     $errors['fullname'] = $fullname_errors;
   }
 
-  if (!empty ($email_errors)) {
+  if (!empty($email_errors)) {
     $errors['email'] = $email_errors;
   }
-  if (!empty ($password_errors)) {
+  if (!empty($password_errors)) {
     $errors['password'] = $password_errors;
   }
-  if (!empty ($select_errors)) {
+  if (!empty($select_errors)) {
     $errors['select_roles'] = $select_errors;
   }
 
@@ -55,24 +55,24 @@ if (isset ($_POST['make_new_user'])) {
     // $errors['EmailExists'] = 'The email already exists.';
     FlashMessage::setMessage('Email already taken', 'info');
   }
-  if (empty ($errors)) {
+  if (empty($errors)) {
     if ($database->EmailExists($email)) {
     } else {
 
-     $users =  $database->insert('users', [
+      $users =  $database->insert('users', [
         'username' => $fullname,
         'email' => $email,
         'password' => $hashed_password,
         'roles' => $select_roles,
       ]);
-      if($users){
+      if ($users) {
         // Set success message
         FlashMessage::setMessage('New user added', 'primary');
         $_POST['fullname'] = '';
         $_POST['email'] = '';
         $_POST['password'] = '';
         $_POST['select_roles'] = '';
-      }else{
+      } else {
         FlashMessage::setMessage('Something went wrong!', 'danger');
       }
     }
@@ -104,11 +104,10 @@ if (isset ($_POST['make_new_user'])) {
                 <div class=" row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input type="text" class="form-control" name="fullname" placeholder="Full Name"
-                        value="<?php echo getInputValue('fullname') ?>" aria-label="Full Name">
+                      <input type="text" class="form-control" name="fullname" placeholder="Full Name" value="<?php echo getInputValue('fullname') ?>" aria-label="Full Name">
                       <span class="error">
                         <?php
-                        if (isset ($errors['fullname'])) {
+                        if (isset($errors['fullname'])) {
                           echo $errors['fullname'];
                         }
                         ?>
@@ -118,11 +117,10 @@ if (isset ($_POST['make_new_user'])) {
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input type="text" class="form-control" name="email" placeholder="Example@gmail.com"
-                        value="<?php echo getInputValue('email') ?>" aria-label="email">
+                      <input type="text" class="form-control" name="email" placeholder="Example@gmail.com" value="<?php echo getInputValue('email') ?>" aria-label="email">
                       <span class="error">
                         <?php
-                        if (isset ($errors['email'])) {
+                        if (isset($errors['email'])) {
                           echo $errors['email'];
                         }
                         ?>
@@ -131,11 +129,10 @@ if (isset ($_POST['make_new_user'])) {
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input type="password" class="form-control" name="password"
-                        value="<?php echo getInputValue('password') ?>" placeholder="Password" aria-label="password">
+                      <input type="password" class="form-control" name="password" value="<?php echo getInputValue('password') ?>" placeholder="Password" aria-label="password">
                       <span class="error">
                         <?php
-                        if (isset ($errors['password'])) {
+                        if (isset($errors['password'])) {
                           echo $errors['password'];
                         }
                         ?>
@@ -151,7 +148,7 @@ if (isset ($_POST['make_new_user'])) {
                     </select>
                     <span class="error">
                       <?php
-                      if (isset ($errors['select_roles'])) {
+                      if (isset($errors['select_roles'])) {
                         echo $errors['select_roles'];
                       }
                       ?>
@@ -161,7 +158,7 @@ if (isset ($_POST['make_new_user'])) {
                 <!-- button -->
                 <div class="card">
                   <div class="card-footer">
-                    <button type="submit" name="make_new_user" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </div>
               </form>

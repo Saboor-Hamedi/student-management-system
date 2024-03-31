@@ -39,6 +39,14 @@
 </li>
 <!-- ================= -->
 <li class="nav-item">
+  <a href="<?php echo BASE_URL ?>/profile/register.php" class="nav-link">
+    <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+    <p>
+      Student Profile
+    </p>
+  </a>
+</li>
+<li class="nav-item">
   <a href="<?php echo BASE_URL ?>/teacher/profile.php" class="nav-link">
     <i class="fa fa-users nav-icon" aria-hidden="true"></i>
     <p>

@@ -1,0 +1,17 @@
+User roles
+# isAdmin   => 0
+# isStudent => 1
+# isTeacher => 2 
+# isParent => 3
+
+control the pages, Auth::authenticate(Roles::getRole['isAdmin']);
+# user_id on table classes belongs to the teachers 
+# I add teacher names on class table because I search through their names, we could leave it null
+# or empty, but I thought it would be good to have teacher names on classes table
+# Also, we can control student and admin with user_id
+
+# I have readonly input on add-object.php file, which gets the teacher ID or user_id 
+# that ID load through ajax, which is called load-teachers.js
+
+
+# classes would work as schedule

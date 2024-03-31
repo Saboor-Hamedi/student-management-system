@@ -23,9 +23,8 @@ use Thesis\config\Auth;
         <div class="col-md-12">
           <?php
           $sql = "SELECT * FROM classes 
-        INNER JOIN teachers on classes.teacher_id=teachers.teacher_id
-        
-        WHERE student_id = {$user_id} ORDER BY classes.grades desc";
+                  INNER JOIN teachers on classes.teacher_id=teachers.teacher_id
+                  WHERE student_id = {$user_id} ORDER BY classes.grades desc";
           $classes = $database->query($sql);
 
           // Group classes by grade

@@ -19,12 +19,16 @@ use Thesis\config\Auth; ?>
       <div class="row">
         <div class="col-md-12">
           <?php
+          // Fetch scores from the database
           $sql = "SELECT * FROM scores
-                  INNER JOIN grades on scores.grades_id=grades.id
-                  INNER JOIN teachers on scores.teacher_id=teachers.teacher_id
-                  INNER JOIN students on scores.student_id=students.student_id
-                  WHERE scores.student_id = {$user_id} ORDER BY grades.grade desc";
-          $scores = $database->query($sql);
+          INNER JOIN grades ON scores.grades_id = grades.id
+          INNER JOIN teachers ON scores.teacher_id = teachers.teacher_id
+          INNER JOIN students ON scores.student_id = students.student_id
+          WHERE scores.student_id = :user_id ORDER BY grades.grade DESC";
+
+          $params = [':user_id' => $user_id];
+          $scores = $database->executeQuery($sql, $params);
+
 
           // Group scores by grade
           $groupedScores = [];
@@ -35,51 +39,47 @@ use Thesis\config\Auth; ?>
             }
             $groupedScores[$gradeName][] = $score;
           }
-
-          // Check if groupedScores is empty
-          if (empty($groupedScores)) {
-            echo "No score added yet.";
-          } else {
           ?>
 
           <div class="card">
             <div class="card-header">Scores</div>
             <div class="card-body">
-              <?php foreach ($groupedScores as $gradeName => $scoresForGrade) : ?>
-              <div class="card mt-2">
-                <div class="card-header ">
-                  <?php echo $gradeName; ?>
-                </div>
-              </div>
-              <table class="table table-hover table-condensed custom-table">
-                <thead>
-                  <tr>
-                    <th>Teacher</th>
-                    <th>Student</th>
-                    <th>Grade</th>
-                    <th>Subject</th>
-                    <th>Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($scoresForGrade as $score) : ?>
-                  <tr>
-                    <td><?php echo $score['teacher_lastname']; ?></td>
-                    <td><?php echo $score['lastname']; ?></td>
-                    <td><?php echo $gradeName; ?></td>
-                    <td><?php echo $score['subject_names']; ?></td>
-                    <td><?php echo $score['score']; ?></td>
-                  </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-              <?php endforeach; ?>
+              <?php if (empty($groupedScores)) : ?>
+                <p>No score added yet.</p>
+              <?php else : ?>
+                <?php foreach ($groupedScores as $gradeName => $scoresForGrade) : ?>
+                  <div class="card mt-2">
+                    <div class="card-header">
+                      <?php echo $gradeName; ?>
+                    </div>
+                  </div>
+                  <table class="table table-hover table-condensed custom-table">
+                    <thead>
+                      <tr>
+                        <th>Teacher</th>
+                        <th>Student</th>
+                        <th>Grade</th>
+                        <th>Subject</th>
+                        <th>Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($scoresForGrade as $score) : ?>
+                        <tr>
+                          <td><?php echo $score['teacher_lastname']; ?></td>
+                          <td><?php echo $score['lastname']; ?></td>
+                          <td><?php echo $gradeName; ?></td>
+                          <td><?php echo $score['subject_names']; ?></td>
+                          <td><?php echo $score['score']; ?></td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </div>
           </div>
-          <?php
-          } // End of else block
-          ?>
-          </table>
+
         </div>
       </div>
     </div>

@@ -149,7 +149,7 @@ class Validation
                     }
                     break;
                 case 'integer': // Check if $number is an integer
-                    if (!is_numeric($number)) {
+                    if (!is_numeric($number) || intval($number) != $number) {
                         return $rule_message;
                     }
                     break;
@@ -159,12 +159,19 @@ class Validation
                         return $rule_message;
                     }
                     break;
+                case 'min_value':
+                    $min_value = isset($rule[2]) ? $rule[2] : null;
+                    if ($min_value !== null && $number < intval($min_value)) {
+                        return $rule_message;
+                    }
+                    break;
             }
         }
 
         // If all validation rules pass, return an empty string to indicate success
         return '';
     }
+
     /**
      * Summary of options
      * @param mixed $option

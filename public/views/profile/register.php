@@ -22,6 +22,7 @@ $student_lastname_error = '';
 $student_sex = '';
 $student_sex_error = '';
 if (isset ($_POST['student_profile_btn'])) {
+  
   $student_profile_id = $_POST['student_profile_id'];
   $search_student_profile_name = $_POST['search_student_profile_name'];
   $student_lastname = $_POST['student_lastname'];
@@ -131,7 +132,11 @@ if (isset ($_POST['student_profile_btn'])) {
                     </div>
                   </div>
                 </div>
-                <button type="submit" name="student_profile_btn" class="btn btn-primary">Submit</button>
+                <div class="card">
+                  <div class="card-footer">
+                  <button type="submit" name="student_profile_btn" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
               </form>
             </div>
           </div>

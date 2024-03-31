@@ -112,8 +112,10 @@ if ($id) {
                       </span>
                     </div>
                   </div>
-                  <div class="mt-3">
+                  <div class="card">
+                    <div class="card-footer">
                     <button type="submit" name="update_userinfo_button" class="btn btn-primary">Submit</button>
+                    </div>
                   </div>
                 </form>
               </div>

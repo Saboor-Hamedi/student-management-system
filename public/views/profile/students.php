@@ -4,6 +4,7 @@ path('header'); ?>
 <?php
 
 use Thesis\config\Auth;
+use Thesis\functions\Pagination;
 use Thesis\functions\Roles;
 
 Auth::authenticate([Roles::getRole('isAdmin')]);
@@ -41,32 +42,11 @@ Auth::authenticate([Roles::getRole('isAdmin')]);
                   <!-- fetch data -->
                   <tbody>
                     <?php
-                    $result = $database->users('school.users', 1);
-                    $perPage = 5; // Number of users to display per page
-                    $totalUsers = count($result); // Total number of users
-                    $totalPages = ceil($totalUsers / $perPage); // Total number of pages
-                    $currentPage = isset($_GET['page']) ? $_GET['page'] : 1; // Current page 
-                    $startIndex = 0;
-                    $endIndex = 0;
-
-                    // Check if index is smaller than the users 
-                    if ($totalUsers == 1) {
-                      // If there's only one user, set startIndex to 0 and endIndex to 0
-                      $startIndex = 0;
-                      $endIndex = 0;
-                    } elseif ($totalUsers < $perPage) {
-                      // If total users is less than perPage, show all users
-                      $startIndex = 0;
-                      $endIndex = $totalUsers - 1;
-                    } else {
-                      // Otherwise, calculate startIndex and endIndex normally
-                      $startIndex = ($currentPage - 1) * $perPage; // Starting index for the current page
-                      $endIndex = min($startIndex + $perPage - 1, $totalUsers - 1); // Ending index for the current page
-                    }
+                    $sql = $database->users('school.users', 1);
+                    $paginate = Pagination::paginate($database, $sql,2);
                     ?>
-                    <?php if (!empty($result)) : ?>
-                    <?php for ($i = $startIndex; $i <= $endIndex; $i++) : ?>
-                    <?php $user = $result[$i]; ?>
+                    <?php if (!empty($paginate['records'])) : ?>
+                      <?php foreach ($paginate['records'] as $user) : ?>
                     <tr class="odd">
                       <td class="dtr-control sorting_1" tabindex="0">
                         <?php echo ucfirst($user['username']); ?>
@@ -81,7 +61,7 @@ Auth::authenticate([Roles::getRole('isAdmin')]);
                           href="../update-users.php?id=<?php echo encrypt($user['id'], 'no@hack_$_can_%_be_^_done'); ?>"
                           class=" my-small-button">Edit</a></td>
                     </tr>
-                    <?php endfor ?>
+                    <?php endforeach ?>
                     <?php else : ?>
                     <tr>
                       <td colspan="3">No user added yet</td>
@@ -92,35 +72,10 @@ Auth::authenticate([Roles::getRole('isAdmin')]);
                   </tbody>
                 </table>
                 <!-- Generate pagination links -->
-                <?php if (!empty($result)) : ?>
                 <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                    <li class="page-item <?php if ($i == $currentPage) {
-                                              echo 'active';
-                                            }
-                                            ?>">
-                      <a class="page-link" href="?page=<?php echo $i; ?>">
-                        <?php echo $i; ?>
-                      </a>
-                    </li>
-                    <?php endfor ?>
-
-                    <li class=" page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
+                  <?php
+                  echo $paginate['paginationHtml']; ?>
                 </nav>
-                <?php endif;?>
                 <!-- end pagination -->
               </div>
             </div>

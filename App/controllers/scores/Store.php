@@ -8,7 +8,7 @@ use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
 use Thesis\config\ClearInput;
 use Thesis\controllers\Login;
-use Exception;
+
 
 class Store
 {
@@ -49,16 +49,14 @@ class Store
             ['integer', 'Grade ID must be number'],
         ]);
 
-
-        // $student_subject_name_error = $validation->string($student_subject_name, [
-        //     ['required', 'Required Subject']
-        // ]);
         $subject_names_error = $validation->string($subject_names, [
             ['required', 'Required Subject']
         ]);
         $score_error = $validation->number($score, [
             ['required', 'Required score'],
-            ['integer', 'score must be number']
+            ['integer', 'Score must be a number'],
+            ['max_value', 'Score must be less than or equal to 100', 100],
+            ['min_value', 'Score must be greater than or equal to 1 and less than 2', 1],
         ]);
 
         // ======================================================================
@@ -89,6 +87,10 @@ class Store
         if (!$this->callbyid->if_student_id_exists('school.classes', $student_id)) {
             $this->errors['student_id'] = 'Student ID did not match';
         }
+        // ! check if the teacher id exists 
+        if (!$this->callbyid->if_teacher_id_exists('school.classes', $teacher_id)) {
+            $this->errors['teacher_id'] = 'Teacher ID did not match';
+        }
         // ! search with student names, on students table, using ajax
         // if (!$this->callbyid->get_by_roles('school.users', $search_student_names, 1)) {
         //     $this->errors['search_student_names'] = 'Student name did not match';
@@ -110,39 +112,42 @@ class Store
         if (!empty($this->errors)) {
             return ['errors' => $this->errors];
         }
-
-        // insert into classes, it belongs to the students, where they entroll in a class
-
         try {
-            $data = [
-                'student_id' => $student_id,
-                'teacher_id' => $teacher_id,
-                'grades_id' => $student_grade_id,
-                'subject_names' => $subject_names,
-                'score' => $score,
-            ];
-
-            $result = $this->database->insert('school.scores', $data);
-            if ($result) {
-                // clear inputs 
-                ClearInput::clear(
-                    'student_id',
-                    'teacher_id',
-                    'grades_id',
-                    'subject_names',
-                    'score',
-                );
-                FlashMessage::setMessage('New Score added', 'primary');
+            // $this->database->checkIdsExistence($student_id,$teacher_id, $this->database)
+            // check if the teacher has given scores to the certian student. 
+            if ($this->database->checkExistingScore($student_id, $teacher_id, $subject_names)) {
+                FlashMessage::setMessage("Teacher ID: {$teacher_id} has already scored student ID: {$student_id} for subject: {$subject_names}", 'danger');
             } else {
-                FlashMessage::setMessage('No Score added', 'info');
+                $data = [
+                    'student_id' => $student_id,
+                    'teacher_id' => $teacher_id,
+                    'grades_id' => $student_grade_id,
+                    'subject_names' => $subject_names,
+                    'score' => $score,
+                ];
+
+                $result = $this->database->insert('school.scores', $data);
+                if ($result) {
+                    ClearInput::clear(
+                        'student_id',
+                        'teacher_id',
+                        'grades_id',
+                        'subject_names',
+                        'score',
+                    );
+                    FlashMessage::setMessage('New Score added', 'primary');
+                } else {
+                    FlashMessage::setMessage('Failed to add score', 'danger');
+                }
             }
-        } catch (Exception $e) {
-            FlashMessage::addMessageWithException('Something went wrong', $e, 'danger');
+        } catch (\PDOException  $e) {
+            if ($e->getCode() == '23000') {
+                FlashMessage::setMessage("Teacher ID: {$teacher_id} did not match", 'danger');
+            } else {
+                // Handle other database errors
+                FlashMessage::setMessage('Failed to add score: ' . $e->getMessage(), 'danger');
+            }
         }
     }
-    private function user_id()
-    {
-        $login = new Login($this->connection);
-        return $login->getUserId();
-    }
+  
 }
