@@ -2,7 +2,7 @@
 <?php path('header'); ?>
 <?php
 use Thesis\config\Auth;
-use Thesis\controllers\grade\Grades;
+use Thesis\controllers\students\Grades;
 ?>
 <?php Auth::authenticate([1]); ?>
 <!-- header on the top, Navbar -->
@@ -40,9 +40,9 @@ use Thesis\controllers\grade\Grades;
                   <?php foreach ($grades as $grade) : ?>
                     <tbody>
                       <tr>
-                        <td><?php echo $grade['teacher_lastname']; ?></td>
-                        <td><?php echo $grade['lastname']; ?></td>
-                        <td><?php echo $grade['subject_name']; ?></td>
+                        <td><?php echo ucfirst($grade['teacher_lastname']); ?></td>
+                        <td><?php echo ucfirst($grade['lastname']); ?></td>
+                        <td><?php echo ucfirst($grade['subject_name']); ?></td>
                         <td><?php echo $grade['grades']; ?></td>
                       </tr>
                     </tbody>

@@ -2,7 +2,10 @@
 <?php path('header'); ?>
 <?php
 
-use Thesis\config\Auth; ?>
+use Thesis\config\Auth;
+use Thesis\controllers\students\Scores;
+
+ ?>
 <?php Auth::authenticate([1]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
@@ -20,25 +23,8 @@ use Thesis\config\Auth; ?>
         <div class="col-md-12">
           <?php
           // Fetch scores from the database
-          $sql = "SELECT * FROM scores
-          INNER JOIN grades ON scores.grades_id = grades.id
-          INNER JOIN teachers ON scores.teacher_id = teachers.teacher_id
-          INNER JOIN students ON scores.student_id = students.student_id
-          WHERE scores.student_id = :user_id ORDER BY grades.grade DESC";
-
-          $params = [':user_id' => $user_id];
-          $scores = $database->executeQuery($sql, $params);
-
-
-          // Group scores by grade
-          $groupedScores = [];
-          foreach ($scores as $score) {
-            $gradeName = $score['name']; // Assuming 'name' is the field for grade name in your grades table
-            if (!isset($groupedScores[$gradeName])) {
-              $groupedScores[$gradeName] = [];
-            }
-            $groupedScores[$gradeName][] = $score;
-          }
+          $scoresController = new Scores();
+          $groupedScores = $scoresController->fetchScores();
           ?>
 
           <div class="card">
@@ -69,11 +55,11 @@ use Thesis\config\Auth; ?>
                         </tr>
                       <?php endforeach; ?>
                     </tbody>
-                   
+
                   </table>
-                      <div class="container mt-2" style="margin: 0 auto;padding: 5px;  border-radius: 4px;">
-                       <p style="padding: 0px; margin: 0px; font-size: 18px;"><?php echo $gradeName; ?></p>
-                      </div>
+                  <div class="container mt-2" style="margin: 0 auto;padding: 5px;  border-radius: 4px;">
+                    <p style="padding: 0px; margin: 0px; font-size: 18px;"><?php echo $gradeName; ?></p>
+                  </div>
                 <?php endforeach; ?>
               <?php endif; ?>
             </div>

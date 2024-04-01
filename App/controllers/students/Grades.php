@@ -1,6 +1,6 @@
 <?php
 
-namespace Thesis\controllers\grade;
+namespace Thesis\controllers\students;
 
 use Thesis\config\Auth;
 use Thesis\config\Database;

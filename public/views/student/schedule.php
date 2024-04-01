@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../../App/config/path.php';
 path('header');
 
 use Thesis\config\Auth;
-use Thesis\controllers\grade\Grades;
+use Thesis\controllers\students\Schedule;
 
 ?>
 
@@ -23,38 +23,19 @@ use Thesis\controllers\grade\Grades;
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-        
+
           <?php
-          $sql = "SELECT * FROM classes 
-                  INNER JOIN teachers on classes.teacher_id=teachers.teacher_id
-                  WHERE student_id = {$user_id} ORDER BY classes.grades desc";
-          $classes = $database->query($sql);
-
-          // Group classes by grade
-          $groupedClasses = [];
-          foreach ($classes as $class) {
-            $gradeName = $class['grades']; // Assuming 'grades' is the field for grade name in your classes table
-            if (!isset($groupedClasses[$gradeName])) {
-              $groupedClasses[$gradeName] = [];
-            }
-            $groupedClasses[$gradeName][] = $class;
-          }
-
-          // Check if groupedClasses is empty
-          if (empty($groupedClasses)) {
-            echo "No schedule yet.";
-          } else {
-          ?>
+          $scheduleController = new Schedule();
+          $groupedClasses = $scheduleController->fetchSchedule(); ?>
+          <!-- Check if groupedClasses is empty -->
+          <?php if (empty($groupedClasses)) : ?>
+            <p>No schedule yet</p>
+          <?php else : ?>
 
             <div class="card">
               <div class="card-header">Schedule</div>
               <div class="card-body">
                 <?php foreach ($groupedClasses as $gradeName => $classesForGrade) : ?>
-                  <div class="card mt-2">
-                    <div class="card-header ">
-                      Grade <?php echo $gradeName; ?>
-                    </div>
-                  </div>
                   <table class="table table-hover table-condensed custom-table">
                     <thead>
                       <tr>
@@ -77,13 +58,17 @@ use Thesis\controllers\grade\Grades;
                       <?php endforeach; ?>
                     </tbody>
                   </table>
+                  <div class="card mt-2">
+                    <div class="card-footer ">
+                      Grade <?php echo $gradeName; ?>
+                    </div>
+                  </div>
+
+
                 <?php endforeach; ?>
               </div>
             </div>
-
-          <?php
-          } // End of else block
-          ?>
+          <?php endif; ?>
           </table>
         </div>
       </div>
