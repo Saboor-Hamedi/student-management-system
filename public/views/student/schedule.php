@@ -3,6 +3,8 @@ require_once __DIR__ . '/../../../App/config/path.php';
 path('header');
 
 use Thesis\config\Auth;
+use Thesis\controllers\grade\Grades;
+
 ?>
 
 
@@ -21,6 +23,7 @@ use Thesis\config\Auth;
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
+        
           <?php
           $sql = "SELECT * FROM classes 
                   INNER JOIN teachers on classes.teacher_id=teachers.teacher_id
@@ -43,40 +46,40 @@ use Thesis\config\Auth;
           } else {
           ?>
 
-          <div class="card">
-            <div class="card-header">Schedule</div>
-            <div class="card-body">
-              <?php foreach ($groupedClasses as $gradeName => $classesForGrade) : ?>
-              <div class="card mt-2">
-                <div class="card-header ">
-                  Grade <?php echo $gradeName; ?>
-                </div>
+            <div class="card">
+              <div class="card-header">Schedule</div>
+              <div class="card-body">
+                <?php foreach ($groupedClasses as $gradeName => $classesForGrade) : ?>
+                  <div class="card mt-2">
+                    <div class="card-header ">
+                      Grade <?php echo $gradeName; ?>
+                    </div>
+                  </div>
+                  <table class="table table-hover table-condensed custom-table">
+                    <thead>
+                      <tr>
+                        <th>Grade</th>
+                        <th>Subject</th>
+                        <th>Teacher</th>
+                        <th>Start</th>
+                        <th>End</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($classesForGrade as $class) : ?>
+                        <tr>
+                          <td><?php echo $gradeName; ?></td>
+                          <td><?php echo $class['subject_name']; ?></td>
+                          <td><?php echo $class['teacher_lastname']; ?></td>
+                          <td><?php echo $class['start_class']; ?></td>
+                          <td><?php echo $class['end_class']; ?></td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                <?php endforeach; ?>
               </div>
-              <table class="table table-hover table-condensed custom-table">
-                <thead>
-                  <tr>
-                    <th>Grade</th>
-                    <th>Subject</th>
-                    <th>Teacher</th>
-                    <th>Start</th>
-                    <th>End</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($classesForGrade as $class) : ?>
-                  <tr>
-                    <td><?php echo $gradeName; ?></td>
-                    <td><?php echo $class['subject_name']; ?></td>
-                    <td><?php echo $class['teacher_lastname']; ?></td>
-                    <td><?php echo $class['start_class']; ?></td>
-                    <td><?php echo $class['end_class']; ?></td>
-                  </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-              <?php endforeach; ?>
             </div>
-          </div>
 
           <?php
           } // End of else block

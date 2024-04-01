@@ -2,13 +2,10 @@
 require_once __DIR__ . '/../../../App/config/path.php';
 path('header');
 ?>
-
 <?php
-
 use Thesis\config\Auth;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
-
 ?>
 
 <?php Auth::authenticate([0]); ?>

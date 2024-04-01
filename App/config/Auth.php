@@ -75,4 +75,20 @@ class Auth
         // Check if the session's user_id matches the provided user_id
         return $_SESSION['user_id'] == $user_id;
     }
+    public static function user_id()
+    {
+        // Start the session if not already started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        // Check if the user_id session variable is set
+        if (isset($_SESSION['user_id'])) {
+            // Return the user_id
+            return $_SESSION['user_id'];
+        } else {
+            // Handle the case where user_id session variable is not set
+            throw new \RuntimeException("User ID not found in session");
+        }
+    }
+    
 }

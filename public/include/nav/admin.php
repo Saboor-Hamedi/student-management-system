@@ -14,14 +14,14 @@
   </a>
   <ul class="nav nav-treeview" style="display: block;">
     <li class="nav-item">
-      <a href="<?php echo BASE_URL ?>/profile/students.php" class="nav-link">
+      <a href="<?php echo BASE_URL ?>/student/students.php" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Students</p>
       </a>
     </li>
     <li class="nav-item">
     <li class="nav-item">
-      <a href="<?php echo BASE_URL ?>/profile/teachers.php" class="nav-link">
+      <a href="<?php echo BASE_URL ?>/teacher/teachers.php" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Teachers</p>
       </a>
@@ -30,7 +30,7 @@
 </li>
 <li class="nav-header">REGISTER</li>
 <li class="nav-item">
-  <a href="<?php echo BASE_URL ?>/register/register.php" class="nav-link">
+  <a href="<?php echo BASE_URL ?>/users/register.php" class="nav-link">
     <i class="nav-icon fas fa-bookmark"></i>
     <p>
       Register
@@ -39,7 +39,7 @@
 </li>
 <!-- ================= -->
 <li class="nav-item">
-  <a href="<?php echo BASE_URL ?>/profile/register.php" class="nav-link">
+  <a href="<?php echo BASE_URL ?>/student/register.php" class="nav-link">
     <i class="fa fa-users nav-icon" aria-hidden="true"></i>
     <p>
       Student Profile
@@ -47,7 +47,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a href="<?php echo BASE_URL ?>/teacher/profile.php" class="nav-link">
+  <a href="<?php echo BASE_URL ?>/teacher/register.php" class="nav-link">
     <i class="fa fa-users nav-icon" aria-hidden="true"></i>
     <p>
       Teacher Profile
@@ -56,7 +56,7 @@
 </li>
 <!-- =========== -->
 <li class="nav-item">
-  <a href="<?php echo BASE_URL ?>/subjects/store.php" class="nav-link">
+  <a href="<?php echo BASE_URL ?>/subject/store.php" class="nav-link">
     <i class="nav-icon fas fa-mortar-pestle"></i>
     <p>
       Add Subjects

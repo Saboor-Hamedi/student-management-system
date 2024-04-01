@@ -1,8 +1,9 @@
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
 <?php
-
-use Thesis\config\Auth; ?>
+use Thesis\config\Auth;
+use Thesis\controllers\grade\Grades;
+?>
 <?php Auth::authenticate([1]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
@@ -17,19 +18,9 @@ use Thesis\config\Auth; ?>
       <div class="row">
         <div class="col-md-12">
           <?php
-          // Fetch scores from the database
           $grade_id = isset($_GET['grade']) ? intval($_GET['grade']) : 0;
-          $sql = "SELECT * FROM classes 
-          INNER JOIN teachers ON classes.teacher_id = teachers.teacher_id
-          INNER JOIN students ON classes.student_id = students.student_id
-          WHERE students.student_id = :user_id AND classes.grades = :grade_id
-          ORDER BY classes.grades DESC
-          ";
-          $params = [
-            ':user_id' => $user_id,
-            ':grade_id' => $grade_id
-          ];
-          $grades = $database->query($sql, $params);
+          $gradeController = new Grades();
+          $grades = $gradeController->fetchGrade($grade_id);
           ?>
           <div class="card">
             <div class="card-header">Grade <?php echo $grade_id; ?></div>

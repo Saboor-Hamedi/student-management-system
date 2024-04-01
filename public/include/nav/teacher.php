@@ -26,7 +26,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="<?php echo BASE_URL ?>/teacher/allscores.php" class="nav-link">
+      <a href="<?php echo BASE_URL ?>/teacher/scores.php" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>All Scores</p>
       </a>
@@ -35,7 +35,7 @@
   </ul>
 <li class="nav-header">REGISTER</li>
 <li class="nav-item">
-  <a href="<?php echo BASE_URL ?>/profile/profile.php" class="nav-link">
+  <a href="<?php echo BASE_URL ?>/profile/profiles.php" class="nav-link">
     <i class="fas fa-users nav-icon"></i>
     <p>Profile</p>
   </a>

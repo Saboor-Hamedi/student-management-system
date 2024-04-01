@@ -6,8 +6,9 @@ use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
 use Exception;
+use Thesis\controllers\main\MainController;
 
-class StoreSubjects
+class StoreSubjects extends MainController
 {
     private $database;
     public $errors = [];
@@ -174,7 +175,6 @@ class StoreSubjects
             ];
 
             $result = $this->database->insert('school.classes', $data);
-           
             if ($result) {
                 FlashMessage::setMessage('New class created', 'primary');
                 // clear inputs 
@@ -188,6 +188,7 @@ class StoreSubjects
                 $_POST['select_grades']= "";
                 
             } else {
+                
                 FlashMessage::setMessage('No class created', 'info');
             }
         } catch (Exception $e) {

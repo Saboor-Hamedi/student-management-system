@@ -48,11 +48,6 @@ use Thesis\config\Auth; ?>
                 <p>No score added yet.</p>
               <?php else : ?>
                 <?php foreach ($groupedScores as $gradeName => $scoresForGrade) : ?>
-                  <div class="card mt-2">
-                    <div class="card-header">
-                      <?php echo $gradeName; ?>
-                    </div>
-                  </div>
                   <table class="table table-hover table-condensed custom-table">
                     <thead>
                       <tr>
@@ -74,7 +69,11 @@ use Thesis\config\Auth; ?>
                         </tr>
                       <?php endforeach; ?>
                     </tbody>
+                   
                   </table>
+                      <div class="container mt-2" style="margin: 0 auto;padding: 5px;  border-radius: 4px;">
+                       <p style="padding: 0px; margin: 0px; font-size: 18px;"><?php echo $gradeName; ?></p>
+                      </div>
                 <?php endforeach; ?>
               <?php endif; ?>
             </div>

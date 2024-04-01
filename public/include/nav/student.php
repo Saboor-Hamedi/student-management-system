@@ -15,13 +15,13 @@
   <ul class="nav nav-treeview" style="display: block;">
     <li class="nav-item">
     <li class="nav-item">
-      <a href="<?php echo BASE_URL ?>/profile/schedule.php" class="nav-link">
+      <a href="<?php echo BASE_URL ?>/student/schedule.php" class="nav-link">
         <i class="fas fa-table nav-icon"></i>
         <p>Schedule</p>
       </a>
     </li>
     <li class="nav-item">
-      <a href="<?php echo BASE_URL ?>/profile/scores.php" class="nav-link">
+      <a href="<?php echo BASE_URL ?>/student/scores.php" class="nav-link">
         <i class="fas fa-book nav-icon"></i>
         <p>Scores</p>
       </a>
@@ -46,7 +46,7 @@
   ?>
     <?php foreach ($grades as $grade) : ?>
       <li class="nav-item">
-        <a href="<?php echo BASE_URL ?>/profile/grade.php?grade=<?php echo $grade['grades']; ?>" class="nav-link">
+        <a href="<?php echo BASE_URL ?>/student/grade.php?grade=<?php echo $grade['grades']; ?>" class="nav-link">
           <i class="fas fa-solid fa-star nav-icon"></i>
           <p>Grade <?php echo $grade['grades']; ?></p>
         </a>
@@ -58,7 +58,7 @@
 <!-- end -->
 <li class="nav-header">REGISTER</li>
 <li class="nav-item">
-  <a href="<?php echo BASE_URL ?>/profile/profile.php" class="nav-link">
+  <a href="<?php echo BASE_URL ?>/profile/profiles.php" class="nav-link">
     <i class="fas fa-users nav-icon"></i>
     <p>Profile</p>
   </a>
