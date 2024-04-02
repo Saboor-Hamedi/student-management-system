@@ -90,8 +90,13 @@ class Database
 
             // Fetch the results
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            if($result){
+                return $result;
 
-            return $result;
+            }else{
+                return $statement->rowCount();
+            }
+
         } catch (PDOException $e) {
             // Log and handle the error
             error_log('Database Error: ' . $e->getMessage());

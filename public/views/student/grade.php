@@ -1,10 +1,15 @@
-<?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
+<?php
+require_once __DIR__ . '/../../../App/config/path.php'; 
+?>
+
 <?php path('header'); ?>
 <?php
 use Thesis\config\Auth;
 use Thesis\controllers\students\Grades;
+use Thesis\functions\Roles;
+
 ?>
-<?php Auth::authenticate([1]); ?>
+<?php Auth::authenticate([Roles::getRole('isStudent')]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->

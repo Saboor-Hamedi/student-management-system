@@ -4,11 +4,10 @@ path('header');
 
 use Thesis\config\Auth;
 use Thesis\controllers\students\Schedule;
+use Thesis\functions\Roles;
 
 ?>
-
-
-<?php Auth::authenticate([1]); ?>
+<?php Auth::authenticate([Roles::getRole('isStudent')]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->

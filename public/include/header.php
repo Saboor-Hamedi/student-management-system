@@ -1,5 +1,8 @@
 
-<?php require_once __DIR__ . '../../../App/config/path.php'; ?>
+<?php 
+require_once __DIR__ . '../../../App/config/path.php'; 
+
+?>
 
 <!doctype html>
 <html lang="en">

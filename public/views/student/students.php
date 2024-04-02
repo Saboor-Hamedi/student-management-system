@@ -58,7 +58,7 @@ Auth::authenticate([Roles::getRole('isAdmin')]);
                         <?php echo formatCreatedAt($user['created_at']); ?>
                       </td>
                       <td><a
-                          href="../update-users.php?id=<?php echo encrypt($user['id'], 'no@hack_$_can_%_be_^_done'); ?>"
+                          href="../update-users.php?id=<?php echo $user['id']; ?>"
                           class=" my-small-button">Edit</a></td>
                     </tr>
                     <?php endforeach ?>

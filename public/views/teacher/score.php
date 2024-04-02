@@ -1,15 +1,14 @@
 <?php
 require_once __DIR__ . '/../../../App/config/path.php';
 path('header');
-
 use Thesis\config\Auth;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
 use Thesis\controllers\scores\Store;
+use Thesis\functions\Roles;
 ?>
-
 <?php
-Auth::authenticate([2]);
+Auth::authenticate([Roles::getRole('isTeacher')]);
 ?>
 <!-- insert here -->
 <?php

@@ -6,8 +6,9 @@ path('header'); ?>
 use Thesis\config\Auth;
 use Thesis\config\FlashMessage;
 use Thesis\functions\Pagination;
+use Thesis\functions\Roles;
 
-Auth::authenticate([2]);
+Auth::authenticate([Roles::getRole('isTeacher')]);
 ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>

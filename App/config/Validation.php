@@ -43,7 +43,7 @@ class Validation
      * @param mixed $email
      * @return string
      */
-    public function validate_email($email)
+    public function email($email)
     {
         if (empty($email)) {
             return 'Email required';
@@ -56,19 +56,33 @@ class Validation
 
     // password validation 
     /**
-     * Summary of validate_password
+     * Summary of password
      * @param mixed $password
      * @return mixed
      */
-    public function validate_password($password)
+    public function password($input, $validation_rules)
     {
-        $password_rules = [
-            ['required', 'Password is required'],
-            ['min_length', 'Password should be at least 6 characters', 6]
-        ];
-        return $this->string($password, $password_rules);
+        foreach ($validation_rules as $rule) {
+            $rule_name = $rule[0];
+            $rule_message = $rule[1];
+            switch ($rule_name) {
+                case 'required':
+                    if (empty($input)) {
+                        return $rule_message;
+                    }
+                    break;
+                case 'min_length':
+                    $min_length = $rule[2];
+                    if (strlen($input) < $min_length) {
+                        return $rule_message;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return ''; // validation  errors
     }
-
     /**
      * Summary of post_code
      * @param mixed $post_code

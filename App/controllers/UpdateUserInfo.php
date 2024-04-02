@@ -6,6 +6,7 @@ use Exception;
 use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
+use Thesis\functions\HashPassword;
 
 class UpdateUserInfo
 {
@@ -29,17 +30,21 @@ class UpdateUserInfo
             ['required', 'Full Name is required'],
             ['min_length', 'Full Name should be at least 2 characters', 2]
         ]);
+        $password_rule = [
+            ['required', 'password is required'],
+            ['min_length', 'password must be at least 3', 3]
+          ];
         if (!empty($errors)) {
             return ['errors' => $errors];
         }
 
-        $errors = $validation->validate_email($email);
+        $errors = $validation->email($email);
         if (!empty($errors)) {
             return ['errors' => ['email' => $errors]];
         }
 
         if (!empty($password)) {
-            $errors = $validation->validate_password($password);
+            $errors = $validation->password($password, $password_rule);
             if (!empty($errors)) {
                 return ['errors' => ['password' => $errors]];
             }
@@ -55,7 +60,7 @@ class UpdateUserInfo
         // Check if any changes were made
         $changesMade = ($student['username'] !== $username ||
             $student['email'] !== $email ||
-            !empty($password) ||
+            !empty(HashPassword::hash($password)) ||
             $student['roles'] !== $studentRoles
         );
 

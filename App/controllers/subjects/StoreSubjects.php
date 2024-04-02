@@ -10,7 +10,6 @@ use Thesis\controllers\main\MainController;
 
 class StoreSubjects extends MainController
 {
-    private $database;
     public $errors = [];
     public $callbyid;
     public function __construct()
@@ -161,9 +160,6 @@ class StoreSubjects extends MainController
         if (!empty ($this->errors)) {
             return ['errors' => $this->errors];
         }
-
-        // insert into classes, it belongs to the students, where they entroll in a class
-
         try {
             $data = [
                 'teacher_id' => $selected_teacher_id,

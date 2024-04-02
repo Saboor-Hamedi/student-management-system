@@ -9,7 +9,6 @@ function path($path, $data = [])
     if (file_exists($file)) {
         return require_once $file;
     } else {
-        // Handle the error (e.g., log it, return false)
         echo "Error: File '$file' does not exist.";
         return false;
     }

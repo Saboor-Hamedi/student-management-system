@@ -4,77 +4,81 @@ path('header');
 ?>
 <?php
 use Thesis\config\Auth;
+use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
+use Thesis\controllers\users\Store;
+use Thesis\functions\Roles;
 ?>
-
-<?php Auth::authenticate([0]); ?>
+<?php Auth::authenticate([Roles::getRole('isAdmin')]); ?>
 
 <?php
-$fullname_errors = '';
-$email_errors = '';
-$password_errors = '';
-$select_errors = '';
-$EmailExists = '';
-$validation = new Validation();
-$errors = array();
-$fullname_rules = [
-  ['required', 'Full Name is required'],
-  ['min_length', 'Full Name should be at least 2 characters', 2]
-];
-// REGISTER STUDENT
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $fullname = $_POST['fullname'];
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  $hashed_password = hash_password($password);
-  $select_roles = $_POST['select_roles'];
-  $fullname_errors = $validation->string($fullname, $fullname_rules);
-  $email_errors = $validation->validate_email($email);
-  $password_errors = $validation->validate_password($password);
-  $select_errors = $validation->options($select_roles);
-  if (!empty($fullname_errors)) {
-    $errors['fullname'] = $fullname_errors;
-  }
+$store = new Store();
+$errors = $store->store();
+// $fullname_errors = '';
+// $email_errors = '';
+// $password_errors = '';
+// $select_errors = '';
+// $EmailExists = '';
+// $validation = new Validation();
+// $errors = array();
+// $fullname_rules = [
+//   ['required', 'Full Name is required'],
+//   ['min_length', 'Full Name should be at least 2 characters', 2]
+// ];
+// // REGISTER STUDENT
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//   $fullname = $_POST['fullname'];
+//   $email = $_POST['email'];
+//   $password = $_POST['password'];
+//   $hashed_password = hash_password($password);
+//   $select_roles = $_POST['select_roles'];
+//   $fullname_errors = $validation->string($fullname, $fullname_rules);
+//   $email_errors = $validation->validate_email($email);
+//   $password_errors = $validation->password($password);
+//   $select_errors = $validation->options($select_roles);
+//   if (!empty($fullname_errors)) {
+//     $errors['fullname'] = $fullname_errors;
+//   }
 
-  if (!empty($email_errors)) {
-    $errors['email'] = $email_errors;
-  }
-  if (!empty($password_errors)) {
-    $errors['password'] = $password_errors;
-  }
-  if (!empty($select_errors)) {
-    $errors['select_roles'] = $select_errors;
-  }
+//   if (!empty($email_errors)) {
+//     $errors['email'] = $email_errors;
+//   }
+//   if (!empty($password_errors)) {
+//     $errors['password'] = $password_errors;
+//   }
+//   if (!empty($select_errors)) {
+//     $errors['select_roles'] = $select_errors;
+//   }
 
-  $EmailExists = $database->EmailExists($email);
-  if ($EmailExists) {
-    // $errors['EmailExists'] = 'The email already exists.';
-    FlashMessage::setMessage('Email already taken', 'info');
-  }
-  if (empty($errors)) {
-    if ($database->EmailExists($email)) {
-    } else {
+//   $EmailExists = $database->EmailExists($email);
+//   if ($EmailExists) {
+//     // $errors['EmailExists'] = 'The email already exists.';
+//     FlashMessage::setMessage('Email already taken', 'info');
+//   }
+//   if (empty($errors)) {
+//     if ($database->EmailExists($email)) {
+//     } else {
 
-      $users =  $database->insert('users', [
-        'username' => $fullname,
-        'email' => $email,
-        'password' => $hashed_password,
-        'roles' => $select_roles,
-      ]);
-      if ($users) {
-        // Set success message
-        FlashMessage::setMessage('New user added', 'primary');
-        $_POST['fullname'] = '';
-        $_POST['email'] = '';
-        $_POST['password'] = '';
-        $_POST['select_roles'] = '';
-      } else {
-        FlashMessage::setMessage('Something went wrong!', 'danger');
-      }
-    }
-  }
-}
+//       $users =  $database->insert('users', [
+//         'username' => $fullname,
+//         'email' => $email,
+//         'password' => $hashed_password,
+//         'roles' => $select_roles,
+//       ]);
+//       if ($users) {
+//         // Set success message
+//         FlashMessage::setMessage('New user added', 'primary');
+//         $_POST['fullname'] = '';
+//         $_POST['email'] = '';
+//         $_POST['password'] = '';
+//         $_POST['select_roles'] = '';
+//       } else {
+//         FlashMessage::setMessage('Something went wrong!', 'danger');
+//       }
+//     }
+//   }
+// }
 
 ?>
 <!-- header on the top, Navbar -->
@@ -82,8 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->
 <?php path('sidebar', ['roles' => $roles, 'username' => $username, 'user_id' => $user_id, 'database' => $database]); ?>
-
-
 <!-- end insert data -->
 <div class="content-wrapper" style="height: auto;">
   <section class="content">
@@ -97,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="card-body">
               <?php FlashMessage::displayMessages(); ?>
-              <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+              <form method="POST" action="<?php ClearInput::selfURL();?>">
                 <div class=" row">
                   <div class="col-md-6">
                     <div class="form-group">

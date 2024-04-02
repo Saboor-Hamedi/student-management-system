@@ -1,16 +1,12 @@
 <?php
 
 namespace Thesis\controllers\scores;
-
 use Thesis\config\CallById;
 use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
 use Thesis\config\ClearInput;
-use Thesis\controllers\Login;
-
-
-class Store
+class Store 
 {
     private $database;
     protected $connection;
@@ -113,7 +109,6 @@ class Store
             return ['errors' => $this->errors];
         }
         try {
-            // $this->database->checkIdsExistence($student_id,$teacher_id, $this->database)
             // check if the teacher has given scores to the certian student. 
             if ($this->database->checkExistingScore($student_id, $teacher_id, $subject_names)) {
                 FlashMessage::setMessage("Teacher ID: {$teacher_id} has already scored student ID: {$student_id} for subject: {$subject_names}", 'danger');

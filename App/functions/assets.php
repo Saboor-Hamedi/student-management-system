@@ -4,7 +4,7 @@ function assets($file, $root = '/assets/')
 {
   // ensure file is a non-empty string 
 
-  if (!is_string($file) || empty ($file)) {
+  if (!is_string($file) || empty($file)) {
     throw new InvalidArgumentException('File path must be non-empty string.');
   }
   // ensure root ends with a slash
@@ -16,4 +16,8 @@ function assets($file, $root = '/assets/')
   echo $root . $file;
   /* return ROOT . ltrim($file, '/'); */
 }
-
+function error($errors, $field){
+  if (isset($errors[$field])) {
+    echo '<span class="error">' . $errors[$field] . '</span>';
+}
+}
