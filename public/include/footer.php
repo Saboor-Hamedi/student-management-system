@@ -1,3 +1,9 @@
+<footer class="main-footer">
+  <div class="float-right d-none d-sm-block">
+    <b>Version</b> 1.0.0.1
+  </div>
+  <strong>Copyright © 2014 <a href="#">AHS</a>.</strong>
+</footer>
 <script src="<?php assets("plugins/jquery/jquery.min.js") ?>"></script>
 <script src="<?php assets("plugins/jquery-ui/jquery-ui.min.js") ?>"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -22,32 +28,32 @@
 
 <!-- datetimepicker -->
 <script>
-$(document).ready(function() {
-  $("#start_subject_time").datetimepicker({
-    format: 'Y-m-d H:i',
-    formatTime: 'H:i:s',
-    minDate: true,
-    minDate: '2010-01-01 00:00',
-    hours12: true,
+  $(document).ready(function() {
+    $("#start_subject_time").datetimepicker({
+      format: 'Y-m-d H:i',
+      formatTime: 'H:i:s',
+      minDate: true,
+      minDate: '2010-01-01 00:00',
+      hours12: true,
+    });
   });
-});
-// subject end time
-$(document).ready(function() {
-  $("#end_subject_time").datetimepicker({
-    format: 'Y-m-d H:i',
-    formatTime: 'H:i:s',
-    minDate: true,
-    minDate: '2010-01-01 00:00',
-    hours12: true,
+  // subject end time
+  $(document).ready(function() {
+    $("#end_subject_time").datetimepicker({
+      format: 'Y-m-d H:i',
+      formatTime: 'H:i:s',
+      minDate: true,
+      minDate: '2010-01-01 00:00',
+      hours12: true,
+    });
   });
-});
 </script>
 <script>
-window.addEventListener('load', function() {
-  if (window.history.replaceState) {
-    window.history.replaceState(null, null, window.location.href);
-  }
-});
+  window.addEventListener('load', function() {
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  });
 </script>
 </body>
 
