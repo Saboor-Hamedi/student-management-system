@@ -1,14 +1,11 @@
-<?php require_once __DIR__ . '/../../../App/config/path.php';
-path('header'); ?>
-
+<?php require_once __DIR__ . '/../../../App/config/path.php';?>
+<?php path('header'); ?>
 <?php
-
 use Thesis\config\Auth;
 use Thesis\functions\Pagination;
 use Thesis\functions\Roles;
-
-Auth::authenticate([Roles::getRole('isAdmin')]);
 ?>
+<?php Auth::authenticate([Roles::getRole('isAdmin')]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->

@@ -56,7 +56,7 @@
 </li>
 <!-- =========== -->
 <li class="nav-item">
-  <a href="<?php echo BASE_URL ?>/subject/store.php" class="nav-link">
+  <a href="<?php echo BASE_URL ?>/subject/register.php" class="nav-link">
     <i class="nav-icon fas fa-mortar-pestle"></i>
     <p>
       Add Subjects

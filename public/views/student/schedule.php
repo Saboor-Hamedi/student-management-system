@@ -1,11 +1,9 @@
+<?php require_once __DIR__ . '/../../../App/config/path.php';?>
+<?php path('header'); ?>
 <?php
-require_once __DIR__ . '/../../../App/config/path.php';
-path('header');
-
 use Thesis\config\Auth;
 use Thesis\controllers\students\Schedule;
 use Thesis\functions\Roles;
-
 ?>
 <?php Auth::authenticate([Roles::getRole('isStudent')]); ?>
 <!-- header on the top, Navbar -->

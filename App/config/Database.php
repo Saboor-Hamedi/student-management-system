@@ -67,9 +67,10 @@ class Database
     public function query($sql, $params = [])
     {
         // try {
-            $statement = $this->connection->prepare($sql);
-            $statement->execute($params);
-            return $statement->fetchAll();
+        $statement = $this->connection->prepare($sql);
+        $statement->execute($params);
+        return $statement->fetchAll();
+
         // } catch (\Exception  $e) {
         //     $this->error($e);
         // }
@@ -90,13 +91,11 @@ class Database
 
             // Fetch the results
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-            if($result){
+            if ($result) {
                 return $result;
-
-            }else{
+            } else {
                 return $statement->rowCount();
             }
-
         } catch (PDOException $e) {
             // Log and handle the error
             error_log('Database Error: ' . $e->getMessage());

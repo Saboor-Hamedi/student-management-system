@@ -1,5 +1,9 @@
 <?php
-// This is the users profile/ like student, teacher and parents
+// TODO:
+  // ! this is for teachers, students, and parents update profile. 
+  // ! it goes to the views/update-users.php
+  // ! with this class you are able to update the profiles
+
 namespace Thesis\controllers\profile;
 
 use Thesis\config\FlashMessage;
@@ -12,61 +16,63 @@ class ProfileUpdate extends MainController
 {
 
   protected $errors = [];
+  // ! update profile
   public function update()
-{
+  {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        return;
+      return;
     }
 
     $validation = new Validation();
     $this->errors = $this->input($validation);
 
     if (!empty($this->errors)) {
-        return $this->errors;
+      return $this->errors;
     }
 
     $data = [
-        'id' => InputUtils::sanitizeInput($_POST['user_id'], 'number_int'),
-        'username' => InputUtils::sanitizeInput($_POST['username'], 'string'),
-        'email' => InputUtils::sanitizeInput($_POST['email'], 'email'),
-        'roles' => InputUtils::sanitizeInput($_POST['select_roles'], 'number_int')
+      'id' => InputUtils::sanitizeInput($_POST['user_id'], 'number_int'),
+      'username' => InputUtils::sanitizeInput($_POST['username'], 'string'),
+      'email' => InputUtils::sanitizeInput($_POST['email'], 'email'),
+      'roles' => InputUtils::sanitizeInput($_POST['select_roles'], 'number_int')
     ];
 
     // Check if password is provided
     if (!empty($_POST['password'])) {
-        $data['password'] = HashPassword::hash($_POST['password']);
+      $data['password'] = HashPassword::hash($_POST['password']);
     }
     // Check if data has changed
     $hasChanged = $this->database->getById('school.users', $data['id']);
 
     // Update
     if ($hasChanged) {
-        // If data has changed, proceed with the update
-        $sql = "UPDATE school.users SET username = :username, email = :email, roles = :roles";
-        // Add password to the update query if provided
-        if (isset($data['password'])) {
-            $sql .= ", password = :password";
-        }
-        $sql .= " WHERE id = :id";
+      // If data has changed, proceed with the update
+      $sql = "UPDATE school.users SET username = :username, email = :email, roles = :roles";
+      // Add password to the update query if provided
+      if (isset($data['password'])) {
+        $sql .= ", password = :password";
+      }
+      $sql .= " WHERE id = :id";
 
-        $updateData = $data;
-        // Remove password from update data if not provided
-        if (!isset($data['password'])) {
-            unset($updateData['password']);
-        }
+      $updateData = $data;
+      // Remove password from update data if not provided
+      if (!isset($data['password'])) {
+        unset($updateData['password']);
+      }
 
-        $update = $this->database->executeQuery($sql, $updateData);
+      $update = $this->database->executeQuery($sql, $updateData);
 
-        if ($update) {
-            FlashMessage::setMessage('Record updated', 'success');
-        } else {
-            FlashMessage::setMessage('Record not updated', 'info');
-        }
+      if ($update) {
+        FlashMessage::setMessage('Record updated', 'success');
+      } else {
+        FlashMessage::setMessage('Record not updated', 'info');
+      }
     } else {
-        FlashMessage::setMessage('Nothing changed', 'info');
+      FlashMessage::setMessage('Nothing changed', 'info');
     }
-}
+  }
 
+  // ! validate form
   public function input($valid)
   {
 
