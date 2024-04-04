@@ -3,13 +3,13 @@
  *  Read: 
  *  * The file is on: views/teacher/scores.php
  *  - This file belongs to the teachers
- *  - In this file enables teachers to see the scored students, the one whom recived scores 
- *    from their prespective teachers. 
- *  - Also within this file teahcers are eble to delete certian score of students
+ *  - In this file enables teachers to see the scored students, the one whom received scores 
+ *    from their perspective teachers. 
+ *  - Also within this file teachers are enable to delete certain score of students
  *  - The delete process is done through ajax, visit assets/js/DeleteScore.js
  *  Todo:
  *    Further This file is solely for teachers neither admin nor students has access to it
- *  ? By no mean this documentation is perfetc, I tried my best to explain everything which helps 
+ *  ? By no mean this documentation is perfect, I tried my best to explain everything which helps 
  *  ? to understand the project flow. 
  */
 ?>

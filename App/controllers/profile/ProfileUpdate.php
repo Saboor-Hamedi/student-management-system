@@ -3,9 +3,7 @@
   // ! this is for teachers, students, and parents update profile. 
   // ! it goes to the views/update-users.php
   // ! with this class you are able to update the profiles
-
 namespace Thesis\controllers\profile;
-
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
 use Thesis\controllers\main\MainController;

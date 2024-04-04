@@ -108,6 +108,14 @@
   position: absolute;
   cursor: pointer;
 }
+.content-wrapper{
+ max-width: 100%;
+ position: inherit;
+}
+.container-fluid{
+  position: static;
+  border-radius: 5px;
+}
 .card-footer{
   padding: 5px;
 }
