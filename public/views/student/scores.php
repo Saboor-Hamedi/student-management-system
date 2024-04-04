@@ -54,20 +54,24 @@ use Thesis\functions\Roles;
                         </tr>
                       <?php endforeach; ?>
                     </tbody>
-                    <div class="card-footer">
-                      <?php echo $gradeName; ?>
-                    </div>
+                    <tfoot>
+                      <tr>
+                        <td colspan="5">
+                          <div class="card-footer">
+                            Grade <?php echo $gradeName; ?>
+                          </div>
+                        </td>
+                      </tr>
+                    </tfoot>
                   </table>
                 <?php endforeach; ?>
               <?php else : ?>
-                <tr>
-                  <td>No score found</td>
-                </tr>
+                 <td>No scores found</td>
               <?php endif; ?>
             </div>
           </div>
-
         </div>
+
       </div>
     </div>
 </div>

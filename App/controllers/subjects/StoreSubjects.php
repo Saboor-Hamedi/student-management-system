@@ -88,10 +88,7 @@ class StoreSubjects extends MainController
         $search_teacher_live_error = $validation->string($search_teacher_live, [
             ['required', 'Required name']
         ]);
-        $subject_name_error = $validation->string($subject_names, [
-            ['required', 'Required subjects'],
-            ['min_length', 'Required at least 5 characters', 2]
-        ]);
+       
         $student_id_error = $validation->number($student_id, [
             ['required', 'Required student ID'],
             ['integer', 'Student ID must be integer'],
@@ -107,6 +104,7 @@ class StoreSubjects extends MainController
             ['required', 'Required dateTime']
         ]);
         $select_grades_error = $validation->options($select_grades);
+        $subject_name_error = $validation->options($subject_names);
         // ======================================================================
 
         if (!empty ($selected_teacher_id_error)) {

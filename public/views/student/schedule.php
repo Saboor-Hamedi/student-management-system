@@ -1,6 +1,7 @@
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
 <?php
+
 use Thesis\config\Auth;
 use Thesis\controllers\students\Schedule;
 use Thesis\functions\Roles;
@@ -28,8 +29,8 @@ use Thesis\functions\Roles;
             <div class="card-header">Schedule</div>
             <div class="card-body">
               <?php if (!empty($groupedClasses)) : ?>
-                <table class="table table-hover table-condensed custom-table">
-                  <?php foreach ($groupedClasses as $gradeName => $classesForGrade) : ?>
+                <?php foreach ($groupedClasses as $gradeName => $classesForGrade) : ?>
+                  <table class="table table-hover table-condensed custom-table">
                     <thead>
                       <tr>
                         <th>Teacher</th>
@@ -48,19 +49,26 @@ use Thesis\functions\Roles;
                         </tr>
                       <?php endforeach; ?>
                     </tbody>
-                    <div class="card-footer">
-                      Grade <?php echo $gradeName; ?>
-                    </div>
-                  <?php endforeach; ?>
-                </table>
+                    <tfoot>
+                      <tr>
+                        <td colspan="4" >
+                          <div class="card-footer">
+                            Grade <?php echo $gradeName; ?>
+                          </div>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                <?php endforeach; ?>
               <?php else : ?>
-                <tr>
-                  <td>No schedule found</td>
-                </tr>
+                <td>
+                  No schedule found
+                </td>
               <?php endif; ?>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 </div>
