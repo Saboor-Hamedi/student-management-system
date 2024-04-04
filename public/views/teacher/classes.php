@@ -1,6 +1,18 @@
-<?php require_once __DIR__ . '/../../../App/config/path.php';
-path('header'); ?>
+<?php
 
+/** 
+ *  Read: 
+ *  * The file is on: views/teacher/classes.php
+ *  - This file belongs to the teachers
+ *  - This file enable teachers to see their students
+ *  - Through this file teachers are also able to score students simply by clicking
+ *      on the insert button which is appear to be on the table. 
+ *  Todo:
+ *    Further This file is solely for teachers neither admin nor students has access to it
+ */
+?>
+<?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
+<?php path('header'); ?>
 <?php
 
 use Thesis\config\Auth;
@@ -98,7 +110,7 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                   echo $paginate['paginationHtml']; ?>
                 </nav>
               </div>
-             
+
             </div>
             <div class="card-footer">
               <p></p>

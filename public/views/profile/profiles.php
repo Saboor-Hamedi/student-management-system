@@ -1,7 +1,23 @@
 <?php
-require_once __DIR__ . '/../../../App/config/path.php';
-path('header');
-
+/** 
+ *  Read: 
+ *  * The file is on: views/profile/profiles.php
+ *  - This file belongs to both teachers & studetns
+ *  - This file enables teachers and students to update their profiles, the attributes as follows:
+ *    1- country 
+ *    2- post code (zip-code)
+ *    3- the current address (address)
+ *    4- phone number
+ *  - Both teachers & students has full control over this file, but none can edit, delete each 
+ *     others information. 
+ *  Todo:
+ *  ? By no mean this documentation is perfetc, I tried my best to explain everything which helps 
+ *  ? to understand the project flow. 
+ */
+?>
+<?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
+<?php path('header'); ?>
+<?php 
 use Thesis\config\Auth;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;

@@ -1,3 +1,16 @@
+<?php
+/** 
+ *  Read: 
+ *  * The file is on: views/home.php
+ *  - This is a default file, where every single user redirect to this page for the first time
+ *     but none can edit,delete or insert each others information.
+ *  - This is a home page for all users which are allowed to login in
+ *  Todo:
+ *  ? By no mean this documentation is perfetc, I tried my best to explain everything which helps 
+ *  ? to understand the project flow. 
+ *  ! For more information visit file note.txt
+ */
+?>
 <?php require_once __DIR__ . '/../../App/config/path.php'; ?>
 <?php path('header'); // header 
 ?>

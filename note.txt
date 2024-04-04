@@ -1,17 +1,24 @@
-User roles
-# isAdmin   => 0
-# isStudent => 1
-# isTeacher => 2 
-# isParent => 3
+# This is a simple documentation of my project, this has been developed to change the manual school systems into a web based system. 
+## By no means this project is perfect, but I say one thing for sure this project fulfill alot of the requirements of schools. 
+----------------------------------------------------------------------------------------------------
 
-control the pages, Auth::authenticate(Roles::getRole['isAdmin']);
-# user_id on table classes belongs to the teachers 
-# I add teacher names on class table because I search through their names, we could leave it null
-# or empty, but I thought it would be good to have teacher names on classes table
-# Also, we can control student and admin with user_id
+# Here are the documentations for the project. 
+ This project is build within php and using mariabd as its database to store data. This project has used OOP concept to reduce the redundancy and make it more powerful.
 
-# I have readonly input on add-object.php file, which gets the teacher ID or user_id 
-# that ID load through ajax, which is called load-teachers.js
-
-
-# classes would work as schedule
+# The rules:
+  We have a pretty clean Auth classs with its able to control the authenticated users, 
+  at the moment there are three four differen users in our database, admin, teachers, students, and 
+  parents. All those users denoted as follows:
+  admin == 0 
+  student == 1
+  teachers == 2
+  parants == 3 
+   #NOTE you can add as much user as you want. 
+  # Authenticate users: 
+    visit config/Auth.php for more details. Here is how to control users 
+    lets says you logged in to your project as admin. 
+    admin.php 
+      if you want this page to be shown only for admin simple call 
+      Auth::authenticate([0]) on the top of the page. If you want to allow more users in this page, 
+      you can simply add the roles of the user inside the authenticate e.g, Auth::authenticate([0,1,2,3]).
+    

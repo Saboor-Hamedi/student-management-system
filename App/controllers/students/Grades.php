@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Thesis\controllers\students;
 
 use Thesis\config\Auth;
