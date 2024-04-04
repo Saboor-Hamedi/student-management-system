@@ -1,6 +1,6 @@
 <footer class="main-footer">
   <div class="float-right d-none d-sm-block">
-    <b>Version</b> 1.0.0.2
+    <b>Version</b> 1.0.0.3
   </div>
   <strong>Copyright © 2014 <a href="#">AHS</a>.</strong>
 </footer>
