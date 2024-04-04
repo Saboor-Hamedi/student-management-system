@@ -111,6 +111,9 @@
 .card-footer{
   padding: 5px;
 }
+.card-body{
+  padding: 5px 10px 5px;
+}
 /* CSS for fade-out animation */
 .flash-message {
   opacity: 1;

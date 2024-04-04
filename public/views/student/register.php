@@ -87,6 +87,7 @@ $errors = $register->register();
                 </div>
               </form>
             </div>
+            <div class="card-footer"><p ></p></div>
           </div>
         </div>
       </div>

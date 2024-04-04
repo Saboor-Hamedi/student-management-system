@@ -79,6 +79,7 @@ Auth::authenticate([0]);
                   <!-- end pagination -->
                 </div>
               </div>
+              <div class="card-footer"><p></p></div>
             </div>
           </div>
         <?php endif ?>

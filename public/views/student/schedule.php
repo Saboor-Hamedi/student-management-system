@@ -53,7 +53,7 @@ use Thesis\functions\Roles;
                       <tr>
                         <td colspan="4" >
                           <div class="card-footer">
-                            Grade <?php echo $gradeName; ?>
+                            <h5>Grade <?php echo $gradeName; ?></h5>
                           </div>
                         </td>
                       </tr>

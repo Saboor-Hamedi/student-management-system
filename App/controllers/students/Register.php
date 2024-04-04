@@ -160,4 +160,5 @@ class Register extends MainController
   {
     $this->errors['student_sex'] = $input->options($_POST['student_sex']);
   }
+  
 }

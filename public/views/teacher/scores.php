@@ -1,6 +1,7 @@
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
 <?php
+
 use Thesis\config\Auth;
 use Thesis\functions\Pagination;
 use Thesis\functions\Roles;
@@ -66,8 +67,7 @@ use Thesis\functions\Roles;
                             <?php echo formatCreatedAt($user['created_at']); ?>
                           </td>
                           <td>
-                            <a href="#" class="btn btn-danger btn-xs deleteScore_" 
-                              data-id="<?php echo $user['score_id'] ?>">
+                            <a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="<?php echo $user['score_id'] ?>">
                               delete
                             </a>
                           </td>
@@ -86,9 +86,12 @@ use Thesis\functions\Roles;
                   <?php
                   echo $paginate['paginationHtml']; ?>
                 </nav>
-
                 <!-- end pagination -->
               </div>
+
+            </div>
+            <div class="card-footer">
+              <p></p>
             </div>
           </div>
         </div>

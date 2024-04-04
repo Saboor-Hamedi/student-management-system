@@ -199,7 +199,7 @@ class Validation
         return ''; // No validation errors
     }
 
-    public function validate_datetime($input, $validation_rules, $datetime_format = null)
+    public function time($input, $validation_rules, $datetime_format = null)
     {
         foreach ($validation_rules as $rule) {
             $rule_name = $rule[0];
