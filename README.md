@@ -27,15 +27,15 @@ git clone https://github.com/Saboor-Hamedi/student-management-system.git
 #### Add Autoload Configuration:
 
 . Inside composer.json, add the following lines to configure autoloading with PSR-4:
-```
-{
-	"autoload": {
-		"psr-4": {
-			"Thesis\\": "App/"
-		}
-	}
-}
 
+```
+  {
+    "autoload": {
+      "psr-4": {
+        "Thesis\\": "App/"
+      }
+    }
+  }
 ```
 # Project Details
 
