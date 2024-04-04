@@ -17,14 +17,18 @@ class Scores extends MainController
     $params = [':user_id' => Auth::user_id()];
     $scores = $this->database->executeQuery($sql, $params);
     // Group scores by grade
-    $groupedScores = [];
-    foreach ($scores as $score) {
-      $gradeName = $score['name']; // Assuming 'name' is the field for grade name in your grades table
-      if (!isset($groupedScores[$gradeName])) {
-        $groupedScores[$gradeName] = [];
+    if (is_array($scores) || is_object($scores)) :
+      $groupedScores = [];
+      foreach ($scores as $score) {
+        $gradeName = $score['name']; // Assuming 'name' is the field for grade name in your grades table
+        if (!isset($groupedScores[$gradeName])) {
+          $groupedScores[$gradeName] = [];
+        }
+        $groupedScores[$gradeName][] = $score;
       }
-      $groupedScores[$gradeName][] = $score;
-    }
-    return $groupedScores;
+      return $groupedScores;
+    else :
+      return [];
+    endif;
   }
 }

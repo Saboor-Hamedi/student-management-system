@@ -19,12 +19,12 @@
         <p>Classes</p>
       </a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a href="<?php echo BASE_URL ?>/teacher/score.php" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Scores</p>
       </a>
-    </li>
+    </li> -->
     <li class="nav-item">
       <a href="<?php echo BASE_URL ?>/teacher/scores.php" class="nav-link">
         <i class="far fa-circle nav-icon"></i>

@@ -108,6 +108,9 @@
   position: absolute;
   cursor: pointer;
 }
+.card-footer{
+  padding: 5px;
+}
 /* CSS for fade-out animation */
 .flash-message {
   opacity: 1;

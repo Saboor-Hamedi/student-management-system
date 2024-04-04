@@ -33,17 +33,15 @@
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-tachometer-alt"></i>
     <p>
-      All Grades <?php echo $user_id;?>
+      All Grades
       <i class="right fas fa-angle-left"></i>
     </p>
   </a>
-
-
   <ul class="nav nav-treeview" style="display: block;">
-  <?php
+    <?php
     $sql = "SELECT * FROM classes WHERE classes.student_id = {$user_id} GROUP BY classes.grades";
     $grades = $database->query($sql);
-  ?>
+    ?>
     <?php foreach ($grades as $grade) : ?>
       <li class="nav-item">
         <a href="<?php echo BASE_URL ?>/student/grade.php?grade=<?php echo $grade['grades']; ?>" class="nav-link">

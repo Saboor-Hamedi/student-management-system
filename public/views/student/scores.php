@@ -6,7 +6,7 @@ use Thesis\config\Auth;
 use Thesis\controllers\students\Scores;
 use Thesis\functions\Roles;
 
- ?>
+?>
 <?php Auth::authenticate([Roles::getRole('isStudent')]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
@@ -31,9 +31,7 @@ use Thesis\functions\Roles;
           <div class="card">
             <div class="card-header">Scores</div>
             <div class="card-body">
-              <?php if (empty($groupedScores)) : ?>
-                <p>No score added yet.</p>
-              <?php else : ?>
+              <?php if (!empty($groupedScores)) : ?>
                 <?php foreach ($groupedScores as $gradeName => $scoresForGrade) : ?>
                   <table class="table table-hover table-condensed custom-table">
                     <thead>
@@ -56,12 +54,15 @@ use Thesis\functions\Roles;
                         </tr>
                       <?php endforeach; ?>
                     </tbody>
-
+                    <div class="card-footer">
+                      <?php echo $gradeName; ?>
+                    </div>
                   </table>
-                  <div class="container mt-2" style="margin: 0 auto;padding: 5px;  border-radius: 4px;">
-                    <p style="padding: 0px; margin: 0px; font-size: 18px;"><?php echo $gradeName; ?></p>
-                  </div>
                 <?php endforeach; ?>
+              <?php else : ?>
+                <tr>
+                  <td>No score found</td>
+                </tr>
               <?php endif; ?>
             </div>
           </div>

@@ -119,7 +119,8 @@ if (isset($_POST['insert_user_profile_button'])) {
                     <!--  -->
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="user_post_code" placeholder="Post Code Like (13842)" value="<?php echo $user_post_code; ?>">
+                        <input type="text" class="form-control" name="user_post_code" 
+                        placeholder="Post code e.g, 12345" value="<?php echo $user_post_code; ?>">
                         <span class="error">
                           <?php
                           if (isset($errors['user_post_code'])) {
@@ -129,7 +130,7 @@ if (isset($_POST['insert_user_profile_button'])) {
                         </span>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" name="phone_number" placeholder="Phone Number" value="<?php echo $phone_number; ?>">
+                        <input type="text" class="form-control" name="phone_number" placeholder="Phone number" value="<?php echo $phone_number; ?>">
                         <span class="error">
                           <?php
                           if (isset($errors['phone_number'])) {

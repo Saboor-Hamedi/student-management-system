@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../../../App/config/path.php';?>
+<?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
 <?php
 use Thesis\config\Auth;
@@ -20,25 +20,20 @@ use Thesis\functions\Roles;
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-
           <?php
           $scheduleController = new Schedule();
           $groupedClasses = $scheduleController->fetchSchedule(); ?>
           <!-- Check if groupedClasses is empty -->
-          <?php if (empty($groupedClasses)) : ?>
-            <p>No schedule yet</p>
-          <?php else : ?>
-
-            <div class="card">
-              <div class="card-header">Schedule</div>
-              <div class="card-body">
-                <?php foreach ($groupedClasses as $gradeName => $classesForGrade) : ?>
-                  <table class="table table-hover table-condensed custom-table">
+          <div class="card">
+            <div class="card-header">Schedule</div>
+            <div class="card-body">
+              <?php if (!empty($groupedClasses)) : ?>
+                <table class="table table-hover table-condensed custom-table">
+                  <?php foreach ($groupedClasses as $gradeName => $classesForGrade) : ?>
                     <thead>
                       <tr>
-                        <th>Grade</th>
-                        <th>Subject</th>
                         <th>Teacher</th>
+                        <th>Subject</th>
                         <th>Start</th>
                         <th>End</th>
                       </tr>
@@ -46,27 +41,25 @@ use Thesis\functions\Roles;
                     <tbody>
                       <?php foreach ($classesForGrade as $class) : ?>
                         <tr>
-                          <td><?php echo $gradeName; ?></td>
-                          <td><?php echo $class['subject_name']; ?></td>
                           <td><?php echo $class['teacher_lastname']; ?></td>
+                          <td><?php echo $class['subject_name']; ?></td>
                           <td><?php echo $class['start_class']; ?></td>
                           <td><?php echo $class['end_class']; ?></td>
                         </tr>
                       <?php endforeach; ?>
                     </tbody>
-                  </table>
-                  <div class="card mt-2">
-                    <div class="card-footer ">
+                    <div class="card-footer">
                       Grade <?php echo $gradeName; ?>
                     </div>
-                  </div>
-
-
-                <?php endforeach; ?>
-              </div>
+                  <?php endforeach; ?>
+                </table>
+              <?php else : ?>
+                <tr>
+                  <td>No schedule found</td>
+                </tr>
+              <?php endif; ?>
             </div>
-          <?php endif; ?>
-          </table>
+          </div>
         </div>
       </div>
     </div>

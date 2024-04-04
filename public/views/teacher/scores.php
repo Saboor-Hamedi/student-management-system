@@ -1,14 +1,11 @@
-<?php require_once __DIR__ . '/../../../App/config/path.php';
-path('header'); ?>
-
+<?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
+<?php path('header'); ?>
 <?php
-
 use Thesis\config\Auth;
 use Thesis\functions\Pagination;
 use Thesis\functions\Roles;
-
-Auth::authenticate([Roles::getRole('isTeacher')]);
 ?>
+<?php Auth::authenticate([Roles::getRole('isTeacher')]); ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->
@@ -77,7 +74,7 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                         </tr>
                       <?php endforeach; ?>
                     <?php else : ?>
-                      <tr>
+                      <tr class="odd">
                         <td colspan="3">No user added yet</td>
                       </tr>
                     <?php endif ?>

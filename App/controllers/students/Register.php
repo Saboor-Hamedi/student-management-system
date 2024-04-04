@@ -71,13 +71,8 @@ class Register extends MainController
         $data = $this->prepareData();
         $insert_result = $this->database->insert('school.students', $data);
         if ($insert_result) {
+          $this->clearInput();
           FlashMessage::setMessage('student updated', 'primary');
-          ClearInput::clear(
-            'student_profile_id',
-            'search_student_profile_name',
-            'student_lastname',
-            'student_sex',
-          );
         } else {
           FlashMessage::setMessage('Something went wrong!', 'danger');
         }
@@ -86,6 +81,8 @@ class Register extends MainController
       FlashMessage::addMessageWithException('Something went wrong', $e, 'danger');
     }
   }
+  // TODO: 
+  // prepare the data
   private function prepareData()
   {
     return [
@@ -94,6 +91,16 @@ class Register extends MainController
       'age' => InputUtils::sanitizeInput($_POST['student_age'], 'number_int'),
       'sex' => $_POST['student_sex'],
     ];
+  }
+  private function clearInput()
+  {
+    ClearInput::clear(
+      'student_profile_id',
+      'search_student_profile_name',
+      'student_lastname',
+      'student_age',
+      'student_sex',
+    );
   }
 
   // TODO:

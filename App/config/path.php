@@ -10,6 +10,7 @@ function path($path, $data = [])
         return require_once $file;
     } else {
         echo "Error: File '$file' does not exist.";
+        
         return false;
     }
 }

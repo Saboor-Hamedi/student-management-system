@@ -1,11 +1,9 @@
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
 <?php
-
 use Thesis\config\Auth;
 use Thesis\config\CallById;
 use Thesis\config\ClearInput;
-use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\controllers\students\Register;
 ?>
@@ -39,10 +37,10 @@ $errors = $register->register();
               <form method="POST" action="<?php ClearInput::selfURL(); ?>">
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="student_profile_id" name="student_profile_id" placeholder="student id number" value="<?php echo getInputValue('student_profile_id') ?>" readonly>
-                      <?php error($errors, 'student_profile_id'); ?>
-                    </div>
+                    <!-- <div class="form-group"> -->
+                      <input type="hidden" class="form-control" id="student_profile_id" name="student_profile_id" placeholder="student id number" value="<?php echo getInputValue('student_profile_id') ?>" readonly>
+                      <?php //error($errors, 'student_profile_id'); ?>
+                    <!-- </div> -->
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">

@@ -84,16 +84,18 @@ $errors = $profileUpdate->update();
 
                     </div>
                   </div>
-                  <div class="card">
-                    <div class="card-footer">
-                      <button type="submit" name="update_userinfo_button" class="btn btn-primary">Submit</button>
-                    </div>
+                  <div class="card-footer">
+                    <button type="submit" name="update_userinfo_button" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
+              </div>
+              <div class="card-footer">
+                <p></p>
               </div>
             </div>
           </div>
         </div>
+
         <div>
     </section>
 </div>

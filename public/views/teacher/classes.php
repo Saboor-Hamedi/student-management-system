@@ -65,7 +65,7 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                               /* INNER JOIN users ON teachers.teacher_id = users.id */
                               INNER JOIN students ON classes.student_id = students.student_id              
                               WHERE teachers.teacher_id = {$user_id}"; ?>
-                    <?php $paginate = Pagination::paginate($database, $sql,2); ?>
+                    <?php $paginate = Pagination::paginate($database, $sql, 2); ?>
                     <?php if (!empty($paginate['records'])) : ?>
                       <?php foreach ($paginate['records'] as $row) : ?>
                         <tr class="odd">
@@ -98,6 +98,10 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                   echo $paginate['paginationHtml']; ?>
                 </nav>
               </div>
+             
+            </div>
+            <div class="card-footer">
+              <p></p>
             </div>
           </div>
         </div>
