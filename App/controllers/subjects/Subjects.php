@@ -125,7 +125,7 @@ class Subjects extends MainController
       $this->errors['selected_teacher_id'] = 'This account is not a teacher';
     }
     // ! checks if teacher exists
-    if (!$this->callbyid->if_teacher_id_exists('school.teachers', $_POST['selected_teacher_id'])) {
+    if (!$this->callbyid->doesTeacherIdExist('school.teachers', $_POST['selected_teacher_id'])) {
       $this->errors['selected_teacher_id'] = 'Teacher id did not match';
     }
   }
@@ -156,7 +156,7 @@ class Subjects extends MainController
       $this->errors['student_id'] = 'This is account is not a student';
     }
     // ! check if the students id exists 
-    if (!$this->callbyid->if_student_id_exists('school.students', $_POST['student_id'])) {
+    if (!$this->callbyid->doesStudentIdExist('school.students', $_POST['student_id'])) {
       $this->errors['student_id'] = 'Student ID did not match';
     }
   }

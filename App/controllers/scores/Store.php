@@ -80,11 +80,11 @@ class Store
             $this->errors['student_id'] = 'This is account is not a student';
         }
         // ! check if the students id exists 
-        if (!$this->callbyid->if_student_id_exists('school.classes', $student_id)) {
+        if (!$this->callbyid->doesStudentIdExist('school.classes', $student_id)) {
             $this->errors['student_id'] = 'Student ID did not match';
         }
         // ! check if the teacher id exists 
-        if (!$this->callbyid->if_teacher_id_exists('school.classes', $teacher_id)) {
+        if (!$this->callbyid->doesTeacherIdExist('school.classes', $teacher_id)) {
             $this->errors['teacher_id'] = 'Teacher ID did not match';
         }
         // ! search with student names, on students table, using ajax

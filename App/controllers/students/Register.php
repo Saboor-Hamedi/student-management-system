@@ -51,7 +51,7 @@ class Register extends MainController
     }
   }
   // TODO: 
-  // ! This function would be responsible for inserteing s student
+  // ! This function would be responsible for inserting a student
   public function register()
   {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -64,7 +64,7 @@ class Register extends MainController
       if (!empty($this->errors)) {
         return $this->errors;
       }
-      $hasUpdate = $this->callbyid->if_student_id_exists('school.students', InputUtils::sanitizeInput($_POST['student_profile_id'], 'number_int'));
+      $hasUpdate = $this->callbyid->doesStudentIdExist('school.students', InputUtils::sanitizeInput($_POST['student_profile_id'], 'number_int'));
       if (!empty($hasUpdate)) {
         FlashMessage::setMessage('This student already exists', 'info');
       } else {

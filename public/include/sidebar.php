@@ -1,10 +1,6 @@
-<?php
-
-use Thesis\functions\Roles; ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <a href="<?php echo BASE_URL ?>/home.php" class="brand-link">
-    <img src="<?php assets("img/AdminLTELogo.png") ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-      style="opacity: .8">
+    <img src="<?php assets("img/AdminLTELogo.png") ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">AHS</span>
   </a>
   <!-- Sidebar -->
@@ -29,15 +25,15 @@ use Thesis\functions\Roles; ?>
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <?php if ($roles === 0): ?>
-        <?php require_once __DIR__ . '/nav/admin.php'; ?>
-        <!-- end admin -->
-        <?php elseif ($roles === 2): ?>
-        <?php require_once __DIR__ . '/nav/teacher.php'; ?>
-        <!-- end teacher -->
+        <?php if ($roles === 0) : ?>
+          <?php require_once __DIR__ . '/nav/admin.php'; ?>
+          <!-- end admin -->
+        <?php elseif ($roles === 2) : ?>
+          <?php require_once __DIR__ . '/nav/teacher.php'; ?>
+          <!-- end teacher -->
 
-        <?php else: ?>
-        <?php require_once __DIR__ . '/nav/student.php'; ?>
+        <?php else : ?>
+          <?php require_once __DIR__ . '/nav/student.php'; ?>
         <?php endif; ?>
 
         <li class="nav-item">

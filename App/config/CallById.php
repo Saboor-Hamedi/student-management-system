@@ -50,15 +50,15 @@ class CallById
         }
     }
     // TODO this goes for Student class
-    public function if_student_id_exists($table, $id)
+    public function doesStudentIdExist($table, $id)
     {
         $sql = "SELECT student_id FROM $table WHERE student_id = ? ";
         $params = [$id];
         $result = $this->database->query($sql, $params);
         return count($result) > 0;
     }
-    // TODO this goes for TeachersProfile class
-    public function if_teacher_id_exists($table, $teacher_id)
+    // TODO this goes for TeacherProfileUpdate class
+    public function doesTeacherIdExist($table, $teacher_id)
     {
         $sql = "SELECT teacher_id FROM $table WHERE teacher_id = ? ";
         $params = [$teacher_id];
