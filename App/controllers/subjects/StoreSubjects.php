@@ -16,16 +16,6 @@ class StoreSubjects extends MainController
         $this->database = Database::GetInstance();
         $this->callbyid = new CallById();
     }
-    public function loadSubject()
-    {
-        if (isset($_POST['name']) && $_POST['name'] !== '') {
-            $name = $_POST['name'];
-            $subjectsData = $this->callbyid->get_subjects_by_name('school.subjects_repositories', $name);
-            echo json_encode($subjectsData, JSON_PRETTY_PRINT);
-        } else {
-            http_response_code(400); // Bad Request
-        }
-    }
     public function loadGrade()
     {
         if (isset($_POST['name']) && $_POST['name'] !== '') {

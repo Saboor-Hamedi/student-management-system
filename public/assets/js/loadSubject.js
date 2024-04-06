@@ -16,7 +16,7 @@ $(document).ready(function () {
                 var query = inputField.val().trim();
                 if (query !== '') {
                     $.ajax({
-                        url: '../../views/files/Loadsubjects.php',
+                        url: '../../views/files/loadSubject.php',
                         method: 'POST',
                         data: { name: query },
                         dataType: 'json',

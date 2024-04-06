@@ -111,7 +111,6 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                 <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
                   <?php FlashMessage::displayMessages(); ?>
                   <form method="POST" action="<?php ClearInput::selfURL(); ?>?id=<?php echo $id; ?>">
-
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
@@ -170,7 +169,6 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                     </div>
                     <!--  -->
                     <div class="row">
-
                       <!-- <div class="col-md-6">
                       <div class="form-group">
                         <div class="search-container">

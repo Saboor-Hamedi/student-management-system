@@ -14,9 +14,9 @@
 <script src="<?php assets("datetimepicker/jquery.datetimepicker.full.js") ?>"></script>
 <script src="<?php assets("datetimepicker/jquery.datetimepicker.full.min.js") ?>"></script>
 <script src="<?php assets("datetimepicker/jquery.datetimepicker.min.js") ?>"></script>
-<script src="<?php //assets("js/Loadgrades.js")
+<script src="<?php //assets("js/loadGrade.js")
               ?>"></script>
-<script src="<?php assets("js/loadStudents.js") ?>"></script>
+<script src="<?php assets("js/loadStudent.js") ?>"></script>
 <script src="<?php assets("js/Loadstudentsprofile.js") ?>"></script>
 <script src="<?php assets("js/loadTeacher.js") ?>"></script>
 <script src="<?php assets("js/DeleteScore.js") ?>"></script>

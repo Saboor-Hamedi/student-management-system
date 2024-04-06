@@ -1,12 +1,14 @@
 <?php
 
 namespace Thesis\controllers\scores;
+
 use Thesis\config\CallById;
 use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
 use Thesis\config\ClearInput;
-class Store 
+
+class Store
 {
     private $database;
     protected $connection;
@@ -144,5 +146,4 @@ class Store
             }
         }
     }
-  
 }

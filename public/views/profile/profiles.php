@@ -74,7 +74,7 @@ if (isset($_POST['insert_user_profile_button'])) {
 <!-- Main Sidebar Container -->
 <?php path('sidebar', ['roles' => $roles, 'username' => $username, 'user_id' => $user_id, 'database' => $database]); ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="height: auto;">
   <section class="content">
     <?php //path("cards"); 
     ?>

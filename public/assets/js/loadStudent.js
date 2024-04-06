@@ -9,7 +9,7 @@ $(document).ready(function () {
         if (query !== '') {
             // Make an AJAX call to the PHP file to get the search results
             $.ajax({
-                url: '../../views/files/loadStudents.php',
+                url: '../../views/files/loadStudent.php',
                 method: 'POST',
                 data: { roles_id: query },
                 dataType: 'json',
