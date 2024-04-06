@@ -4,7 +4,6 @@ namespace Thesis\config;
 
 use Exception;
 use PDO;
-use PDOException;
 use Thesis\controllers\Login;
 
 /**
@@ -96,10 +95,8 @@ class Database
             } else {
                 return $statement->rowCount();
             }
-        } catch (PDOException $e) {
-            // Log and handle the error
-            error_log('Database Error: ' . $e->getMessage());
-            throw new Exception('An error occurred while executing database query.');
+        } catch (Exception $e) {
+            $this->error($e);
         }
     }
 
@@ -123,7 +120,7 @@ class Database
             }
 
             return $statement->execute();
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             $this->error($e);
         }
     }
@@ -147,7 +144,7 @@ class Database
             $statement->execute();
 
             return $statement->rowCount(); // Return the number of affected rows
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             $this->error($e);
         }
     }
@@ -423,7 +420,7 @@ class Database
     public function error($error)
     {
         error_log('Database Error: ' . $error->getMessage());
-        throw new Exception('An error occurred while executing database operation.');
+        throw new Exception('Something went wrong, make sure you have registered all users');
     }
 
     /**

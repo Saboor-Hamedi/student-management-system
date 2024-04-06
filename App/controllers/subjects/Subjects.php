@@ -1,8 +1,8 @@
 <?php
 // TODO:
-// ! This class is responsible to add new subject students
-// ! This class is only avaliable for admin
-// ! This class would be call on views/subject/subject.php 
+// * This class is responsible to add new subject students
+// * This class is only available for admin
+// * This class would be call on views/subject/subject.php 
 namespace Thesis\controllers\subjects;
 
 use Exception;
@@ -16,16 +16,16 @@ use Thesis\functions\InputUtils;
 class Subjects extends MainController
 {
   protected $errors = [];
-  protected $callbyid;
+  protected $callByID;
   /**
    * Subjects constructor.
    *
-   * @param Callbyid $callbyid
+   * @param CallById $callByID
    */
-  public function __construct(Callbyid $callbyid)
+  public function __construct(CallById $callByID)
   {
     parent::__construct();
-    $this->callbyid = $callbyid;
+    $this->callByID = $callByID;
   }
   // TODO:
   /**
@@ -49,8 +49,8 @@ class Subjects extends MainController
   }
 
   //  TODO:
-  // ! Store the subjects
-  public function store()
+  // * Store the subjects
+  public function addSubject()
   {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
       return;
@@ -59,12 +59,13 @@ class Subjects extends MainController
 
       $validate = new Validation();
       $this->errors = $this->input($validate);
-      // ! check if erros is empty
+      // * check if errors is empty
       if (!empty($this->errors)) {
         return $this->errors;
       }
       $data = $this->prepareData();
       $subject = $this->database->insert('school.classes', $data);
+      var_dump($subject);
       if ($subject) {
         $this->clearInput();
         FlashMessage::setMessage('New class created', 'success');
@@ -77,7 +78,7 @@ class Subjects extends MainController
   }
   private function prepareData()
   {
-    return [
+    $data = [
       'teacher_id' => InputUtils::sanitizeInput($_POST['selected_teacher_id'], 'number_int'),
       'student_id' => InputUtils::sanitizeInput($_POST['student_id'], 'number_int'),
       'subject_name' => InputUtils::sanitizeInput($_POST['subject_names'], 'string'),
@@ -85,6 +86,7 @@ class Subjects extends MainController
       'end_class' => InputUtils::sanitizeInput($_POST['end_subject_time'], 'string'),
       'grades' => $_POST['select_grades'],
     ];
+    return $data;
   }
   private function clearInput()
   {
@@ -101,18 +103,18 @@ class Subjects extends MainController
   }
   private function input($input)
   {
-    $this->validateStudentId($input);
+    $this->validateTeacherId($input);
     $this->validateSearchLive($input);
     $this->validateSubjectName($input);
-    $this->validateSudentId($input);
+    $this->validateStudentId($input);
     $this->validateSearchName($input);
     $this->validateSubjectStartTime($input);
     $this->validateSubjectEndTime($input);
     $this->validateGrades($input);
     return array_filter($this->errors);
   }
-  //  ! selected_teacher_id, validate for teacher id
-  private function validateStudentId($input)
+  // * selected_teacher_id, validate for teacher id
+  private function validateTeacherId($input)
   {
     $rules = [
       ['required',  'Required teacher id'],
@@ -120,16 +122,12 @@ class Subjects extends MainController
       ['min_value', 'Teacher must be not less not 1', 1]
     ];
     $this->errors['selected_teacher_id'] = $input->number($_POST['selected_teacher_id'], $rules);
-    //  ! check if the roles are 2, teachers
-    if (!$this->callbyid->if_user_exists('school.users', $_POST['selected_teacher_id'], 2)) {
-      $this->errors['selected_teacher_id'] = 'This account is not a teacher';
-    }
-    // ! checks if teacher exists
-    if (!$this->callbyid->doesTeacherIdExist('school.teachers', $_POST['selected_teacher_id'])) {
-      $this->errors['selected_teacher_id'] = 'Teacher id did not match';
+    // * checks if teacher exists
+    if (!$this->callByID->doesTeacherIdExist('school.teachers', $_POST['selected_teacher_id'])) {
+      $this->errors['selected_teacher_id'] = 'This teacher is not yet registered';
     }
   }
-  //  ! search_teacher_live, validate search for teacher
+  // * search_teacher_live, validate search for teacher
   private function validateSearchLive($input)
   {
     $rules = [
@@ -137,13 +135,13 @@ class Subjects extends MainController
     ];
     $this->errors['search_teacher_live'] = $input->string($_POST['search_teacher_live'], $rules);
   }
-  // ! validate subject name
+  // * validate subject name
   private function validateSubjectName($input)
   {
     $this->errors['subject_names'] = $input->options($_POST['subject_names']);
   }
-  // ! validate student id
-  private function validateSudentId($input)
+  // * validate student id
+  private function validateStudentId($input)
   {
     $rules = [
       ['required', 'Required student id'],
@@ -151,28 +149,24 @@ class Subjects extends MainController
       ['min_value', 'Student must be not less not 1', 1]
     ];
     $this->errors['student_id'] = $input->number($_POST['student_id'], $rules);
-    // ! check if the roles are 1, students
-    if (!$this->callbyid->if_user_exists('school.users', $_POST['student_id'], 1)) { // check if teacher userid is match 
-      $this->errors['student_id'] = 'This is account is not a student';
-    }
-    // ! check if the students id exists 
-    if (!$this->callbyid->doesStudentIdExist('school.students', $_POST['student_id'])) {
-      $this->errors['student_id'] = 'Student ID did not match';
+    // * check if the students id exists 
+    if (!$this->callByID->doesStudentIdExist('school.students', $_POST['student_id'])) {
+      $this->errors['student_id'] = 'This is not yet registered';
     }
   }
-  // ! validate student search name
+  // * validate student search name
   private function validateSearchName($input)
   {
     $rules = [
       ['required', 'Required student name']
     ];
     $this->errors['search_student_names'] = $input->string($_POST['search_student_names'], $rules);
-    // ! search with student names, on students table, using ajax
-    if (!$this->callbyid->get_by_roles('school.users', $_POST['search_student_names'], 1)) {
+    // * search with student names, on students table, using ajax
+    if (!$this->callByID->get_by_roles('school.users', $_POST['search_student_names'], 1)) {
       $this->errors['search_student_names'] = 'Student name did not match';
     }
   }
-  // ! validate the start time of the subjects
+  // * validate the start time of the subjects
   private function validateSubjectStartTime($input)
   {
     $rules = [
@@ -180,7 +174,7 @@ class Subjects extends MainController
     ];
     $this->errors['start_subject_time'] = $input->time($_POST['start_subject_time'], $rules);
   }
-  // ! validate the end time of the subjects
+  // * validate the end time of the subjects
   private function validateSubjectEndTime($input)
   {
     $rules = [

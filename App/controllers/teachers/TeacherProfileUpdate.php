@@ -59,6 +59,7 @@ class TeacherProfileUpdate extends MainController
     }
   }
 
+  // ! validate form or input 
   private function input($input)
   {
     $errors = [];

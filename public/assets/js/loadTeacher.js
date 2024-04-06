@@ -10,7 +10,7 @@ $(document).ready(function () {
             // Make an AJAX call to the PHP file to get the search results
             console.log('Sending AJAX request with query:', query);
             $.ajax({
-                url: "../../views/files/Loadteachers.php",
+            url: "../../views/files/loadTeacher.php",
                 method: 'POST',
                 data: { roles_id: query },
                 dataType: 'json',
