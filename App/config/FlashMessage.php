@@ -1,4 +1,5 @@
 <?php
+
 namespace Thesis\config;
 
 
@@ -39,7 +40,6 @@ class FlashMessage
             self::clearMessages();
         }
         ob_end_flush();
-
     }
     public static function addMessageWithException(string $message, Exception $exception, string $type = 'info')
     {
@@ -51,8 +51,7 @@ class FlashMessage
     public static function redirect(string $url, string $message, string $type = 'info')
     {
         self::setMessage($message, $type);
-        header("Location: $url");
-        exit();
+        header("Location:" . BASE_URL . "{$url}");
     }
 }
 

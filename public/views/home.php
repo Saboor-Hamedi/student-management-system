@@ -18,6 +18,8 @@
 <?php
 
 use Thesis\config\Auth;
+use Thesis\config\FlashMessage;
+
 ?>
 <?php Auth::authenticate([0, 1, 2]); ?>
 <?php path('navbar'); // navbar 
@@ -41,6 +43,7 @@ use Thesis\config\Auth;
       <div class="card"></div>
     <?php endif; ?>
     <div class="container-fluid">
+      
       <div class="row">
         <div class="col-12">
           <div class="card ">
@@ -52,6 +55,7 @@ use Thesis\config\Auth;
             </div>
             <!-- body -->
             <div class="card-body">
+            <?php FlashMessage::displayMessages(); ?>
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <table class="table table-hover table-condensed">
                   <thead>

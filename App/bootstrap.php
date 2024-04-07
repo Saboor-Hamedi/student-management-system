@@ -1,4 +1,9 @@
 <?php session_start();  ?>
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
 <?php require_once __DIR__ . '../../vendor/autoload.php'; ?>
 <?php define('BASE_URL', 'http://localhost:8888/views'); ?>
 

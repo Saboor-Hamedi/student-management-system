@@ -43,7 +43,6 @@ class UpdateUserProfile
   /**
    * editUserProfile
    *
-   * @return void
    */
   public function editUserProfile()
   {
@@ -51,11 +50,10 @@ class UpdateUserProfile
       return;
     }
     try {
-
       $errors = $this->input($this->validation);
 
       if (!empty($errors)) {
-        return null; // * change this to return $errors if something went wrong.
+        return $errors; // Return errors if validation fails
       }
 
       $data = $this->prepareData();
@@ -65,12 +63,10 @@ class UpdateUserProfile
       }
       $hasChanged = $this->isChanged($data['id']);
       if ($hasChanged) {
-        $this->update($data);
-      } else {
-        $this->flash->setMessage('Nothing changed', 'info');
+        return $this->update($data);
       }
     } catch (Exception $e) {
-      $this->flash->addMessageWithException('Something went wrong', $e, 'danger');
+      return null;
     }
   }
   /**
@@ -109,7 +105,7 @@ class UpdateUserProfile
    * @param  mixed $data
    * @return void
    */
-  private function update(array $data)
+  private function update(array $data): void
   {
     $sql = "UPDATE school.users SET username = :username, email = :email, roles = :roles";
     if (isset($data['password'])) {
@@ -126,7 +122,8 @@ class UpdateUserProfile
     if ($update) {
       $this->flash->setMessage('Record updated', 'success');
     } else {
-      $this->flash->setMessage('Record not updated', 'info');
+      $this->flash->setMessage('Nothing changed', 'info');
+
     }
   }
 
