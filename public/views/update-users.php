@@ -1,3 +1,7 @@
+<?php
+use Thesis\config\Validation;
+
+?>
 <?php require_once __DIR__ . '/../../App/config/path.php'; ?>
 <?php path("header"); ?>
 <?php
@@ -5,24 +9,31 @@
 use Thesis\config\Auth;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
-use Thesis\controllers\profile\ProfileUpdate;
-use Thesis\controllers\UpdateUserInfo;
+use Thesis\controllers\profile\UpdateUserProfile;
 use Thesis\functions\Roles;
 
 ?>
 <?php Auth::authenticate([Roles::getRole('isAdmin')]); ?>
 <?php
-$id = isset($_GET['id']) ? $_GET['id'] : null;
-$user_update = new UpdateUserInfo();
-$profileUpdate = new ProfileUpdate();
-$errors = $profileUpdate->update();
-?>
+$id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$validation = new Validation();
+$flash = new FlashMessage();
+$profileUpdate = new UpdateUserProfile($database, $validation, $flash);
+$errors = $profileUpdate->editUserProfile();
 
-<!-- header on the top, Navbar -->
-<?php path("navbar"); ?>
-<!-- Main Sidebar Container -->
-<?php path('sidebar', ['roles' => $roles, 'username' => $username, 'user_id' => $user_id, 'database' => $database]); ?>
-<!-- ==== -->
+?>
+<?php path("navbar"); //navbar 
+?>
+<?php path(
+  'sidebar',
+  [
+    'roles' => $roles,
+    'username' => $username,
+    'user_id' => $user_id,
+    'database' => $database
+  ]
+); //sidebar
+?>
 <div class="content-wrapper " style="height: auto;">
   <section class="content">
     <section class="content">

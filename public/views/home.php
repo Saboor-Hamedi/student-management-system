@@ -1,4 +1,5 @@
 <?php
+
 /** 
  *  Read: 
  *  * The file is on: views/home.php
@@ -15,12 +16,21 @@
 <?php path('header'); // header 
 ?>
 <?php
+
 use Thesis\config\Auth;
 ?>
 <?php Auth::authenticate([0, 1, 2]); ?>
-<?php path('navbar'); // navrbar 
+<?php path('navbar'); // navbar 
 ?>
-<?php path('sidebar', ['roles' => $roles, 'username' => $username, 'user_id' => $user_id, 'database' => $database]); // sidebar 
+<?php path(
+  'sidebar',
+  [
+    'roles' => $roles,
+    'username' => $username,
+    'user_id' => $user_id,
+    'database' => $database
+  ]
+); // sidebar 
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="height: auto;">

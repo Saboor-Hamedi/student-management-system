@@ -1,4 +1,5 @@
 <?php
+
 /** 
  *  Read: 
  *  * The file is on: views/profile/profiles.php
@@ -17,12 +18,14 @@
 ?>
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
-<?php 
+<?php
+
 use Thesis\config\Auth;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
 use Thesis\controllers\profile\UserInformation;
 use Thesis\functions\Roles;
+
 ?>
 <?php
 $insert_information = new UserInformation();
@@ -32,7 +35,7 @@ $insert_information = new UserInformation();
 
 $user_country_errors = '';
 $user_address_errors = '';
-$uuser_post_code_errors = '';
+$user_post_code_errors = '';
 $phone_number_error = '';
 $user_country = '';
 $user_address = '';
@@ -58,7 +61,7 @@ if (isset($_POST['insert_user_profile_button'])) {
       $user_address_errors = $errors['user_address'];
     }
     if (isset($errors['user_post_code'])) {
-      $uuser_post_code_errors = $errors['user_post_code'];
+      $user_post_code_errors = $errors['user_post_code'];
     }
     if (isset($errors['phone_number'])) {
       $phone_number_error = $errors['phone_number'];
@@ -69,19 +72,25 @@ if (isset($_POST['insert_user_profile_button'])) {
   }
 }
 ?>
-<!-- header on the top, Navbar -->
-<?php path("navbar"); ?>
+<?php path("navbar"); //navbar
+?>
 <!-- Main Sidebar Container -->
-<?php path('sidebar', ['roles' => $roles, 'username' => $username, 'user_id' => $user_id, 'database' => $database]); ?>
+<?php path(
+  'sidebar',
+  [
+    'roles' => $roles,
+    'username' => $username,
+    'user_id' => $user_id,
+    'database' => $database
+  ]
+); // sidebar
+?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="height: auto;">
   <section class="content">
-    <?php //path("cards"); 
-    ?>
     <div class="card"></div>
     <div class="container-fluid">
       <div class="row">
-        <!-- student -->
         <div class="col-12">
           <div class="card">
             <div class="card-header">
@@ -135,8 +144,7 @@ if (isset($_POST['insert_user_profile_button'])) {
                     <!--  -->
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="user_post_code" 
-                        placeholder="Post code e.g, 12345" value="<?php echo $user_post_code; ?>">
+                        <input type="text" class="form-control" name="user_post_code" placeholder="Post code e.g, 12345" value="<?php echo $user_post_code; ?>">
                         <span class="error">
                           <?php
                           if (isset($errors['user_post_code'])) {
@@ -164,20 +172,12 @@ if (isset($_POST['insert_user_profile_button'])) {
                     </div>
                   </div>
                 </form>
-                <!-- end profile -->
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-</div>
-</div>
-
-<!-- end student -->
-</div>
-</div>
-</section>
+  </section>
 </div>
 <?php path("footer"); ?>

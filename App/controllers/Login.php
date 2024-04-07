@@ -35,7 +35,7 @@ class Login
         try {
             // Input validation
             if (empty ($email) || empty ($password)) {
-                throw new Exception('Email and password are required.');
+                throw new Exception('Email and password are required');
             }
 
             $sql = "SELECT * FROM users WHERE email = :email";
@@ -47,7 +47,7 @@ class Login
                 $user = $result[0];
                 $storedPassword = $user['password'];
                 if (password_verify($password, $storedPassword)) {
-                    $this->revemoPassword($user);
+                    $this->removePassword($user);
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['roles'] = $user['roles'];
                     $_SESSION['username'] = $user['username'];
@@ -72,7 +72,7 @@ class Login
   
 
 
-    private function revemoPassword(&$user)
+    private function removePassword(&$user)
     {
         unset($user['password']);
     }
