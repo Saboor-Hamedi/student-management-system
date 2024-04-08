@@ -1,9 +1,11 @@
 <?php
 
+use Thesis\config\Validation;
+
 /** 
  *  Read: 
  *  * The file is on: views/profile/profiles.php
- *  - This file belongs to both teachers & studetns
+ *  - This file belongs to both teachers & students
  *  - This file enables teachers and students to update their profiles, the attributes as follows:
  *    1- country 
  *    2- post code (zip-code)
@@ -23,58 +25,16 @@
 use Thesis\config\Auth;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
-use Thesis\controllers\profile\UserInformation;
+use Thesis\controllers\profile\InsertUserProfile;
 use Thesis\functions\Roles;
 
 ?>
-<?php
-$insert_information = new UserInformation();
-?>
 <?php Auth::authenticate([Roles::getRole('isStudent'), Roles::getRole('isTeacher')]); ?>
-<?php
-
-$user_country_errors = '';
-$user_address_errors = '';
-$user_post_code_errors = '';
-$phone_number_error = '';
-$user_country = '';
-$user_address = '';
-$user_post_code = '';
-$phone_number = '';
-// move tot he top
-
-if (isset($_POST['insert_user_profile_button'])) {
-  $user_main_id = $_POST['user_main_id'];
-  $user_country = $_POST['user_country'];
-  $user_address = $_POST['user_address'];
-  $user_post_code = $_POST['user_post_code'];
-  $phone_number = $_POST['phone_number'];
-
-  $result = $insert_information->validate_user_profile($user_main_id, $user_country, $user_address, $user_post_code, $phone_number);
-  if (isset($result['errors'])) {
-    // Handle validation errors
-    $errors = $result['errors'];
-    if (isset($errors['user_country'])) {
-      $user_country_errors = $errors['user_country'];
-    }
-    if (isset($errors['user_address'])) {
-      $user_address_errors = $errors['user_address'];
-    }
-    if (isset($errors['user_post_code'])) {
-      $user_post_code_errors = $errors['user_post_code'];
-    }
-    if (isset($errors['phone_number'])) {
-      $phone_number_error = $errors['phone_number'];
-    }
-  } else {
-    // Data is valid, perform the insertion into the database
-    $insert_information->insertOrUpdateUserInformation($user_main_id, $user_country, $user_address, $user_post_code, $phone_number);
-  }
-}
-?>
-<?php path("navbar"); //navbar
-?>
-<!-- Main Sidebar Container -->
+<?php $validation = new Validation(); ?>
+<?php $flash = new FlashMessage(); ?>
+<?php $insert = new InsertUserProfile($database, $validation, $flash); ?>
+<?php $errors = $insert->insertProfile(); ?>
+<?php path("navbar"); ?>
 <?php path(
   'sidebar',
   [
@@ -101,70 +61,54 @@ if (isset($_POST['insert_user_profile_button'])) {
             <!-- body -->
             <div class="card-body">
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <?php FlashMessage::displayMessages(); ?>
-                <?php
-                $inserted_data = $database->UserInfomation('school.userinformation', $user_id);
-                if (!empty($inserted_data)) {
-                  $user_country = $inserted_data[0]['country'];
-                  $user_address = $inserted_data[0]['address'];
-                  $user_post_code = $inserted_data[0]['zip_code'];
-                  $phone_number = $inserted_data[0]['phone_number'];
-                }
-
-                ?>
-                <!-- insert profile -->
+                <?php $posts = $insert->users('userinformation', Auth::user_id()); ?>
+                <?php if (!empty($posts)) {
+                  $user_id = $posts['user_id'];
+                  $country = $posts['country'];
+                  $address = $posts['address'];
+                  $code  = $posts['zip_code'];
+                  $phoneNumber = $posts['phone_number'];
+                } ?>
                 <form method="POST" action="<?php ClearInput::selfURL(); ?>">
-                  <div class=" row">
-                    <!-- display user_id -->
-                    <div class="col-lg-12 mb-2">
-                      <input type="hidden" class="form-control" name="user_main_id" placeholder="User Main ID" value="<?php echo $user_id; ?>">
+                  <?php FlashMessage::displayMessages(); ?>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <!-- <div class="form-group"> -->
+                      <input type="hidden" class="form-control" name="user_main_id" placeholder="User Main ID" value="<?php echo $user_id ?>" readonly>
+                      <?php //error($errors, 'user_main_id'); 
+                      ?>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="user_country" placeholder="Where are you from ?" value="<?php echo isset($country) ? $country : getInputValue('user_country');
+                                                                                                                              ?>">
+                        <?php error($errors, 'user_country'); ?>
+                      </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="user_country" placeholder="Where are you from ?" value="<?php echo $user_country; ?>">
-                        <span class="error">
-                          <?php
-                          if (isset($errors['user_country'])) {
-                            echo $errors['user_country'];
-                          }
-                          ?>
-                        </span>
-                      </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" name="user_address" value="<?php echo $user_address; ?>" placeholder="Where do you live">
-                        <span class="error">
-                          <?php
-                          if (isset($errors['user_address'])) {
-                            echo $errors['user_address'];
-                          }
-                          ?>
-                        </span>
+                        <input type="text" class="form-control" name="user_address" value="<?php echo isset($address) ? $address : getInputValue('user_address'); ?>" placeholder="Where do you live">
+                        <?php error($errors, 'user_address'); ?>
                       </div>
                     </div>
-                    <!--  -->
+                  </div>
+                  <!--  -->
+                  <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="user_post_code" placeholder="Post code e.g, 12345" value="<?php echo $user_post_code; ?>">
-                        <span class="error">
-                          <?php
-                          if (isset($errors['user_post_code'])) {
-                            echo $errors['user_post_code'];
-                          }
-                          ?>
-                        </span>
-                      </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" name="phone_number" placeholder="Phone number" value="<?php echo $phone_number; ?>">
-                        <span class="error">
-                          <?php
-                          if (isset($errors['phone_number'])) {
-                            echo $errors['phone_number'];
-                          }
-                          ?>
-                        </span>
+                        <input type="text" class="form-control" name="user_post_code" placeholder="Post code e.g, 12345" value="<?php echo isset($code) ? $code : getInputValue('user_post_code'); ?>">
+                        <?php error($errors, 'user_post_code'); ?>
                       </div>
                     </div>
-                    <!--  -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="phone_number" placeholder="Phone number" value="<?php echo isset($phoneNumber) ? $phoneNumber : getInputValue('phone_number'); ?>">
+                        <?php error($errors, 'phone_number'); ?>
+                      </div>
+                    </div>
                   </div>
                   <div class="card">
                     <div class="card-footer">

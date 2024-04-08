@@ -161,18 +161,21 @@ class Database
         $statement = $this->connection->prepare($sql);
         $statement->execute();
     }
+
     /**
-     * Summary of UserInfomation
-     * @param mixed $tableName
-     * @return array
+     * information
+     *
+     * @param  mixed $table
+     * @param  mixed $id
+     * @return void
      */
-    public function UserInfomation($tableName, $id)
+    public function information($table, $id)
     {
-        $query = "SELECT * FROM $tableName WHERE user_id = :id";
+        $query = "SELECT * FROM $table WHERE user_id = :id LIMIT 1";
         $statement = $this->connection->prepare($query);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
     public function adminUsers($table, $roles)
     {
@@ -263,41 +266,6 @@ class Database
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-    /**
-     * Summary of GetPaginatedUsers
-     * @param mixed $tableName
-     * @param mixed $page
-     * @param mixed $perPage
-     * @return array
-     */
-    public function GetPaginatedUsers($tableName, $page, $perPage)
-    {
-        $offset = ($page - 1) * $perPage;
-
-        $query = "SELECT * FROM $tableName LIMIT :offset, :perPage";
-        $statement = $this->connection->prepare($query);
-        $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $statement->bindValue(':perPage', $perPage, PDO::PARAM_INT);
-        $statement->execute();
-
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Summary of GetTotalUserCount
-     * @param mixed $tableName
-     * @return mixed
-     */
-    public function GetTotalUserCount($tableName)
-    {
-        $query = "SELECT COUNT(*) as total FROM $tableName";
-        $statement = $this->connection->prepare($query);
-        $statement->execute();
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
-
-        return $result['total'];
-    }
     /**
      * Summary of EmailExists
      * @param mixed $email
@@ -319,13 +287,13 @@ class Database
     }
     /**
      * Summary of getById
-     * @param mixed $tableName
+     * @param mixed $table
      * @param mixed $id
      * @return mixed
      */
-    public function getById($tableName, $id)
+    public function getById($table, $id)
     {
-        $query = "SELECT * FROM $tableName WHERE id = :id";
+        $query = "SELECT * FROM $table WHERE id = :id";
         $statement = $this->connection->prepare($query);
         $statement->bindParam(':id', $id);
         $statement->execute();
