@@ -202,10 +202,10 @@ class Database
             $query .= " WHERE roles = :roles"; // load based on user roles
         }
         // Get the user ID from the login class
-        $login = new Login($this->connection);
+        $login = new Login($this);
         $user_id = $login->getUserId();
         // Bind the user ID parameter
-        $query .= " WHERE id != :user_id"; // dont load the user itself data
+        $query .= " WHERE id != :user_id"; // don't load the user itself data
         $statement = $this->connection->prepare($query);
         // Bind the role ID parameter if it is provided
         if ($roles !== null) {
@@ -225,7 +225,7 @@ class Database
         }
 
         // Get the user ID from the login class
-        $login = new Login($this->connection);
+        $login = new Login($this);
         $user_id = $login->getUserId();
 
         // Add condition to exclude the current user's ID

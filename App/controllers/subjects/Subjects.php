@@ -65,7 +65,6 @@ class Subjects extends MainController
       }
       $data = $this->prepareData();
       $subject = $this->database->insert('school.classes', $data);
-      var_dump($subject);
       if ($subject) {
         $this->clearInput();
         FlashMessage::setMessage('New class created', 'success');
