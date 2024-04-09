@@ -79,9 +79,10 @@ class Login
             if ($result && password_verify($password, $result[0]['password'])) {
                 $user = $result[0];
                 $this->removePassword($user);
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['roles'] = $user['roles'];
-                $_SESSION['username'] = $user['username'];
+                // $_SESSION['user_id'] = $user['id'];
+                // $_SESSION['roles'] = $user['roles'];
+                // $_SESSION['username'] = $user['username'];
+                $this->setSession($user);
                 header("Location: ../views/home.php");
                 exit();
             } else {
@@ -90,6 +91,12 @@ class Login
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
+    }
+    private function setSession($user)
+    {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['roles'] = $user['roles'];
+        $_SESSION['username'] = $user['username'];
     }
 
     public function getUserId()
@@ -102,4 +109,3 @@ class Login
         unset($user['password']);
     }
 }
-

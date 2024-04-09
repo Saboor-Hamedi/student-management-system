@@ -19,19 +19,19 @@
         <p>Classes</p>
       </a>
     </li>
-    <!-- <li class="nav-item">
-      <a href="<?php echo BASE_URL ?>/teacher/score.php" class="nav-link">
-        <i class="far fa-circle nav-icon"></i>
-        <p>Scores</p>
-      </a>
-    </li> -->
+
     <li class="nav-item">
       <a href="<?php echo BASE_URL ?>/teacher/scores.php" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>All Scores</p>
       </a>
     </li>
-
+    <li class="nav-item">
+      <a href="<?php echo BASE_URL ?>/scores/search.php" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Search</p>
+      </a>
+    </li>
   </ul>
 <li class="nav-header">REGISTER</li>
 <li class="nav-item">
