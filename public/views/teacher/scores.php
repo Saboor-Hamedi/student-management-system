@@ -1,16 +1,22 @@
 <?php
-/** 
- *  Read: 
- *  * The file is on: views/teacher/scores.php
- *  - This file belongs to the teachers
- *  - In this file enables teachers to see the scored students, the one whom received scores 
- *    from their perspective teachers. 
- *  - Also within this file teachers are enable to delete certain score of students
- *  - The delete process is done through ajax, visit assets/js/DeleteScore.js
- *  Todo:
- *    Further This file is solely for teachers neither admin nor students has access to it
- *  ? By no mean this documentation is perfect, I tried my best to explain everything which helps 
- *  ? to understand the project flow. 
+/**
+ * ? View: views/teacher/scores.php
+ *
+ *    ? This file is accessible exclusively to teachers for managing student scores.
+ *
+ * ? Features:
+ *    ? Allows teachers to view scores assigned to students by their respective teachers.
+ *    ? Provides functionality for teachers to delete specific scores assigned to students.
+ *    ? (Deletion is performed asynchronously using AJAX, refer to assets/js/DeleteScore.js)
+ *
+ * ? Access Restrictions:
+ *    ? This file is accessible only to teachers and is not accessible by admins or students.
+ *
+ * ? Note:
+ *    ? This documentation aims to provide an overview of the purpose and access restrictions
+ *    ? of the  scores.php file.
+ *    ? For detailed implementation and functionality, refer to the code and related 
+ *    ? JavaScript file (DeleteScore.js).
  */
 ?>
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
@@ -110,7 +116,6 @@ use Thesis\functions\Roles;
             </div>
           </div>
         </div>
-        <!-- main body -->
       </div>
     </div>
   </section>

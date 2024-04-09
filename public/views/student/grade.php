@@ -1,9 +1,10 @@
 <?php
-require_once __DIR__ . '/../../../App/config/path.php'; 
+require_once __DIR__ . '/../../../App/config/path.php';
 ?>
 
 <?php path('header'); ?>
 <?php
+
 use Thesis\config\Auth;
 use Thesis\controllers\students\Grades;
 use Thesis\functions\Roles;
@@ -13,11 +14,17 @@ use Thesis\functions\Roles;
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->
-<?php path('sidebar', ['roles' => $roles, 'username' => $username, 'user_id' => $user_id, 'database' => $database]); ?>
-<div class="content-wrapper">
+<?php path(
+  'sidebar',
+  [
+    'roles' => $roles,
+    'username' => $username,
+    'user_id' => $user_id,
+    'database' => $database
+  ]
+); ?>
+<div class="content-wrapper" style="height: auto;">
   <section class="content">
-    <?php //path('cards');
-    ?>
     <div class="card"></div>
     <div class="container-fluid">
       <div class="row">
@@ -30,30 +37,51 @@ use Thesis\functions\Roles;
           <div class="card">
             <div class="card-header">Grade <?php echo $grade_id; ?></div>
             <div class="card-body">
-              <?php if (empty($grades)) : ?>
-                <p>No score added yet.</p>
-              <?php else : ?>
-                <table class="table table-hover table-condensed custom-table">
-                  <thead>
-                    <tr>
-                      <th>Teacher</th>
-                      <th>Student</th>
-                      <th>Subject</th>
-                      <th>Grade</th>
-                    </tr>
-                  </thead>
-                  <?php foreach ($grades as $grade) : ?>
-                    <tbody>
+              <table class="table table-hover table-condensed custom-table">
+                <thead>
+                  <tr>
+                    <th>Teacher</th>
+                    <th>Student</th>
+                    <th>Subject</th>
+                    <th>Grade</th>
+                    <th>Start Time</th>
+                  </tr>
+                </thead>
+                <?php if (!empty($grades)) : ?>
+                  <tbody>
+                    <?php foreach ($grades as $grade) : ?>
                       <tr>
                         <td><?php echo ucfirst($grade['teacher_lastname']); ?></td>
                         <td><?php echo ucfirst($grade['lastname']); ?></td>
                         <td><?php echo ucfirst($grade['subject_name']); ?></td>
                         <td><?php echo $grade['grades']; ?></td>
+                        <td><?php echo $grade['start_class']; ?></td>
                       </tr>
-                    </tbody>
-                  <?php endforeach; ?>
-                </table>
-              <?php endif; ?>
+                    <?php endforeach; ?>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="5">
+                        <div class="card-footer">
+                          <h5>Grade <?php echo $grade['grades'] ?></h5>
+                        </div>
+                      </td>
+                    </tr>
+                  </tfoot>
+                <?php else : ?>
+                  <tfoot>
+                    <tr>
+                      <td colspan="5">
+                        <div class="card-footer">
+                          <h5>No class found</h5>
+                        </div>
+                      </td>
+                    </tr>
+                  </tfoot>
+
+                <?php endif; ?>
+
+              </table>
             </div>
           </div>
         </div>

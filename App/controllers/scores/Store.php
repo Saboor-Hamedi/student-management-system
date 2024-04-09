@@ -111,9 +111,10 @@ class Store
             return ['errors' => $this->errors];
         }
         try {
-            // check if the teacher has given scores to the certian student. 
+            // check if the teacher has given scores to the certain student. 
             if ($this->database->checkExistingScore($student_id, $teacher_id, $subject_names)) {
-                FlashMessage::setMessage("Teacher ID: {$teacher_id} has already scored student ID: {$student_id} for subject: {$subject_names}", 'danger');
+                // FlashMessage::setMessage("Teacher ID: {$teacher_id} has already scored student ID: {$student_id} for subject: {$subject_names}", 'danger');
+                FlashMessage::redirect("/teacher/classes.php","You already scored {$search_student_names} in {$subject_names}", "info");
             } else {
                 $data = [
                     'student_id' => $student_id,

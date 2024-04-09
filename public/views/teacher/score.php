@@ -1,6 +1,7 @@
+<?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
+<?php path('header'); ?>
 <?php
-require_once __DIR__ . '/../../../App/config/path.php';
-path('header');
+
 use Thesis\config\Auth;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
@@ -74,10 +75,8 @@ path('navbar');
 path('sidebar', ['roles' => $roles, 'username' => $username]);
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="height: auto;">
   <section class="content">
-    <?php //path('cards'); 
-    ?>
     <div class="card"></div>
     <div class="container-fluid">
       <div class="row">
@@ -218,7 +217,7 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                 </div>
                 <div class="card">
                   <div class="card-footer">
-                  <button type="submit"  class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </div>
                 </form>

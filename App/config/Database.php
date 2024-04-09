@@ -52,7 +52,7 @@ class Database
      * Summary of GetConnection
      * @return PDO
      */
-    public function GetConnection()
+    public function connect()
     {
         return $this->connection;
     }

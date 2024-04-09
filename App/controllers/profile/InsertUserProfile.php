@@ -1,24 +1,33 @@
 <?php
 
+/**
+ *  * This class is responsible to insert or update teacher and students    profiles. 
+ *  * This class is only access by teachers & students 
+ *  * This class is instantiated on profile/profiles.php 
+ *  * 
+ * 
+ */
+
 namespace Thesis\controllers\profile;
 
 use Exception;
-use PDO;
 use Thesis\config\Auth;
 use Thesis\config\FlashMessage;
+use Thesis\config\Validation;
 use Thesis\functions\InputUtils;
 
 class InsertUserProfile
 {
-
   protected $database;
   protected $callByID;
   protected $validate;
+  protected $auth;
   protected $flash;
-  public function __construct($database, $validate, FlashMessage $flash)
+  public function __construct($database, Validation $validate, Auth $auth, FlashMessage $flash)
   {
     $this->database = $database;
     $this->validate = $validate;
+    $this->auth = $auth;
     $this->flash = $flash;
   }
   public function insertProfile()
@@ -26,29 +35,33 @@ class InsertUserProfile
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
       return;
     }
-    $errors = $this->input($this->validate);
-    if (!empty($errors)) {
-      return $errors;
+    try {
+      $errors = $this->input($this->validate);
+      if (!empty($errors)) {
+        return $errors;
+      }
+      $this->processProfileData();
+    } catch (Exception $e) {
+      $this->flash->addMessageWithException('Something went wrong', $e, 'danger');
     }
-    $this->prepareData();
   }
-  private function prepareData()
+  private function processProfileData()
   {
     try {
-      $existingRow = $this->database->getUserId('school.userinformation', 'user_id', Auth::user_id());
-
-      $data = $this->sanitized();
+      $userId = $this->auth->user_id();
+      $existingRow = $this->database->getUserId('school.userinformation', 'user_id', $userId);
+      $data = $this->sanitizeData();
       if (!$existingRow) {
-        $this->insert($data);
+        $this->insertData($data);
       } else {
-        $this->update($data);
+        $this->updateData($data);
       }
     } catch (Exception $e) {
       $this->flash->addMessageWithException('Something went wrong', $e, 'danger');
     }
   }
 
-  private function sanitized()
+  private function sanitizeData()
   {
     return [
       'user_id' => InputUtils::sanitizeInput($_POST['user_main_id'], 'number_int'),
@@ -59,7 +72,7 @@ class InsertUserProfile
     ];
   }
 
-  private function insert($data)
+  private function insertData($data)
   {
     $result =  $this->database->insert('school.userinformation', $data);
     if ($result === false) {
@@ -69,13 +82,14 @@ class InsertUserProfile
     $this->flash->setMessage('Profile inserted', 'primary');
   }
 
-  private function update($data)
+  private function updateData($data)
   {
     $where = 'user_id = :user_id';
     $result = $this->database->update('school.userinformation', $data, $where);
 
     if (!$result) {
-      $this->flash->setMessage('No changes made', 'info');
+      // $this->flash->setMessage('No changes made', 'info');
+      $this->flash->redirect('/home.php', 'No changes made', 'info');
     } else {
       $this->flash->setMessage('Profile Updated', 'success');
     }

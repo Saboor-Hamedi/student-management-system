@@ -11,28 +11,32 @@ use Thesis\functions\Roles;
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->
-<?php path('sidebar', ['roles' => $roles, 'username' => $username, 'user_id' => $user_id, 'database' => $database]); ?>
-
+<?php path(
+  'sidebar',
+  [
+    'roles' => $roles,
+    'username' => $username,
+    'user_id' => $user_id,
+    'database' => $database
+  ]
+); ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="height: auto;">
   <section class="content">
-    <?php //path('cards');
-    ?>
     <div class="card"></div>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <?php
-          // Fetch scores from the database
-          $scoresController = new Scores();
-          $groupedScores = $scoresController->fetchScores();
-          ?>
-
-          <div class="card">
-            <div class="card-header">Scores</div>
-            <div class="card-body">
-              <?php if (!empty($groupedScores)) : ?>
-                <?php foreach ($groupedScores as $gradeName => $scoresForGrade) : ?>
+      <?php
+      // Fetch scores from the database
+      $scoresController = new Scores();
+      $groupedScores = $scoresController->fetchScores();
+      ?>
+      <?php if (!empty($groupedScores)) : ?>
+        <?php foreach ($groupedScores as $gradeName => $scoresForGrade) : ?>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">Scores</div>
+                <div class="card-body">
                   <table class="table table-hover table-condensed custom-table">
                     <thead>
                       <tr>
@@ -54,29 +58,20 @@ use Thesis\functions\Roles;
                         </tr>
                       <?php endforeach; ?>
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <td colspan="5">
-                          <div class="card-footer">
-                            Grade <?php echo $gradeName; ?>
-                          </div>
-                        </td>
-                      </tr>
-                    </tfoot>
                   </table>
-                <?php endforeach; ?>
-              <?php else : ?>
-                 <td>No scores found</td>
-              <?php endif; ?>
+                </div>
+                <div class="card-footer text-muted">
+                  Grade <?php echo $gradeName; ?>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-      </div>
+        <?php endforeach; ?>
+      <?php else : ?>
+        <td>No scores found</td>
+      <?php endif; ?>
     </div>
-</div>
-</div>
-</section>
+  </section>
 </div>
 
 <?php path("footer"); ?>

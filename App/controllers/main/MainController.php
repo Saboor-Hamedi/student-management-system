@@ -10,7 +10,7 @@ class MainController
   public function __construct()
   {
     $this->database = Database::GetInstance();
-    $this->database->GetConnection();
+    $this->database->connect();
   }
   public function views($path, $data = [])
   {

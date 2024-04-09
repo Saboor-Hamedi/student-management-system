@@ -14,7 +14,7 @@ use Thesis\config\Validation;
  *  - Both teachers & students has full control over this file, but none can edit, delete each 
  *     others information. 
  *  Todo:
- *  ? By no mean this documentation is perfetc, I tried my best to explain everything which helps 
+ *  ? By no mean this documentation is perfect, I tried my best to explain everything which helps 
  *  ? to understand the project flow. 
  */
 ?>
@@ -30,9 +30,10 @@ use Thesis\functions\Roles;
 
 ?>
 <?php Auth::authenticate([Roles::getRole('isStudent'), Roles::getRole('isTeacher')]); ?>
+<?php $auth = new Auth();?>
 <?php $validation = new Validation(); ?>
 <?php $flash = new FlashMessage(); ?>
-<?php $insert = new InsertUserProfile($database, $validation, $flash); ?>
+<?php $insert = new InsertUserProfile($database, $validation, $auth, $flash); ?>
 <?php $errors = $insert->insertProfile(); ?>
 <?php path("navbar"); ?>
 <?php path(

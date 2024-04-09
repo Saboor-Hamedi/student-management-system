@@ -3,7 +3,7 @@
 use Thesis\config\Database;
 
 $database = Database::GetInstance();
-$connection = $database->GetConnection();
+$connection = $database->connect();
 ?>
 <?php require_once __DIR__ . '/getsession.php'; ?>
 <div class="container-fluid">

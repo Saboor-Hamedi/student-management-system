@@ -72,7 +72,7 @@ use Thesis\config\FlashMessage;
                       <?php foreach ($result as $user) : ?>
                         <tr class="odd">
                           <td class="dtr-control sorting_1" tabindex="0">
-                            <?php echo $user['username']; ?>
+                            <?php echo ucfirst($user['username']); ?>
                           </td>
                           <td>
                             <?php echo $user['email']; ?>

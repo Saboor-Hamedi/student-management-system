@@ -82,10 +82,10 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                       <?php foreach ($paginate['records'] as $row) : ?>
                         <tr class="odd">
                           <td class="dtr-control sorting_1" tabindex="0">
-                            <?php echo $row['subject_name']; ?>
+                            <?php echo ucfirst($row['subject_name']); ?>
                           </td>
                           <td>
-                            <?php echo $row['lastname']; ?>
+                            <?php echo ucfirst($row['lastname']); ?>
                           </td>
                           <td>
                             <?php echo $row['grades']; ?>

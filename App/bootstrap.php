@@ -10,7 +10,7 @@ ini_set('display_errors', 1);
 <?php
 use Thesis\config\Database;
 $database = Database::GetInstance();
-$connection = $database->GetConnection();
+$connection = $database->connect();
 require_once __DIR__ . '/functions/assets.php';
 require_once __DIR__ . '/config/functions.php';
 ?>

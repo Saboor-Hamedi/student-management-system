@@ -1,11 +1,11 @@
 <?php
 
 /**
- *  * This class is responsible to update the teacher profile
- *  * Even though it says TeacherProfileUpdate, but it's responsible to insert not update
- *  * You can make another function to update the if you want to 
- *  * This class is only call on views/teacher/register.php
- *  * 
+ * ? This class is responsible for inserting a teacher profile.
+ * ? Although named TeacherProfileUpdate, its purpose is to handle profile insertion.
+ * ? If needed, another function can be added for profile updating.
+ * ? This class is exclusively called by views/teacher/register.php.
+ * ? The views/teacher/register.php page is accessible only to administrators.
  */
 
 namespace Thesis\controllers\teachers;

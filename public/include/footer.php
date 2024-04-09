@@ -24,6 +24,7 @@
 <script src="<?php assets("js/RefreshPage.js") ?>"></script>
 
 <script src="<?php assets("js/custom.js") ?>"></script>
+<script src="<?php assets("js/CloseFlashMessage.js") ?>"></script>
 
 
 <!-- datetimepicker -->
