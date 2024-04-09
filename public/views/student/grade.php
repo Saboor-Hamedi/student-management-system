@@ -78,9 +78,7 @@ use Thesis\functions\Roles;
                       </td>
                     </tr>
                   </tfoot>
-
                 <?php endif; ?>
-
               </table>
             </div>
           </div>

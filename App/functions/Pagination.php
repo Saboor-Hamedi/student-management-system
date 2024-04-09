@@ -63,7 +63,7 @@ class Pagination
     ];
   }
 
-  private static function generatePaginationHtml($currentPage, $totalPages)
+  private static function generatePaginationHtml($currentPage, $totalPages, $maxVisible = 5)
   {
     $html = '<nav aria-label="Page navigation example">';
     $html .= '<ul class="pagination">';
@@ -73,8 +73,12 @@ class Pagination
       $html .= '<li class="page-item"><a class="page-link" href="?page=' . ($currentPage - 1) . '">Previous</a></li>';
     }
 
-    // Generate page links
-    for ($i = 1; $i <= $totalPages; $i++) {
+    // Calculate start and end page numbers to display
+    $start = max(1, $currentPage - floor($maxVisible / 2));
+    $end = min($totalPages, $start + $maxVisible - 1);
+
+    // Generate page links within the specified range
+    for ($i = $start; $i <= $end; $i++) {
       if ($i == $currentPage) {
         $html .= '<li class="page-item active"><span class="page-link">' . $i . '</span></li>';
       } else {
