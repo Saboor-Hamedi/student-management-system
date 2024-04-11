@@ -6,6 +6,7 @@ use Thesis\controllers\scores\SearchScore; ?>
 
 use Thesis\config\Auth;
 use Thesis\controllers\students\Scores;
+use Thesis\functions\Pagination;
 use Thesis\functions\Roles;
 ?>
 <?php Auth::authenticate([Roles::getRole('isTeacher')]); ?>
@@ -17,8 +18,6 @@ use Thesis\functions\Roles;
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="height: auto;">
   <section class="content">
-    <?php //path('cards'); 
-    ?>
     <div class="card"></div>
     <div class="container-fluid">
       <div class="row">
@@ -33,6 +32,7 @@ use Thesis\functions\Roles;
             <div class="card-body">
               <div class="form-group">
                 <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+                <span id="searchResults"></span>
               </div>
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div id="message" class="alert" style="display: none;"></div>
@@ -40,9 +40,8 @@ use Thesis\functions\Roles;
                   <thead class="">
                     <tr>
                       <th>Student</th>
-                      <th>Grade</th>
                       <th>Subject</th>
-                      <th>Score</th>
+                      <th>Scores</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
@@ -53,14 +52,14 @@ use Thesis\functions\Roles;
                     $search = new SearchScore($database);
                     $result = $search->searchScores();
                     ?>
-                    <?php foreach ($result as $user) : ?>
+                    <?php $paginate = Pagination::paginate($database, $result, 2); ?>
+                    <?php if(!empty($paginate['records'])): ?>
+                     
+                    <?php foreach ($paginate['records'] as $user) : ?>
                       <tr class="odd">
                         <td><?php echo $user['lastname']; ?></td>
                         <td><?php echo $user['subject_names']; ?></td>
                         <td><?php echo $user['score']; ?></td>
-                        <td>
-                          <?php echo formatCreatedAt($user['created_at']); ?>
-                        </td>
                         <td>
                           <a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="<?php echo $user['score_id'] ?>">
                             delete
@@ -68,14 +67,14 @@ use Thesis\functions\Roles;
                         </td>
                       </tr>
                     <?php endforeach; ?>
-                  </tbody>
-                  <tbody>
+                    <?php endif;?>
                   </tbody>
                 </table>
-
-                <!-- end pagination -->
+                <nav aria-label="Page navigation example">
+                  <?php
+                  echo $paginate['paginationHtml']; ?>
+                </nav>
               </div>
-
             </div>
             <div class="card-footer">
               <p></p>

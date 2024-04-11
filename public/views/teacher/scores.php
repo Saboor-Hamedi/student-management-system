@@ -1,4 +1,7 @@
 <?php
+
+use Thesis\controllers\scores\SearchScore;
+
 /**
  * ? View: views/teacher/scores.php
  *
@@ -52,68 +55,53 @@ use Thesis\functions\Roles;
             <div class="card-body">
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div id="message" class="alert" style="display: none;"></div>
-                <table class="table table-hover table-condensed">
-                  <thead class="">
-                    <tr>
-                      <th>Student</th>
-                      <th>Grade</th>
-                      <th>Subject</th>
-                      <th>Score</th>
-                      <th>Delete</th>
-                    </tr>
-                  </thead>
-                  <!-- fetch data -->
-                  <tbody>
-                    <?php
-                    $sql = "SELECT scores.id AS score_id, scores.teacher_id AS teacher_id,
-                   scores.student_id AS student_id, scores.grades_id AS grades_id, 
-                   scores.subject_names AS subject_names, scores.score AS score,
-                   scores.created_at AS created_at, students.lastname FROM scores
-                   INNER JOIN grades on scores.grades_id=grades.id
-                   INNER JOIN teachers on scores.teacher_id=teachers.teacher_id
-                   INNER JOIN students on scores.student_id=students.student_id
-                   WHERE scores.teacher_id = {$user_id}
-                   ORDER BY grades.grade DESC";
-                    // Call the paginate method to generate pagination HTML and fetch records for the current page
-                    $paginate = Pagination::paginate($database, $sql, 2);
 
-                    ?>
-                    <?php if (!empty($paginate['records'])) : ?>
-                      <?php foreach ($paginate['records'] as $user) : ?>
+                <!-- fetch data -->
+                <?php
+                $search = new SearchScore($database);
+                $sql = $search->searchScores();
+                // Call the paginate method to generate pagination HTML and fetch records for the current page
+                $paginate = Pagination::paginate($database, $sql, 2);
+                ?>
+                <?php if (!empty($paginate['records'])) : ?>
+                  <table class="table table-hover table-condensed">
+                    <thead class="">
+                      <tr>
+                        <th>Student</th>
+                        <th>Subject</th>
+                        <th>Score</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <?php foreach ($paginate['records'] as $user) : ?>
+                      <tbody>
                         <tr class="odd">
                           <td><?php echo $user['lastname']; ?></td>
                           <td><?php echo $user['subject_names']; ?></td>
                           <td><?php echo $user['score']; ?></td>
-                          <td>
-                            <?php echo formatCreatedAt($user['created_at']); ?>
-                          </td>
                           <td>
                             <a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="<?php echo $user['score_id'] ?>">
                               delete
                             </a>
                           </td>
                         </tr>
-                      <?php endforeach; ?>
-                    <?php else : ?>
-                      <tr class="odd">
-                        <td colspan="3">No user added yet</td>
-                      </tr>
-                    <?php endif ?>
-                  </tbody>
-                  <tbody>
-                  </tbody>
-                </table>
-                <nav aria-label="Page navigation example">
-                  <?php
-                  echo $paginate['paginationHtml']; ?>
-                </nav>
-                <!-- end pagination -->
+                      </tbody>
+                    <?php endforeach; ?>
+                  <?php else : ?>
+                      <div class="card-body text-center">
+                        <p class="card-text">Dear<strong> <?php echo ucfirst($username) ?? '' ?></strong> This message appears due, not giving score to your student, 
+                          please if you have finished the exam,provide score to you students</p>
+                        <a href="<?php echo BASE_URL ?>/teacher/classes.php" class="btn btn-primary">Profile</a>
+                      </div>
+                  <?php endif ?>
+                  </table>
+                  <nav aria-label="Page navigation example">
+                    <?php
+                    echo $paginate['paginationHtml']; ?>
+                  </nav>
               </div>
-
             </div>
-            <div class="card-footer">
-              <p></p>
-            </div>
+            <div class="card-footer"><p></p></div>
           </div>
         </div>
       </div>

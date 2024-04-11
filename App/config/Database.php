@@ -388,7 +388,7 @@ class Database
     public function error($error)
     {
         error_log('Database Error: ' . $error->getMessage());
-        throw new Exception('Something went wrong, make sure you have registered all users');
+        // throw new Exception('Something went wrong, make sure you have registered all users');
     }
 
     /**

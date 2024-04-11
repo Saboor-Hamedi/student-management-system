@@ -112,8 +112,8 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                   <form method="POST" action="<?php ClearInput::selfURL(); ?>?id=<?php echo $id; ?>">
                     <div class="row">
                       <div class="col-md-6">
-                        <div class="form-group">
-                          <input type="text" class="form-control" name="teacher_id" value="<?php echo $user_id; ?>" placeholder="Teacher ID">
+                        <!-- <div class="form-group"> -->
+                          <input type="hidden" class="form-control" name="teacher_id" value="<?php echo $user_id; ?>" placeholder="Teacher ID">
                           <span class="error">
                             <?php
                             if (!empty($teacher_id_error)) {
@@ -122,10 +122,10 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                             ?>
                           </span>
                         </div>
-                      </div>
+                      <!-- </div> -->
                       <div class="col-md-6">
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Student ID" value="<?php echo $row['student_id'] ?>">
+                        <!-- <div class="form-group"> -->
+                          <input type="hidden" class="form-control" id="student_id" name="student_id" placeholder="Student ID" value="<?php echo $row['student_id'] ?>">
                           <span class="error">
                             <?php
                             if (!empty($student_id_error)) {
@@ -133,14 +133,14 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                             }
                             ?>
                           </span>
-                        </div>
+                        <!-- </div> -->
                       </div>
 
                     </div>
                     <div class="row">
                       <div class="col-md-6">
-                        <div class="form-group">
-                          <input type="text" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" value="<?php echo $row['grades'] ?>">
+                        <!-- <div class="form-group"> -->
+                          <input type="hidden" class="form-control" name="student_grade_id" id="student_grade_id" placeholder="Grade ID" value="<?php echo $row['grades'] ?>">
                           <span class="error">
                             <?php
                             if (!empty($student_grade_id_error)) {
@@ -148,12 +148,12 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                             }
                             ?>
                           </span>
-                        </div>
+                        <!-- </div> -->
                       </div>
                       <div class="col-md-6">
-                        <div class="form-group">
+                        <!-- <div class="form-group"> -->
                           <div class="search-container">
-                            <input type="text" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo $row['student_lastname'] ?>">
+                            <input type="hidden" class="form-control" id="search_student_names" name="search_student_names" placeholder="Search for students" value="<?php echo $row['student_lastname'] ?>">
                             <span class="error">
                               <?php
                               if (!empty($search_student_names_error)) {
@@ -163,7 +163,7 @@ path('sidebar', ['roles' => $roles, 'username' => $username]);
                             </span>
                             <div id="search-results2"></div>
                           </div>
-                        </div>
+                        <!-- </div> -->
                       </div>
                     </div>
                     <!--  -->

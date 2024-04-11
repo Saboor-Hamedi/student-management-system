@@ -68,7 +68,15 @@ use Thesis\functions\Roles;
           </div>
         <?php endforeach; ?>
       <?php else : ?>
-        <td>No scores found</td>
+        <div class="card">
+          <div class="card-header">
+            No scores found
+          </div>
+          <div class="card-body text-center">
+            <p class="card-text">This is your score page, it looks no teacher has uploaded your scores, please wait for sometime.</p>
+            <a href="<?php echo BASE_URL?>/home.php" class="btn btn-primary">Profile</a>
+          </div>
+        </div>
       <?php endif; ?>
     </div>
   </section>

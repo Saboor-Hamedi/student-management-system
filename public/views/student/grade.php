@@ -59,31 +59,27 @@ use Thesis\functions\Roles;
                       </tr>
                     <?php endforeach; ?>
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colspan="5">
-                        <div class="card-footer">
-                          <h5>Grade <?php echo $grade['grades'] ?></h5>
-                        </div>
-                      </td>
-                    </tr>
-                  </tfoot>
                 <?php else : ?>
-                  <tfoot>
+                  <tbody>
                     <tr>
                       <td colspan="5">
-                        <div class="card-footer">
+                        <div class="card-footer text-muted">
                           <h5>No class found</h5>
                         </div>
                       </td>
                     </tr>
-                  </tfoot>
+                  </tbody>
                 <?php endif; ?>
               </table>
+            </div>
+            <!-- Display the grade under the card -->
+            <div class="card-footer text-muted">
+              Grade <?php echo $grades[0]['grades']; ?>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 </div>

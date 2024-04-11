@@ -50,16 +50,7 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
 
                 ?>
                 <table class="table table-hover table-condensed">
-                  <thead>
-                    <tr>
-                      <th>Subjects</th>
-                      <th>Names</th>
-                      <th>Grades</th>
-                      <th>Start Class</th>
-                      <th>Score</th>
 
-                    </tr>
-                  </thead>
                   <!-- fetch data -->
                   <tbody>
                     <?php $sql = "SELECT classes.id AS class_id,teachers.teacher_id,
@@ -79,6 +70,16 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                               WHERE teachers.teacher_id = {$user_id}"; ?>
                     <?php $paginate = Pagination::paginate($database, $sql, 4); ?>
                     <?php if (!empty($paginate['records'])) : ?>
+                      <thead>
+                        <tr>
+                          <th>Subjects</th>
+                          <th>Names</th>
+                          <th>Grades</th>
+                          <th>Start Class</th>
+                          <th>Score</th>
+
+                        </tr>
+                      </thead>
                       <?php foreach ($paginate['records'] as $row) : ?>
                         <tr class="odd">
                           <td class="dtr-control sorting_1" tabindex="0">
@@ -97,12 +98,12 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                         </tr>
                       <?php endforeach; ?>
                     <?php else : ?>
-                      <tr>
-                        <td colspan="3">No user added yet</td>
-                      </tr>
+
+                      <div class="card-body text-center">
+                        <p class="card-text">Dear<strong> <?php echo ucfirst($username) ?? '' ?></strong> Please talk to the admin, you do not have any class yet</p>
+                        <a href="<?php echo BASE_URL ?>/home.php" class="btn btn-primary">Profile</a>
+                      </div>
                     <?php endif; ?>
-                  </tbody>
-                  <tbody>
                   </tbody>
                 </table>
                 <nav aria-label="Page navigation example">

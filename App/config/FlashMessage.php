@@ -1,10 +1,6 @@
 <?php
-
 namespace Thesis\config;
-
-
 use Exception;
-
 class FlashMessage
 {
     public static function setMessage(string $message, string $type = 'info')
@@ -47,4 +43,4 @@ class FlashMessage
     }
 }
 
-?>
+

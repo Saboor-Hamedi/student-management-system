@@ -1,3 +1,5 @@
+
+
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
 <?php
@@ -70,13 +72,13 @@ use Thesis\functions\Roles;
           </div>
         <?php endforeach; ?>
       <?php else : ?>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <p>No schedule found</p>
-              </div>
-            </div>
+        <div class="card">
+          <div class="card-header">
+            No schedule found
+          </div>
+          <div class="card-body text-center">
+            <p class="card-text">It looks like have not get any schedule yet, please wait.</p>
+            <a href="<?php echo BASE_URL?>/home.php" class="btn btn-primary">Profile</a>
           </div>
         </div>
       <?php endif; ?>

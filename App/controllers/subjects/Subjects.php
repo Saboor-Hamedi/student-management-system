@@ -150,7 +150,7 @@ class Subjects extends MainController
     $this->errors['student_id'] = $input->number($_POST['student_id'], $rules);
     // * check if the students id exists 
     if (!$this->callByID->doesStudentIdExist('school.students', $_POST['student_id'])) {
-      $this->errors['student_id'] = 'This is not yet registered';
+      $this->errors['student_id'] = 'This student is not yet registered';
     }
   }
   // * validate student search name
