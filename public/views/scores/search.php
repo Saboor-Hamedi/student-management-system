@@ -30,9 +30,9 @@ use Thesis\functions\Roles;
             </div>
             <!-- body -->
             <div class="card-body">
-              <div class="form-group">
+              <div class="search">
                 <input type="text" class="form-control" id="searchInput" placeholder="Search...">
-                <span id="searchResults"></span>
+                <button id="clearSearchBtn"><i class="fa fa-trash"></i></button>
               </div>
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div id="message" class="alert" style="display: none;"></div>
@@ -52,22 +52,22 @@ use Thesis\functions\Roles;
                     $search = new SearchScore($database);
                     $result = $search->searchScores();
                     ?>
-                    <?php $paginate = Pagination::paginate($database, $result, 2); ?>
-                    <?php if(!empty($paginate['records'])): ?>
-                     
-                    <?php foreach ($paginate['records'] as $user) : ?>
-                      <tr class="odd">
-                        <td><?php echo $user['lastname']; ?></td>
-                        <td><?php echo $user['subject_names']; ?></td>
-                        <td><?php echo $user['score']; ?></td>
-                        <td>
-                          <a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="<?php echo $user['score_id'] ?>">
-                            delete
-                          </a>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                    <?php endif;?>
+                    <?php $paginate = Pagination::paginate($database, $result, 4); ?>
+                    <?php if (!empty($paginate['records'])) : ?>
+
+                      <?php foreach ($paginate['records'] as $user) : ?>
+                        <tr class="odd">
+                          <td><?php echo $user['lastname']; ?></td>
+                          <td><?php echo $user['subject_names']; ?></td>
+                          <td><?php echo $user['score']; ?></td>
+                          <td>
+                            <a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="<?php echo $user['score_id'] ?>">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
                   </tbody>
                 </table>
                 <nav aria-label="Page navigation example">

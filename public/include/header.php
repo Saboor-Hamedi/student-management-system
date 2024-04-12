@@ -20,6 +20,7 @@ require_once __DIR__ . '../../../App/config/path.php';
   <link rel="stylesheet" type="text/css" href="<?php assets("datetimepicker/jquery.datetimepicker.min.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/style.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/modern-normalize.css") ?>">
+  <link rel="stylesheet" type="text/css" href="<?php assets("css/search.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/login.css") ?>">
 
 </head>

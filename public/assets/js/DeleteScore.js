@@ -18,7 +18,7 @@ function deleteRecord(scoreId) {
     });
   });
 }
-
+function deleteData(){
 $(document).ready(function () {
   $(".deleteScore_").on("click", function (e) {
     e.preventDefault();
@@ -40,3 +40,5 @@ $(document).ready(function () {
     }
   });
 });
+}
+deleteData();

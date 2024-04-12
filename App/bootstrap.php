@@ -28,15 +28,6 @@ require_once __DIR__ . '/config/functions.php';
 <?php $flash = new FlashMessage(); ?>
 <?php $fake = new ClassesFakeData($database, $flash);?>
 <?php //$fake->fakeClasses() ?>
-<script>
-// window.addEventListener('unload', function() {
-//     var xhr = new XMLHttpRequest();
-//     xhr.open('GET', '../public/include/logout.php', true); // Replace 'logout.php' with the URL of your logout script
-//     xhr.send();
-// });
-</script>
-
-
 
 <?php 
 

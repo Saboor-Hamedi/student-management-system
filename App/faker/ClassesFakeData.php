@@ -38,7 +38,7 @@ class ClassesFakeData
         $teacherIds = $this->teacherTable();
 
         // Number of records to insert
-        $numRecords = 10;
+        $numRecords = 2;
 
         for ($i = 0; $i < $numRecords; $i++) {
             $subjectName = $this->faker->randomElement(['Math', 'Science', 'History', 'English', 'Geography']);
