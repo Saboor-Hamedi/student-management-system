@@ -1,4 +1,5 @@
 <?php
+
 /**
  * * This is the teachers profile, where admin update teachers
  * * If a teacher profile is not updated, a teacher would not be able to 
@@ -10,6 +11,7 @@
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
 <?php
+
 use Thesis\config\CallById;
 use Thesis\controllers\teachers\TeacherProfileUpdate;
 use Thesis\config\Auth;
@@ -54,8 +56,9 @@ use Thesis\functions\Roles;
                 <div class="row">
                   <div class="col-md-6">
                     <!-- <div class="form-group"> -->
-                      <input type="hidden" class="form-control" id="selected_teacher_id" name="selected_teacher_id" placeholder="This will be set automatically" value="<?php echo getInputValue('selected_teacher_id') ?>" readonly>
-                      <?php //error($errors, 'selected_teacher_id'); ?>
+                    <input type="hidden" class="form-control" id="selected_teacher_id" name="selected_teacher_id" placeholder="This will be set automatically" value="<?php echo getInputValue('selected_teacher_id') ?>" readonly>
+                    <?php //error($errors, 'selected_teacher_id'); 
+                    ?>
                     <!-- </div> -->
                   </div>
                   <div class="col-md-12">

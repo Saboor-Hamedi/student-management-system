@@ -21,6 +21,7 @@
 <script src="<?php assets("js/loadTeacher.js") ?>"></script>
 <script src="<?php assets("js/loadSearch.js") ?>"></script>
 <script src="<?php assets("js/DeleteScore.js") ?>"></script>
+<script src="<?php assets("js/DeleteStudent.js") ?>"></script>
 <script src="<?php assets("js/flashMessage.js") ?>"></script>
 <script src="<?php assets("js/RefreshPage.js") ?>"></script>
 

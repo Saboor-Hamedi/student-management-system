@@ -12702,7 +12702,9 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 .nav-sidebar > .nav-item .nav-icon.fa, .nav-sidebar > .nav-item .nav-icon.fas, .nav-sidebar > .nav-item .nav-icon.far, .nav-sidebar > .nav-item .nav-icon.fab, .nav-sidebar > .nav-item .nav-icon.fal, .nav-sidebar > .nav-item .nav-icon.fad, .nav-sidebar > .nav-item .nav-icon.svg-inline--fa, .nav-sidebar > .nav-item .nav-icon.ion {
   font-size: 1.1rem;
 }
-
+.nav-item a {
+  font-size: 0.9rem;
+}
 .nav-sidebar > .nav-item .float-right {
   margin-top: 3px;
 }

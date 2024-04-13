@@ -9,9 +9,9 @@ use Thesis\functions\HashPassword;
 use Thesis\config\Validation;
 use Thesis\controllers\main\MainController;
 
-class Store extends MainController
+class RegisterUsers extends MainController
 {
-  public function store()
+  public function registerUser()
   {
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

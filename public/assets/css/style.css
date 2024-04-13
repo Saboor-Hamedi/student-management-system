@@ -5,6 +5,14 @@
 .custom-table {
   table-layout: fixed;
 }
+/* this is the navbar section, where we separate the sections on sidebar */
+#nav-bar-section{
+  background-color: #494e53;
+  border-radius: 2px;
+  font-size: 10px;
+  padding: 10px;
+  text-align: center;
+}
 
 .error {
   font-size: 10px;
