@@ -3,7 +3,7 @@
         'name' => 'omer/sultani',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '532fb2ba7fc8c1f97245222ef0e4bf2008c0b3ef',
+        'reference' => 'b9c160ba865baed5cd6aee4d71571505dbaeccc2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'omer/sultani' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '532fb2ba7fc8c1f97245222ef0e4bf2008c0b3ef',
+            'reference' => 'b9c160ba865baed5cd6aee4d71571505dbaeccc2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
