@@ -13,6 +13,8 @@ require_once __DIR__ . '/config/functions.php';
 use Thesis\config\Database;
 use Thesis\faker\ClassesFakeData;
 use Thesis\config\FlashMessage;
+use Thesis\seeder\UserTableSeeder;
+
 $database = Database::GetInstance();
 $connection = $database->connect();
 ?>
@@ -20,6 +22,8 @@ $connection = $database->connect();
 <?php $flash = new FlashMessage(); ?>
 <?php $fake = new ClassesFakeData($database, $flash);?>
 <?php //$fake->fakeClasses() ?>
+<?php $userTable = new UserTableSeeder($database);
+//$userTable->run();?>
 <?php 
 if (isset($_SESSION['user_id'])) {
   $roles = (int)$_SESSION['roles'];
