@@ -73,12 +73,12 @@ use Thesis\functions\Roles;
                   <?php else : ?>
                     <div class="card-body text-center">
                       <p class="card-text">Dear<strong> <?php echo ucfirst($username) ?? '' ?></strong> 
-                      It appears that there are no students yet. If you are having trouble displaying students here, please click 'Student Profile' 
-                      to search for students by name, then submit; they will automatically appear here. 
-                      If you cannot find a student, please consult with your database administrator to ensure that the student roles are set to '1'.
-
+                      It seems that there are currently no students available. 
+                      If you are experiencing difficulty displaying students here, please click on 'Student Profile' 
+                      to search for students by name and submit; they will then automatically appear here. If you still cannot find a student, 
+                      please consult your database administrator to ensure that the student roles are set to '1'
                     </p>
-                      <a href="<?php echo BASE_URL ?>/teacher/classes.php" class="btn btn-primary">Profile</a>
+                      <a href="<?php echo BASE_URL ?>/users/register.php" class="btn btn-primary">Profile</a>
                     </div>
                   <?php endif ?>
 

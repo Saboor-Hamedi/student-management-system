@@ -6,12 +6,12 @@ use Thesis\controllers\users\DeleteUsers;
 
 
 // Assuming the AJAX request sends the ID in the "id" parameter:
-$studentId = isset($_POST['id']) ? $_POST['id'] : null;
+$teacherId = isset($_POST['id']) ? $_POST['id'] : null;
 $database = Database::GetInstance();
 
-if ($studentId) {
+if ($teacherId) {
   $delete = new DeleteUsers($database);
-  $result = $delete->destroy($studentId); // Pass the received score ID
+  $result = $delete->destroy($teacherId); // Pass the received score ID
   if ($result) {
     // Deletion was successful
     echo json_encode(array('success' => true));

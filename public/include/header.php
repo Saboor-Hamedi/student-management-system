@@ -10,10 +10,11 @@ require_once __DIR__ . '../../../App/config/path.php';
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Thesis</title>
   <link rel="stylesheet" type="text/css" href="<?php assets("css/bootstrap.min.css") ?>">
+  <link rel="stylesheet" type="text/css" , href="<?php assets("css/ionicons.min.css") ?>">
   <link rel="stylesheet" type="text/css" , href="<?php assets("css/fontawesome.min.css") ?>">
   <!-- adminlit -->
   <link rel="stylesheet" type="text/css" href="<?php assets("css/adminlte.css") ?>">
-  <link rel="stylesheet" type="text/css" href="<?php assets("css/adminlte.min.css") ?>">
+  <link rel="stylesheet" type="text/css" href="<?php assets("css/adminlte.min.css?v=3.2.0") ?>">
 
   <link rel="stylesheet" type="text/css" href="<?php assets("plugins/fontawesome-free/css/all.min.css"); ?>">
   <!-- datetimepicker -->

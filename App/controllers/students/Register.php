@@ -11,26 +11,29 @@ namespace Thesis\controllers\students;
 use Exception;
 use Thesis\config\CallById;
 use Thesis\config\ClearInput;
+use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
 use Thesis\controllers\main\MainController;
 use Thesis\functions\InputUtils;
 
-class Register extends MainController
+class Register
 {
 
   protected $errors = [];
   protected $callByID;
-  
+  protected $database;
+  protected $validation;
   /**
    * __construct
    *
    * @return void
    */
-  public function __construct()
+  public function __construct(Database $database, CallById $callByID, Validation $validation)
   {
-    parent::__construct(); // ! its because we don't want to make override the __construct since its on MainController
-    $this->callByID = new CallById();
+    $this->database = $database;
+    $this->callByID = $callByID;
+    $this->validation = $validation;
   }
   /**
    * Search for a student this function goes to the views/files/loadProfile.php
@@ -62,15 +65,14 @@ class Register extends MainController
    *
    * @return void
    */
-  public function register()
+  public function updateStudentData()
   {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
       return;
     }
 
     try {
-      $validation = new Validation();
-      $this->errors = $this->input($validation);
+      $this->errors = $this->input($this->validation);
       if (!empty($this->errors)) {
         return $this->errors;
       }

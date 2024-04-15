@@ -16,8 +16,9 @@ function assets($file, $root = '/assets/')
   echo $root . $file;
   /* return ROOT . ltrim($file, '/'); */
 }
-function error($errors, $field){
+function error($errors, $field)
+{
   if (isset($errors[$field])) {
-    echo '<span class="error">' . $errors[$field] . '</span>';
-}
+    echo '<small class="error">' . $errors[$field] . '</small>';
+  }
 }

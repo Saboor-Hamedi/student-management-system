@@ -1,4 +1,5 @@
 <?php
+use Thesis\config\Validation;
 require_once __DIR__ . '/../../../App/config/path.php';
 path('header');
 ?>
@@ -13,7 +14,8 @@ use Thesis\functions\Roles;
 <?php Auth::authenticate([Roles::getRole('isAdmin')]); ?>
 
 <?php
-$store = new RegisterUsers();
+$validation = new Validation();
+$store = new RegisterUsers($database, $validation);
 $errors = $store->registerUser();
 ?>
 <!-- header on the top, Navbar -->
@@ -56,7 +58,7 @@ $errors = $store->registerUser();
                   </div>
                   <div class="col-md-6">
                     <select class="form-select" name="select_roles" value="<?php echo getInputValue('select_roles') ?>">
-                      <option value="">Open this select menu</option>
+                      <option value="">Select roles</option>
                       <option value="0">Admin</option>
                       <option value="1">Student</option>
                       <option value="2">Teacher</option>

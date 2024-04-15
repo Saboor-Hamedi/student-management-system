@@ -3,22 +3,28 @@
 namespace Thesis\controllers\users;
 
 use PDOException;
+use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\functions\InputUtils;
 use Thesis\functions\HashPassword;
 use Thesis\config\Validation;
 use Thesis\controllers\main\MainController;
 
-class RegisterUsers extends MainController
+class RegisterUsers
 {
+  protected $database; 
+  protected $validation;
+  public function __construct(Database $database, Validation $validation){
+    $this->database = $database;
+    $this->validation = $validation;
+  }
   public function registerUser()
   {
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
       return;
     }
-    $validation = new Validation();
-    $errors = $this->input($validation);
+    $errors = $this->input($this->validation);
     if (!empty($errors)) {
       return $errors;
     }
@@ -50,11 +56,11 @@ class RegisterUsers extends MainController
   {
     $errors = [];
     $name = [
-      ['required', 'full name is reuired'],
+      ['required', 'Full name is required'],
       ['min_length', 'Full Name should be at least 2 characters', 2]
     ];
     $password = [
-      ['required', 'password is required'],
+      ['required', 'Password is required'],
       ['min_length', 'password must be at least 3', 3]
     ];
     $errors['fullname'] = $valid->string($_POST['fullname'], $name);

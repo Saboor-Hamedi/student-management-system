@@ -1,18 +1,20 @@
-<?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
+<?php require_once __DIR__ . '/../../../App/config/path.php'; 
+use Thesis\config\CallById;
+use Thesis\config\Validation;?>
 <?php path('header'); ?>
 <?php
 use Thesis\config\Auth;
-use Thesis\config\CallById;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
 use Thesis\controllers\students\Register;
 ?>
 <?php Auth::authenticate([0]); ?>
-<?php $callbyid = new CallById(); ?>
 <!-- insert data -->
 <?php
-$register = new Register();
-$errors = $register->register();
+$callByID = new CallById();
+$validation = new Validation();
+$register = new Register($database,$callByID, $validation );
+$errors = $register->updateStudentData();
 ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>

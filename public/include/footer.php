@@ -1,3 +1,6 @@
+<aside class="control-sidebar control-sidebar-dark">
+
+</aside>
 <footer class="main-footer">
   <div class="float-right d-none d-sm-block">
     <b>Version</b> 1.0.0.3
@@ -22,6 +25,7 @@
 <script src="<?php assets("js/loadSearch.js") ?>"></script>
 <script src="<?php assets("js/DeleteScore.js") ?>"></script>
 <script src="<?php assets("js/DeleteStudent.js") ?>"></script>
+<script src="<?php assets("js/DeleteTeacher.js") ?>"></script>
 <script src="<?php assets("js/flashMessage.js") ?>"></script>
 <script src="<?php assets("js/RefreshPage.js") ?>"></script>
 
