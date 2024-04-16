@@ -15,19 +15,21 @@ require_once __DIR__ . '../../../App/config/path.php';
   <!-- adminlit -->
   <link rel="stylesheet" type="text/css" href="<?php assets("css/adminlte.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/adminlte.min.css?v=3.2.0") ?>">
-
+  
   <link rel="stylesheet" type="text/css" href="<?php assets("plugins/fontawesome-free/css/all.min.css"); ?>">
   <!-- datetimepicker -->
   <link rel="stylesheet" type="text/css" href="<?php assets("datetimepicker/jquery.datetimepicker.min.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/style.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/modern-normalize.css") ?>">
+  <link rel="stylesheet" type="text/css" href="<?php assets("css/dark-theme.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/search.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/login.css") ?>">
 
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
+
+<div class="wrapper">
     <div id="content">
       <script>
         window.addEventListener('load', function() {

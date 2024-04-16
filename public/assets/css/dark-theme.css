@@ -1,0 +1,63 @@
+/* Container for the toggle switch */
+.theme-switch-container {
+  position: relative;
+  height: 25px; /* Set the desired height */
+  display: flex;
+  align-items: center; /* Center items vertically */
+}
+
+/* Styling for the toggle switch */
+.theme-switch {
+  height: 20px;
+  width: 46px;
+  border-radius: 50px;
+  /* background-color: yellow; */
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  border-radius: 17px; /* Half of the height for a pill-shaped slider */
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.4s;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* Inset shadow for depth */
+}
+
+.slider:before {
+  background-color: #5BC0EB;
+  border-radius: 50%;
+  content: "";
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 0px; /* Adjust the top position for vertical centering */
+  left: 0px; /* Adjust the left position for horizontal centering */
+  transition: transform 0.4s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Outer shadow for knob */
+}
+
+input:checked + .slider {
+  background-color: #4CAF50; /* Green when toggled on */
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px); /* Move the knob to the right when checked */
+}
+
+/* Optional: Styling for the label (button appearance) */
+.theme-switch label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 34px;
+  cursor: pointer;
+  color: #333;
+}
+

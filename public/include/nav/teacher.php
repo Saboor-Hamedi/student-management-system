@@ -32,6 +32,12 @@
         <p>Search</p>
       </a>
     </li>
+    <li class="nav-item">
+      <a href="<?php echo BASE_URL ?>/teacher/profile.php" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Profile</p>
+      </a>
+    </li>
   </ul>
 <li class="nav-header">REGISTER</li>
 <li class="nav-item">

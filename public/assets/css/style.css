@@ -1,6 +1,18 @@
 .active {
   color: red;
 }
+.custom-nav-link a {
+  color: inherit; /* Inherit color from parent */
+  margin-left: 10px;
+  text-decoration: none; /* Remove underline from links */
+}
+.custom-nav-link i {
+  font-size: 15px;
+}
+.custom-nav-link a:hover {
+  color: inherit !important; /* Force inherit color on hover */
+}
+
 
 .custom-table {
   table-layout: fixed;
