@@ -83,7 +83,6 @@ class UpdateUserProfile
     }
     return false;
   }
-
   /**
    * prepareData
    *
@@ -123,7 +122,6 @@ class UpdateUserProfile
       $this->flash->setMessage('Record updated', 'success');
     } else {
       $this->flash->setMessage('Nothing changed', 'info');
-
     }
   }
 

@@ -8,7 +8,6 @@ use Thesis\config\FlashMessage;
 use Thesis\functions\InputUtils;
 use Thesis\functions\HashPassword;
 use Thesis\config\Validation;
-use Thesis\controllers\main\MainController;
 
 class RegisterUsers
 {

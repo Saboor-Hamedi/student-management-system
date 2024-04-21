@@ -21,7 +21,7 @@ use Thesis\config\Auth;
 use Thesis\config\FlashMessage;
 
 ?>
-<?php Auth::authenticate([0, 1, 2]); ?>
+p
 <?php path('navbar'); // navbar 
 ?>
 <?php path(

@@ -1,22 +1,20 @@
 <?php
 
 namespace Thesis\config;
-
 use Exception;
-
 class FlashMessage
 {
   public static function setMessage(string $message, string $type = 'info')
   {
+    self::startSession();
     // Check if the session variable is not set or is an empty array
     if (!isset($_SESSION['flash_messages']) || !is_array($_SESSION['flash_messages'])) {
       $_SESSION['flash_messages'] = [];
-  }
-
+    }
     // Check if a message of the same type already exists
     foreach ($_SESSION['flash_messages'] as $existingMessage) {
       if ($existingMessage['type'] === $type) {
-        // If a message of the same type exists, do not add a new one
+        $existingMessage['message'] = $message;
         return;
       }
     }
@@ -28,11 +26,41 @@ class FlashMessage
 
   public static function getMessages()
   {
+    self::startSession();
+
     $messages = $_SESSION['flash_messages'] ?? [];
     $_SESSION['flash_messages'] = []; // Clear messages after retrieval
     return $messages;
   }
 
+  public static function addMessageWithException(string $message, Exception $exception, string $type = 'info')
+  {
+    self::setMessage($message . ' ' . $exception->getMessage(), $type);
+  }
+  public static function redirect(string $url, string $message, string $type = 'info')
+  {
+    // Clear existing flash messages
+    unset($_SESSION['flash_messages']);
+    // Set the new flash message
+    self::setMessage($message, $type);
+    // Redirect user to specified URL
+    $redirectUrl = BASE_URL . $url;
+    header("Location: {$redirectUrl}");
+    exit; // Ensure no further output is sent
+  }
+
+
+  // public static function redirect(string $url, string $message, string $type = 'info')
+  // {
+  //   self::startSession();
+  //   if (!isset($_SESSION['redirected'])) {
+  //     $_SESSION['redirected'] = true;
+  //     self::setMessage($message, $type);
+  //     header("Location:" . BASE_URL . "{$url}");
+  //     exit; // Ensure no further output is sent
+  //   }
+
+  // }
   public static function displayMessages()
   {
     $messages = self::getMessages();
@@ -44,30 +72,10 @@ class FlashMessage
       echo '</div>';
     }
   }
-
-  public static function addMessageWithException(string $message, Exception $exception, string $type = 'info')
+  private static function startSession()
   {
-    self::setMessage($message . ' ' . $exception->getMessage(), $type);
-  }
-
-  // public static function redirect(string $url, string $message, string $type = 'info')
-  // {
-  //   self::setMessage($message, $type);
-  //   header("Location:" . BASE_URL . "{$url}");
-  //   exit; // Ensure no further output is sent
-  // }
-  public static function redirect(string $url, string $message, string $type = 'info')
-{
-    // Use a unique session variable to prevent redirection loop
-    if (!isset($_SESSION['redirected'])) {
-        $_SESSION['redirected'] = true;
-        self::setMessage($message, $type);
-        header("Location:" . BASE_URL . "{$url}");
-        exit; // Ensure no further output is sent
-    } else {
-        // Clear the session variable after use
-        unset($_SESSION['redirected']);
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
     }
-}
-
+  }
 }

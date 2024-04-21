@@ -46,16 +46,12 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
             <!-- body -->
             <div class="card-body">
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <?php FlashMessage::displayMessages();
-
-                ?>
+                <?php FlashMessage::displayMessages();?>
                 <table class="table table-hover table-condensed">
 
                   <!-- fetch data -->
                   <tbody>
                     <?php $sql = "SELECT classes.id AS class_id,teachers.teacher_id,
-                                  /* users.id, 
-                                  users.username AS username, */
                                   students.student_id ,
                                   students.lastname,
                                   classes.subject_name,
@@ -65,7 +61,6 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                                   classes.approve,
                                   classes.created_at FROM classes 
                               INNER JOIN teachers ON classes.teacher_id = teachers.teacher_id
-                              /* INNER JOIN users ON teachers.teacher_id = users.id */
                               INNER JOIN students ON classes.student_id = students.student_id              
                               WHERE teachers.teacher_id = {$user_id}"; ?>
                     <?php $paginate = Pagination::paginate($database, $sql, 4); ?>
@@ -77,7 +72,6 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                           <th>Grades</th>
                           <th>Start Class</th>
                           <th>Score</th>
-
                         </tr>
                       </thead>
                       <?php foreach ($paginate['records'] as $row) : ?>
@@ -94,7 +88,9 @@ Auth::authenticate([Roles::getRole('isTeacher')]);
                           <td>
                             <?php echo formatCreatedAt($row['start_class']); ?>
                           </td>
-                          <td><a href="<?php echo BASE_URL ?>/teacher/score.php?id=<?php echo $row['class_id'] ?>" class="btn btn-primary btn-xs">insert</a></td>
+                          <td>
+                            <a href="<?php echo BASE_URL ?>/teacher/score.php?id=<?php echo $row['class_id'] ?>" class="btn btn-primary btn-xs">insert</a>
+                          </td>
                         </tr>
                       <?php endforeach; ?>
                     <?php else : ?>

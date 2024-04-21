@@ -2,6 +2,8 @@
 
 namespace Thesis\functions;
 
+use Thesis\config\Auth;
+
 class Roles
 {
   private static $roleCache = [];
@@ -20,4 +22,5 @@ class Roles
     }
     return self::$roleCache[$roleName];;
   }
+  
 }

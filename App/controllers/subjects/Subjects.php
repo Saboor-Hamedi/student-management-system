@@ -50,6 +50,7 @@ class Subjects extends MainController
 
   //  TODO:
   // * Store the subjects
+
   public function addSubject()
   {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

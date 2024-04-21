@@ -26,7 +26,7 @@ class UserTableSeeder
         'username' => $fake->name('10'),
         'email' => $fake->email(),
         'password' => HashPassword::hash('123'),
-        'roles' => $fake->numberBetween(1, 2),
+        'roles' => $fake->numberBetween(0, 2),
       ];
       $sql = 'INSERT INTO school.users (username, email, password, roles)
      VALUES (:username, :email, :password, :roles)';

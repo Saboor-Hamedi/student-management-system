@@ -25,11 +25,20 @@ if (isset($_POST['search'])) { ?>
           <td><?php echo $user['lastname']; ?></td>
           <td><?php echo $user['subject_names']; ?></td>
           <td><?php echo $user['score']; ?></td>
-          <td>
-            <a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="<?php echo $user['score_id'] ?>">
-              delete
-            </a>
-          </td>
+          <?php if (isset($user['isScored'])) : ?>
+            <td>
+              <?php switch ($user['isScored']) {
+                case 'complete':
+                  echo '<span class="badge bg-success">Completed</span>';
+                  break;
+                case 'progress':
+                  echo '<span class="badge bg-info">In Progress</span>';
+                  break;
+                default:
+                  echo '<a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="' . $user['score_id'] . '">Delete</a>';
+              } ?>
+            </td>
+          <?php endif; ?>
         </tr>
       </div>
     <?php endforeach; ?>

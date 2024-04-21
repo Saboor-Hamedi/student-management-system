@@ -5,8 +5,9 @@ path('header'); ?>
 
 use Thesis\config\Auth;
 use Thesis\functions\Pagination;
+use Thesis\functions\Roles;
 
-Auth::authenticate([0]);
+Auth::authenticate([Roles::getRole('isAdmin')]);
 ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>

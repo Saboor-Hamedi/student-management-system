@@ -55,7 +55,6 @@ use Thesis\functions\Roles;
             <div class="card-body">
               <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div id="message" class="alert" style="display: none;"></div>
-
                 <!-- fetch data -->
                 <?php
                 $search = new SearchScore($database);
@@ -65,7 +64,7 @@ use Thesis\functions\Roles;
                 ?>
                 <?php if (!empty($paginate['records'])) : ?>
                   <table class="table table-hover table-condensed">
-                    <thead class="">
+                    <thead>
                       <tr>
                         <th>Student</th>
                         <th>Subject</th>
@@ -79,20 +78,29 @@ use Thesis\functions\Roles;
                           <td><?php echo $user['lastname']; ?></td>
                           <td><?php echo $user['subject_names']; ?></td>
                           <td><?php echo $user['score']; ?></td>
-                          <td>
-                            <a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="<?php echo $user['score_id'] ?>">
-                              delete
-                            </a>
-                          </td>
+                          <?php if (isset($user['isScored'])) : ?>
+                            <td>
+                              <?php switch ($user['isScored']) {
+                                case 'complete':
+                                  echo '<span class="badge bg-success">Completed</span>';
+                                  break;
+                                case 'progress':
+                                  echo '<span class="badge bg-info">In Progress</span>';
+                                  break;
+                                default:
+                                  echo '<a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="' . $user['score_id'] . '">Delete</a>';
+                              } ?>
+                            </td>
+                          <?php endif; ?>
                         </tr>
                       </tbody>
                     <?php endforeach; ?>
                   <?php else : ?>
-                      <div class="card-body text-center">
-                        <p class="card-text">Dear<strong> <?php echo ucfirst($username) ?? '' ?></strong> This message appears due, not giving score to your student, 
-                          please if you have finished the exam,provide score to you students</p>
-                        <a href="<?php echo BASE_URL ?>/teacher/classes.php" class="btn btn-primary">Profile</a>
-                      </div>
+                    <div class="card-body text-center">
+                      <p class="card-text">Dear<strong> <?php echo ucfirst($username) ?? '' ?></strong> This message appears due, not giving score to your student,
+                        please if you have finished the exam,provide score to you students</p>
+                      <a href="<?php echo BASE_URL ?>/teacher/classes.php" class="btn btn-primary">Profile</a>
+                    </div>
                   <?php endif ?>
                   </table>
                   <nav aria-label="Page navigation example">
@@ -101,7 +109,9 @@ use Thesis\functions\Roles;
                   </nav>
               </div>
             </div>
-            <div class="card-footer"><p></p></div>
+            <div class="card-footer">
+              <p></p>
+            </div>
           </div>
         </div>
       </div>

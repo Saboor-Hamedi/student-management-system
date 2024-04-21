@@ -47,33 +47,33 @@ class Validation
    * @param mixed $email
    * @return string
    */
-  // public function email($email)
-  // {
-  //     if (empty($email)) {
-  //         return 'Email required';
-  //     }
-  //     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  //         return 'Invalid email';
-  //     }
-  //     return ''; //no error 
-  // }
   public function email($email)
   {
-    if (empty($email)) {
-      return 'Email required';
-    }
-    $validateEmail = new EmailValidator();
-    $multipleValidations = new MultipleValidationWithAnd([
-      new RFCValidation(),
-      new DNSCheckValidation()
-    ]);
-    if (!$validateEmail->isValid($email, $multipleValidations)) {
-      return 'Invalid email';
-    } else {
-      return false;
-      // Assuming you want to return false if the email is valid
-    }
+      if (empty($email)) {
+          return 'Email required';
+      }
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          return 'Invalid email';
+      }
+      return ''; //no error 
   }
+  // public function email($email)
+  // {
+  //   if (empty($email)) {
+  //     return 'Email required';
+  //   }
+  //   $validateEmail = new EmailValidator();
+  //   $multipleValidations = new MultipleValidationWithAnd([
+  //     new RFCValidation(),
+  //     new DNSCheckValidation()
+  //   ]);
+  //   if (!$validateEmail->isValid($email, $multipleValidations)) {
+  //     return 'Invalid email';
+  //   } else {
+  //     return false;
+  //     // Assuming you want to return false if the email is valid
+  //   }
+  // }
 
   // password validation 
   /**
