@@ -1,7 +1,5 @@
 <?php
-
 use Thesis\controllers\scores\SearchScore;
-
 /**
  * ? View: views/teacher/scores.php
  *
@@ -25,7 +23,6 @@ use Thesis\controllers\scores\SearchScore;
 <?php require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header'); ?>
 <?php
-
 use Thesis\config\Auth;
 use Thesis\functions\Pagination;
 use Thesis\functions\Roles;
@@ -35,87 +32,84 @@ use Thesis\functions\Roles;
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->
 <?php path('sidebar', ['roles' => $roles, 'username' => $username]); ?>
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="height: auto;">
-  <section class="content">
-    <?php //path('cards'); 
-    ?>
-    <div class="card"></div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">
-                All Scores
-              </h3>
-            </div>
-            <!-- body -->
-            <div class="card-body">
-              <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div id="message" class="alert" style="display: none;"></div>
-                <!-- fetch data -->
-                <?php
-                $search = new SearchScore($database);
-                $sql = $search->searchScores();
-                // Call the paginate method to generate pagination HTML and fetch records for the current page
-                $paginate = Pagination::paginate($database, $sql, 2);
-                ?>
-                <?php if (!empty($paginate['records'])) : ?>
-                  <table class="table table-hover table-condensed">
-                    <thead>
-                      <tr>
-                        <th>Student</th>
-                        <th>Subject</th>
-                        <th>Score</th>
-                        <th>Delete</th>
-                      </tr>
-                    </thead>
-                    <?php foreach ($paginate['records'] as $user) : ?>
-                      <tbody>
-                        <tr class="odd">
-                          <td><?php echo $user['lastname']; ?></td>
-                          <td><?php echo $user['subject_names']; ?></td>
-                          <td><?php echo $user['score']; ?></td>
-                          <?php if (isset($user['isScored'])) : ?>
-                            <td>
-                              <?php switch ($user['isScored']) {
-                                case 'complete':
-                                  echo '<span class="badge bg-success">Completed</span>';
-                                  break;
-                                case 'progress':
-                                  echo '<span class="badge bg-info">In Progress</span>';
-                                  break;
-                                default:
-                                  echo '<a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="' . $user['score_id'] . '">Delete</a>';
-                              } ?>
-                            </td>
-                          <?php endif; ?>
-                        </tr>
-                      </tbody>
-                    <?php endforeach; ?>
-                  <?php else : ?>
-                    <div class="card-body text-center">
-                      <p class="card-text">Dear<strong> <?php echo ucfirst($username) ?? '' ?></strong> This message appears due, not giving score to your student,
-                        please if you have finished the exam,provide score to you students</p>
-                      <a href="<?php echo BASE_URL ?>/teacher/classes.php" class="btn btn-primary">Profile</a>
-                    </div>
-                  <?php endif ?>
-                  </table>
-                  <nav aria-label="Page navigation example">
-                    <?php
-                    echo $paginate['paginationHtml']; ?>
-                  </nav>
+<section class="content">
+<div class="card"></div>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          All Scores
+        </h3>
+      </div>
+      <!-- body -->
+      <div class="card-body">
+        <div id="example2-wrapper" class="dataTables_wrapper dt-bootstrap4">
+          <div id="message" class="alert" style="display: none;"></div>
+          <!-- fetch data -->
+          <?php
+          $search = new SearchScore($database);
+          $sql = $search->searchScores();
+          // Call the paginate method to generate pagination HTML and fetch records for the current page
+          $paginate = Pagination::paginate($database, $sql, 4);
+          ?>
+          <?php if (!empty($paginate['records'])) : ?>
+            <table class="table table-hover table-condensed">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Subject</th>
+                  <th>Score</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <?php foreach ($paginate['records'] as $user) : ?>
+                <tbody>
+                  <tr class="odd">
+                    <td><?php echo $user['lastname']; ?></td>
+                    <td><?php echo $user['subject_names']; ?></td>
+                    <td><?php echo $user['score']; ?></td>
+                    <?php if (isset($user['isScored'])) : ?>
+                      <td>
+                        <?php switch ($user['isScored']) {
+                          case 'complete':
+                            echo '<span class="badge bg-success">Completed</span>';
+                            break;
+                          case 'progress':
+                            echo '<span class="badge bg-info">In Progress</span>';
+                            break;
+                          default:
+                            echo '<a href="#" class="btn btn-danger btn-xs deleteScore_" data-id="' . $user['score_id'] . '">Delete</a>';
+                        } ?>
+                      </td>
+                    <?php endif; ?>
+                  </tr>
+                </tbody>
+              <?php endforeach; ?>
+            <?php else : ?>
+              <div class="card-body text-center">
+                <p class="card-text">Dear<strong> <?php echo ucfirst($username) ?? '' ?></strong> This message appears due, not giving score to your student,
+                  please if you have finished the exam,provide score to you students</p>
+                <a href="<?php echo BASE_URL ?>/teacher/classes.php" class="btn btn-primary">Profile</a>
               </div>
-            </div>
-            <div class="card-footer">
-              <p></p>
-            </div>
-          </div>
+            <?php endif ?>
+            </table>
+            <nav aria-label="Page navigation example">
+              <?php
+              echo $paginate['paginationHtml']; ?>
+            </nav>
         </div>
       </div>
+      <div class="card-footer">
+        <p></p>
+      </div>
     </div>
-  </section>
+  </div>
+</div>
+</div>
+</section>
 </div>
 <?php path('footer'); ?>

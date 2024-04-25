@@ -15,13 +15,7 @@
 <?php require_once __DIR__ . '/../../App/config/path.php'; ?>
 <?php path('header'); // header 
 ?>
-<?php
-
-use Thesis\config\Auth;
-use Thesis\config\FlashMessage;
-
-?>
-p
+<?php use Thesis\config\FlashMessage;?>
 <?php path('navbar'); // navbar 
 ?>
 <?php path(

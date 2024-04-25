@@ -1,8 +1,3 @@
-<!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
 <?php
 
 /**
@@ -20,8 +15,6 @@
 use Thesis\config\CallById;
 use Thesis\controllers\teachers\TeacherProfileUpdate;
 use Thesis\config\Auth;
-use Thesis\config\ClearInput;
-use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
 use Thesis\functions\Roles;
 
@@ -48,10 +41,27 @@ use Thesis\functions\Roles;
 
 <div class="content-wrapper">
   <div class="card"></div>
-    <section class="content">
-      
-
-    </section>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+             Profile
+            </div>
+          </div>
+        <div class="container">
+            <div class="profile-image d-flex justify-content-center m-auto p-2 mb-3 bg-success">
+                <img src="https://via.placeholder.com/300x300" alt="Profile Image" class="avatar avatar-sm">
+            </div>
+            <div class="profile-details bg-success">
+              <h4>Jordon Lemke</h4>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <?php path('footer'); ?>
