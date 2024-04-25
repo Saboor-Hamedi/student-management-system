@@ -1,8 +1,10 @@
-<?php require_once __DIR__ . '/../../../App/config/path.php'; 
+<?php require_once __DIR__ . '/../../../App/config/path.php';
+
 use Thesis\config\CallById;
-use Thesis\config\Validation;?>
+use Thesis\config\Validation; ?>
 <?php path('header'); ?>
 <?php
+
 use Thesis\config\Auth;
 use Thesis\config\ClearInput;
 use Thesis\config\FlashMessage;
@@ -13,13 +15,21 @@ use Thesis\controllers\students\Register;
 <?php
 $callByID = new CallById();
 $validation = new Validation();
-$register = new Register($database,$callByID, $validation );
+$register = new Register($database, $callByID, $validation);
 $errors = $register->updateStudentData();
 ?>
 <!-- header on the top, Navbar -->
 <?php path('navbar'); ?>
 <!-- Main Sidebar Container -->
-<?php path('sidebar', ['roles' => $roles, 'username' => $username, 'user_id' => $user_id, 'database' => $database]); ?>
+<?php path(
+  'sidebar',
+  [
+    'roles' => $roles,
+    'username' => $username,
+    'user_id' => $user_id,
+    'database' => $database
+  ]
+); ?>
 
 <!-- end insert data -->
 <div class="content-wrapper" style="height: auto;">
@@ -40,8 +50,9 @@ $errors = $register->updateStudentData();
                 <div class="row">
                   <div class="col-md-12">
                     <!-- <div class="form-group"> -->
-                      <input type="hidden" class="form-control" id="student_profile_id" name="student_profile_id" placeholder="student id number" value="<?php echo getInputValue('student_profile_id') ?>" readonly>
-                      <?php //error($errors, 'student_profile_id'); ?>
+                    <input type="hidden" class="form-control" id="student_profile_id" name="student_profile_id" placeholder="student id number" value="<?php echo getInputValue('student_profile_id') ?>" readonly>
+                    <?php //error($errors, 'student_profile_id'); 
+                    ?>
                     <!-- </div> -->
                   </div>
                   <div class="col-md-12">
@@ -89,7 +100,9 @@ $errors = $register->updateStudentData();
                 </div>
               </form>
             </div>
-            <div class="card-footer"><p ></p></div>
+            <div class="card-footer">
+              <p></p>
+            </div>
           </div>
         </div>
       </div>

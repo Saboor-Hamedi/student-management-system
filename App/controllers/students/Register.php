@@ -1,10 +1,11 @@
 <?php
+
 /**
   ! Update Students Data
   ! This class belongs to the student, and admin has the access to register a new student 
   ! for more details you can visit public/views/student/register.php
   ! if want to add more details about students, add more attributes on student table and inputs on student/register.php
-*/
+ */
 
 namespace Thesis\controllers\students;
 
@@ -14,8 +15,8 @@ use Thesis\config\ClearInput;
 use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
-use Thesis\controllers\main\MainController;
 use Thesis\functions\InputUtils;
+use Thesis\helper\EntityExistsChecker;
 
 class Register
 {
@@ -76,7 +77,9 @@ class Register
       if (!empty($this->errors)) {
         return $this->errors;
       }
-      $hasUpdate = $this->callByID->doesStudentIdExist('school.students', InputUtils::sanitizeInput($_POST['student_profile_id'], 'number_int'));
+      // $hasUpdate = $this->callByID->doesStudentIdExist('school.students', InputUtils::sanitizeInput($_POST['student_profile_id'], 'number_int'));
+      $entity = new EntityExistsChecker($this->database);
+      $hasUpdate = $entity->doesEntityIdExist('students', InputUtils::sanitizeInput($_POST['student_profile_id'], 'number_int'));
       if (!empty($hasUpdate)) {
         FlashMessage::setMessage('This student already exists', 'info');
       } else {
@@ -172,5 +175,4 @@ class Register
   {
     $this->errors['student_sex'] = $input->options($_POST['student_sex']);
   }
-  
 }

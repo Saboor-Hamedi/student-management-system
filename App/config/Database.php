@@ -296,28 +296,7 @@ class Database
     $user = $statement->fetch(PDO::FETCH_ASSOC);
     return $user;
   }
-  public function checkIdsExistence($student_id, $teacher_id, $database)
-  {
-    // Check if the student_id and teacher_id exist in their respective tables
-    $studentExistsQuery = "SELECT COUNT(*) AS count FROM students WHERE student_id = :student_id";
-    $teacherExistsQuery = "SELECT COUNT(*) AS count FROM teachers WHERE teacher_id = :teacher_id";
 
-    $studentExistsParams = ['student_id' => $student_id];
-    $teacherExistsParams = ['teacher_id' => $teacher_id];
-
-    $studentExistsResult = $this->query($studentExistsQuery, $studentExistsParams);
-    $teacherExistsResult = $this->query($teacherExistsQuery, $teacherExistsParams);
-
-    // Check both IDs existence
-    if (
-      $studentExistsResult && $studentExistsResult[0]['count'] > 0 &&
-      $teacherExistsResult && $teacherExistsResult[0]['count'] > 0
-    ) {
-      return true; // Both student and teacher exist
-    } else {
-      return false; // Either student or teacher does not exist
-    }
-  }
   public function checkExistingScore($student_id, $teacher_id, $subject_names)
   {
     // Query to check if the entry already exists in the scores table
@@ -371,16 +350,7 @@ class Database
 
     return $result['count'];
   }
-  public function checkScoreExistsForSubject($teacher_id, $student_id, $subject_names)
-  {
-    $query = "SELECT * FROM school.scores WHERE teacher_id = :teacher_id AND student_id = :student_id AND subject_names = :subject_names";
-    $statement = $this->connection->prepare($query);
-    $statement->bindParam(':teacher_id', $teacher_id);
-    $statement->bindParam(':student_id', $student_id);
-    $statement->bindParam(':subject_names', $subject_names);
-    $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC) !== false;
-  }
+ 
   public function error($error)
   {
     error_log('Database Error: ' . $error->getMessage());

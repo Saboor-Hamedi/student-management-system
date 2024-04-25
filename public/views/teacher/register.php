@@ -26,7 +26,8 @@ use Thesis\functions\Roles;
 <!-- insert data -->
 <?php $callByID = new CallById(); ?>
 <?php $validation = new Validation(); ?>
-<?php $updateProfile = new TeacherProfileUpdate($callByID, $validation); ?>
+<?php $flash = new FlashMessage(); ?>
+<?php $updateProfile = new TeacherProfileUpdate($database,$callByID, $validation, $flash); ?>
 <?php $errors = $updateProfile->UpdateProfile(); ?>
 <?php path('navbar'); // header
 ?>

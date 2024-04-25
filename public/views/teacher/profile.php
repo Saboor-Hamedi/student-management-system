@@ -15,6 +15,7 @@
 use Thesis\config\CallById;
 use Thesis\controllers\teachers\TeacherProfileUpdate;
 use Thesis\config\Auth;
+use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
 use Thesis\functions\Roles;
 
@@ -24,7 +25,8 @@ use Thesis\functions\Roles;
 <!-- insert data -->
 <?php $callByID = new CallById(); ?>
 <?php $validation = new Validation(); ?>
-<?php $updateProfile = new TeacherProfileUpdate($callByID, $validation); ?>
+<?php $flash = new FlashMessage(); ?>
+<?php $updateProfile = new TeacherProfileUpdate($database, $callByID, $validation, $flash); ?>
 <?php $errors = $updateProfile->UpdateProfile(); ?>
 <?php path('navbar'); // header
 ?>

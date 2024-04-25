@@ -13,19 +13,28 @@ namespace Thesis\controllers\teachers;
 use Exception;
 use Thesis\config\CallById;
 use Thesis\config\ClearInput;
+use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
-use Thesis\controllers\main\MainController;
 use Thesis\functions\InputUtils;
-class TeacherProfileUpdate extends MainController
+use Thesis\helper\EntityExistsChecker;
+
+class TeacherProfileUpdate
 {
   protected $callByID;
   protected $validation;
-  public function __construct(CallById $callByID, Validation $validation)
-  {
-    parent::__construct();
+  protected $database;
+  protected $flash;
+  public function __construct(
+    Database $database,
+    CallById $callByID,
+    Validation $validation,
+    FlashMessage $flash
+  ) {
+    $this->database = $database;
     $this->callByID = $callByID;
     $this->validation = $validation;
+    $this->flash = $flash;
   }
 
   public function UpdateProfile()
@@ -39,23 +48,23 @@ class TeacherProfileUpdate extends MainController
       if (!empty($errors)) {
         return $errors;
       }
-      $hasProfile = $this->callByID->doesTeacherIdExist('school.teachers', $_POST['selected_teacher_id']);
-
+      $entity = new EntityExistsChecker($this->database);
+      $hasProfile = $entity->doesEntityIdExist('teachers', $_POST['selected_teacher_id']);
       if (!empty($hasProfile)) {
-        FlashMessage::setMessage('Profile has already updated', 'info');
+        $this->flash->setMessage('Profile has already updated', 'info');
       } else {
         $data = $this->prepareData();
-        $profile = $this->database->insert('school.teachers', $data);
+        $profile = $this->database->insert('teachers', $data);
 
         if ($profile) {
           $this->InputClear();
-          FlashMessage::setMessage('Profile successfully updated', 'success');
+          $this->flash->setMessage('Profile successfully updated', 'success');
         } else {
-          FlashMessage::setMessage('Profile did not update', 'info');
+          $this->flash->setMessage('Profile did not update', 'info');
         }
       }
     } catch (Exception $e) {
-      FlashMessage::addMessageWithException('Something went wrong', $e, 'danger');
+      $this->flash->addMessageWithException('Something went wrong', $e, 'danger');
     }
   }
 

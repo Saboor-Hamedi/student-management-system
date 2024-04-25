@@ -8,6 +8,7 @@ use Thesis\config\FlashMessage;
 use Thesis\config\ClearInput;
 use Thesis\config\Validation;
 use Thesis\functions\InputUtils;
+use Thesis\helper\EntityExistsChecker;
 
 class UploadScores
 {
@@ -16,9 +17,14 @@ class UploadScores
   protected $callById;
   protected $validation;
   protected $flash;
+  protected $entityIdField;
 
-  public function __construct(Database $database, CallById $callById, Validation $validation, FlashMessage $flash)
-  {
+  public function __construct(
+    Database $database,
+    CallById $callById,
+    Validation $validation,
+    FlashMessage $flash
+  ) {
     $this->database = $database;
     $this->callById =  $callById;
     $this->validation = $validation;
@@ -39,17 +45,17 @@ class UploadScores
       $data = $this->prepareData();
       $result = $this->database->insert('school.scores', $data);
       if ($result) {
-        $this->flash->redirect('/teacher/classes.php','Scores uploaded successfully', 'success');
+        $this->flash->redirect('/teacher/classes.php', 'Scores uploaded successfully', 'success');
       }
-    }else{
-      $this->flash->redirect('/teacher/classes.php','Scores already uploaded', 'info');
+    } else {
+      $this->flash->redirect('/teacher/classes.php', 'Scores already uploaded', 'info');
     }
   }
   private function validateInput($input)
   {
     $errors = [];
-    $errors['teacher_id'] = $this->validateTeacherId($input);
-    $errors['student_id'] = $this->validateStudentId($input);
+    $errors['teacher_id'] = $this->validateTeacherId($input, $errors);
+    $errors['student_id'] = $this->validateStudentId($input, $errors);
     $errors['search_student_names'] = $this->validateSearchStudentName($input);
     $errors['student_grade_id'] = $this->validateStudentGradeId($input);
     $errors['subject_names'] = $this->validateSubjectName($input);
@@ -61,12 +67,7 @@ class UploadScores
     $studentId = $_POST['student_id'];
     $teacherId = $_POST['teacher_id'];
     $subjectName = $_POST['subject_names'];
-    if (!$this->callById->doesStudentIdExist('school.classes', $studentId)) {
-      return 'Student id did not match';
-    }
-    if (!$this->callById->doesTeacherIdExist('school.classes', $teacherId)) {
-      return 'Teacher id did not match';
-    }
+    $this->entityIdField = new EntityExistsChecker($this->database);
     $scoresExist = $this->database->checkExistingScore($studentId, $teacherId, $subjectName);
     return $scoresExist;
   }
@@ -81,24 +82,27 @@ class UploadScores
     ];
   }
 
-  private function validateStudentId($input)
+  private function validateStudentId($input, $errors)
   {
     $rules = [
       ['required', 'Required student id'],
       ['integer', 'Student id must be a number'],
     ];
     //  * check if student_id match the current student_id or exists
-    if (!$this->callById->if_user_exists('school.users', $_POST['student_id'], 1)) { // check if teacher user_id is match 
-      return 'Student not found';
-    }
+    if (!$this->callById->if_user_exists('school.users', $_POST['student_id'], 1)) {
+      return $errors['errors'] =  'Student did not match';
+    } // check if student user_id is match 
     return $input->number($_POST['student_id'], $rules);
   }
-  private function validateTeacherId($input)
+  private function validateTeacherId($input, $errors)
   {
     $rules = [
       ['required', 'Required teacher id'],
       ['integer', 'Teacher id must be a number'],
     ];
+    if (!$this->callById->if_user_exists('school.users', $_POST['teacher_id'], 2)) {
+      return $errors['error'] =  'Teacher did not match';
+    } // check if teacher user_id is match
 
     // * check if the teacher id exists 
     return $input->number($_POST['teacher_id'], $rules);

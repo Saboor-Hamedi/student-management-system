@@ -8,7 +8,7 @@ class CallById
 {
     private $database;
 
-    function __construct()
+    public function __construct()
     {
         $this->database = Database::GetInstance();
     }
