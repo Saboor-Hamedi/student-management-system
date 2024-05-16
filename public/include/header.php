@@ -14,7 +14,7 @@ require_once __DIR__ . '../../../App/config/path.php';
   <link rel="stylesheet" type="text/css" , href="<?php assets("css/ionicons.min.css") ?>">
   <link rel="stylesheet" type="text/css" , href="<?php assets("css/fontawesome.min.css") ?>">
   <!-- adminlit -->
-  <link rel="stylesheet" type="text/css" href="<?php assets("css/adminlte.css") ?>">
+  <link rel="stylesheet" type="text/css" href="<?php //assets("css/adminlte.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/adminlte.min.css?v=3.2.0") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("plugins/fontawesome-free/css/all.min.css"); ?>">
   <!-- datetimepicker -->
@@ -24,6 +24,7 @@ require_once __DIR__ . '../../../App/config/path.php';
   <link rel="stylesheet" type="text/css" href="<?php assets("css/dark-theme.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/search.css") ?>">
   <link rel="stylesheet" type="text/css" href="<?php assets("css/login.css") ?>">
+  <link rel="stylesheet" type="text/css" href="<?php assets("css/theme.css") ?>">
 
 </head>
 

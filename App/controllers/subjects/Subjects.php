@@ -8,23 +8,26 @@ namespace Thesis\controllers\subjects;
 use Exception;
 use Thesis\config\CallById;
 use Thesis\config\ClearInput;
+use Thesis\config\Database;
 use Thesis\config\FlashMessage;
 use Thesis\config\Validation;
-use Thesis\controllers\main\MainController;
 use Thesis\functions\InputUtils;
+use Thesis\helper\EntityExistsChecker;
 
-class Subjects extends MainController
+class Subjects
 {
+
   protected $errors = [];
+  protected $database;
   protected $callByID;
+  protected $entity;
   /**
-   * Subjects constructor.
-   *
-   * @param CallById $callByID
+   * Summary of __construct
    */
-  public function __construct(CallById $callByID)
+  public function __construct(Database $database, EntityExistsChecker $entity, CallById $callByID)
   {
-    parent::__construct();
+    $this->database = $database;
+    $this->entity = $entity;
     $this->callByID = $callByID;
   }
   // TODO:
@@ -33,7 +36,6 @@ class Subjects extends MainController
    * 
    * @return mixed Returns the result of the query, or false if no data found.
    */
-
   /**
    * Store the subjects.
    */
@@ -48,11 +50,16 @@ class Subjects extends MainController
     }
   }
 
-  //  TODO:
-  // * Store the subjects
 
+
+  /**
+   * Add new subject
+   */
   public function addSubject()
   {
+    /**
+     * Check if the request method is POST
+     */
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
       return;
     }
@@ -60,7 +67,9 @@ class Subjects extends MainController
 
       $validate = new Validation();
       $this->errors = $this->input($validate);
-      // * check if errors is empty
+      /**
+       * Check if there are any errors
+       */
       if (!empty($this->errors)) {
         return $this->errors;
       }
@@ -76,9 +85,12 @@ class Subjects extends MainController
       FlashMessage::addMessageWithException('Something went wrong', $e, 'danger');
     }
   }
+  /** 
+   * Prepare data for insert
+   */
   private function prepareData()
   {
-    $data = [
+    return [
       'teacher_id' => InputUtils::sanitizeInput($_POST['selected_teacher_id'], 'number_int'),
       'student_id' => InputUtils::sanitizeInput($_POST['student_id'], 'number_int'),
       'subject_name' => InputUtils::sanitizeInput($_POST['subject_names'], 'string'),
@@ -86,7 +98,6 @@ class Subjects extends MainController
       'end_class' => InputUtils::sanitizeInput($_POST['end_subject_time'], 'string'),
       'grades' => $_POST['select_grades'],
     ];
-    return $data;
   }
   private function clearInput()
   {
@@ -94,11 +105,11 @@ class Subjects extends MainController
       'selected_teacher_id',
       'search_teacher_live',
       'subject_names',
+      'select_grades',
       'student_id',
       'search_student_names',
       'start_subject_time',
       'end_subject_time',
-      'grades'
     );
   }
   private function input($input)
@@ -116,15 +127,23 @@ class Subjects extends MainController
   // * selected_teacher_id, validate for teacher id
   private function validateTeacherId($input)
   {
-    $rules = [
-      ['required',  'Required teacher id'],
-      ['integer',   'Teacher id must be integer'],
-      ['min_value', 'Teacher must be not less not 1', 1]
-    ];
-    $this->errors['selected_teacher_id'] = $input->number($_POST['selected_teacher_id'], $rules);
-    // * checks if teacher exists
-    if (!$this->callByID->doesTeacherIdExist('school.teachers', $_POST['selected_teacher_id'])) {
-      $this->errors['selected_teacher_id'] = 'This teacher is not yet registered';
+    $selectedTeacherId = isset($_POST['selected_teacher_id']) ? $_POST['selected_teacher_id'] : '';
+    if (empty($selectedTeacherId)) {
+      $this->errors['selected_teacher_id'] = 'Teacher id required';
+    } else {
+      $rules = [
+        ['required',  'Required teacher id'],
+        ['integer',   'Teacher id must be integer'],
+        ['min_value', 'Teacher must be not less not 1', 1]
+      ];
+      $this->errors['selected_teacher_id'] = $input->number($selectedTeacherId, $rules);
+      if (!$this->errors['selected_teacher_id']) {
+        // Check if the teacher ID exists in the database
+        $isTeacher = $this->entity->checkWithValue('teachers', 'teacher_id', $selectedTeacherId);
+        if (!$isTeacher) {
+          $this->errors['selected_teacher_id'] = 'This teacher is not yet registered';
+        }
+      }
     }
   }
   // * search_teacher_live, validate search for teacher
@@ -143,15 +162,23 @@ class Subjects extends MainController
   // * validate student id
   private function validateStudentId($input)
   {
-    $rules = [
-      ['required', 'Required student id'],
-      ['integer', 'Student id must be integer'],
-      ['min_value', 'Student must be not less not 1', 1]
-    ];
-    $this->errors['student_id'] = $input->number($_POST['student_id'], $rules);
-    // * check if the students id exists 
-    if (!$this->callByID->doesStudentIdExist('school.students', $_POST['student_id'])) {
-      $this->errors['student_id'] = 'This student is not yet registered';
+    $selectedStudentId = isset($_POST['student_id']) ? $_POST['student_id'] : '';
+    if (empty($selectedStudentId)) {
+      $this->errors['student_id'] = 'Student id required';
+    } else {
+      $rules = [
+        ['required', 'Required student id'],
+        ['integer', 'Student id must be integer'],
+        ['min_value', 'Student must be not less not 1', 1]
+      ];
+      $this->errors['student_id'] = $input->number($selectedStudentId, $rules);
+    }
+    if (!$this->errors['student_id']) {
+      // * check if the students id exists 
+      $isStudent = $this->entity->checkWithValue('students', 'student_id', $_POST['student_id']);
+      if (!$isStudent) {
+        $this->errors['student_id'] = 'This student is not yet registered';
+      }
     }
   }
   // * validate student search name

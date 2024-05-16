@@ -11,6 +11,12 @@ function getInputValue($fieldName)
 {
     return isset($_POST[$fieldName]) ? htmlspecialchars($_POST[$fieldName]) : "";
 }
+
+function getOption($selectedValue, $optionValue) {
+  return isset($selectedValue) && $selectedValue == $optionValue ? 'selected' : '';
+}
+
+
 function hash_password($password)
 {
     return password_hash($password, PASSWORD_DEFAULT);

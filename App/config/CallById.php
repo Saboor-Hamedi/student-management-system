@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Saboor Khan
+ */
 namespace Thesis\config;
 
 use Thesis\config\Database;
@@ -36,6 +38,7 @@ class CallById
     }
     public function if_user_exists($table, $id, $roles)
     {
+      
         try {
             $sql = "SELECT id FROM $table WHERE id = :id AND roles = :roles  LIMIT 1";
             $params =

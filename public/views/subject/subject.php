@@ -1,4 +1,7 @@
 <?php
+
+use Thesis\helper\EntityExistsChecker;
+
 require_once __DIR__ . '/../../../App/config/path.php'; ?>
 <?php path('header');  ?>
 <?php
@@ -14,12 +17,15 @@ use Thesis\functions\Roles;
 
 Auth::authenticate([Roles::getRole('isAdmin')]);
 $callByID = new CallById();
-$subject = new Subjects($callByID);
+$entity = new EntityExistsChecker($database);
+$subject = new Subjects($database, $entity, $callByID);
 $grades = $subject->loadGrades();
 $errors = $subject->addSubject();
 ?>
-<?php path('navbar'); //header 
+<!-- header -->
+<?php path('navbar');
 ?>
+<!-- sidebar -->
 <?php path(
   'sidebar',
   [
@@ -28,7 +34,7 @@ $errors = $subject->addSubject();
     'user_id' => $user_id,
     'database' => $database
   ]
-); // sidebar
+);
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -109,9 +115,12 @@ $errors = $subject->addSubject();
                     <select class="form-select" name="subject_names">
                       <option value="">What subject the teacher would teach?</option>
                       <?php $subjects = $database->query("SELECT * FROM subjects"); ?>
+                      <?php $selectedSubject = isset($_POST['subject_names']) ? $_POST['subject_names'] : ''; ?>
                       <?php if ($subjects) : ?>
                         <?php foreach ($subjects as $row) : ?>
-                          <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                          <option value="<?php echo $row['name']; ?>" <?php echo getOption($selectedSubject, $row['name']) ?>>
+                            <?php echo $row['name']; ?>
+                          </option>
                         <?php endforeach; ?>
                       <?php endif; ?>
                     </select>
@@ -120,12 +129,15 @@ $errors = $subject->addSubject();
                   <!--  grade -->
                   <div class="col-md-6">
                     <select class="form-select" name="select_grades">
-                      <option value="" class="form-class">Select Grades</option>
-                      <?php foreach ($grades as $row) : ?>
-                        <option value="<?php echo $row['grade']; ?>">
-                          <?php echo $row['grade']; ?> Grade
-                        </option>
-                      <?php endforeach; ?>
+                      <option value="">Select Grade</option>
+                      <?php $selectedGrade = isset($_POST['select_grades']) ? $_POST['select_grades'] : ''; ?>
+                      <?php if ($grades) : ?>
+                        <?php foreach ($grades as $row) : ?>
+                          <option value="<?php echo $row['grade']; ?>"  <?php echo getOption($selectedGrade, $row['grade']); ?>>
+                            <?php echo $row['grade']; ?> Grade
+                          </option>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
                     </select>
                     <?php error($errors, 'select_grades'); ?>
                   </div>

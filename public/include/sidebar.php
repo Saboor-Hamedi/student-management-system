@@ -1,10 +1,8 @@
+<?php
+use Thesis\config\Auth; 
+?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <a href="<?php
-
-            use Thesis\config\Auth;
-            use Thesis\functions\Roles;
-
-            echo BASE_URL ?>/home.php" class="brand-link" style="color: #d3d5d7;">
+  <a href="<?php echo BASE_URL ?>/home.php" class="brand-link" style="color: #d3d5d7;">
     <img src="<?php assets("img/AdminLTELogo.png") ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">AHS</span>
   </a>
